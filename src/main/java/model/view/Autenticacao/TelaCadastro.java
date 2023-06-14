@@ -5,10 +5,14 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import model.view.TelaPrincipal;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JLabel;
 import java.awt.Font;
 
@@ -20,9 +24,6 @@ public class TelaCadastro extends JFrame {
 	private JTextField textField_2;
 
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -40,17 +41,27 @@ public class TelaCadastro extends JFrame {
 	 * Create the frame.
 	 */
 	public TelaCadastro() {
+		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("Button.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Cadastrar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaPrincipal
+				telaPrincipal = new TelaPrincipal();
+				dispose();
+				telaPrincipal.setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(45, 362, 309, 64);
 		contentPane.add(btnNewButton);
 		

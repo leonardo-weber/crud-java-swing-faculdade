@@ -13,6 +13,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.SwingConstants;
+import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -21,9 +22,6 @@ public class TelaInicial extends JFrame {
 
 	private JPanel contentPane;
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -47,7 +45,7 @@ public class TelaInicial extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
-		contentPane.setBackground(new Color(211, 215, 207));
+		contentPane.setBackground(UIManager.getColor("Button.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);

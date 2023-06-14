@@ -16,6 +16,7 @@ import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.JButton;
 import java.awt.SystemColor;
 import java.awt.event.ActionListener;
@@ -32,9 +33,7 @@ public class TelaLogin extends JFrame {
 	TelaCadastro cadastro = new TelaCadastro();
 	TelaPrincipal principal = new TelaPrincipal();
 
-	/**
-	 * Launch the application.
-	 */
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -57,7 +56,7 @@ public class TelaLogin extends JFrame {
 		setLocationRelativeTo(null);
 		setResizable(false);
 		contentPane = new JPanel();
-		contentPane.setBackground(SystemColor.controlHighlight);
+		contentPane.setBackground(UIManager.getColor("Button.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
