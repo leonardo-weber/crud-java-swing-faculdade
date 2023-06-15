@@ -19,9 +19,15 @@ import java.awt.Font;
 public class TelaCadastro extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	
+	private JTextField nameInputField;
+	private JTextField cpfInputField;
+	private JTextField phoneInputField;
+	
+	private JLabel nameLabel;
+	private JLabel cpfLabel;
+	private JLabel phoneLabel;
+	
 
 
 	public static void main(String[] args) {
@@ -37,9 +43,6 @@ public class TelaCadastro extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaCadastro() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -76,34 +79,34 @@ public class TelaCadastro extends JFrame {
 		btnVoltar.setBounds(392, 362, 309, 64);
 		contentPane.add(btnVoltar);
 		
-		textField = new JTextField();
-		textField.setBounds(224, 90, 477, 33);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		nameInputField = new JTextField();
+		nameInputField.setBounds(224, 90, 477, 33);
+		contentPane.add(nameInputField);
+		nameInputField.setColumns(10);
 		
-		JLabel lblNome = new JLabel("NOME");
-		lblNome.setFont(new Font("Dialog", Font.BOLD, 24));
-		lblNome.setBounds(56, 86, 100, 33);
-		contentPane.add(lblNome);
+		nameLabel = new JLabel("NOME");
+		nameLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		nameLabel.setBounds(56, 86, 100, 33);
+		contentPane.add(nameLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(224, 166, 477, 33);
-		contentPane.add(textField_1);
+		cpfInputField = new JTextField();
+		cpfInputField.setColumns(10);
+		cpfInputField.setBounds(224, 166, 477, 33);
+		contentPane.add(cpfInputField);
 		
-		JLabel lblNome_1 = new JLabel("CPF");
-		lblNome_1.setFont(new Font("Dialog", Font.BOLD, 24));
-		lblNome_1.setBounds(56, 162, 100, 33);
-		contentPane.add(lblNome_1);
+		cpfLabel = new JLabel("CPF");
+		cpfLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		cpfLabel.setBounds(56, 162, 100, 33);
+		contentPane.add(cpfLabel);
 		
-		textField_2 = new JTextField();
-		textField_2.setColumns(10);
-		textField_2.setBounds(224, 249, 478, 33);
-		contentPane.add(textField_2);
+		phoneInputField = new JTextField();
+		phoneInputField.setColumns(10);
+		phoneInputField.setBounds(224, 249, 478, 33);
+		contentPane.add(phoneInputField);
 		
-		JLabel lblNome_2 = new JLabel("TELEFONE");
-		lblNome_2.setFont(new Font("Dialog", Font.BOLD, 24));
-		lblNome_2.setBounds(56, 245, 163, 33);
-		contentPane.add(lblNome_2);
+		phoneLabel = new JLabel("TELEFONE");
+		phoneLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		phoneLabel.setBounds(56, 245, 163, 33);
+		contentPane.add(phoneLabel);
 	}
 }

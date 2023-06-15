@@ -69,89 +69,89 @@ public class TelaPrincipal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Funcionário");
-		menuBar.add(mnNewMenu);
+		JMenu menuItemFuncionario = new JMenu("Funcionário");
+		menuBar.add(menuItemFuncionario);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Listagem");
-		mntmNewMenuItem.addActionListener(new ActionListener() {
+		JMenuItem menuItemFuncionarioListagem = new JMenuItem("Listagem");
+		menuItemFuncionarioListagem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(listagemDeFuncionario);
 				revalidate();
 			}
 		});
-		mnNewMenu.add(mntmNewMenuItem);
+		menuItemFuncionario.add(menuItemFuncionarioListagem);
 		
-		JMenuItem mntmCadastro = new JMenuItem("Cadastro");
-		mntmCadastro.addActionListener(new ActionListener() {
+		JMenuItem menuItemFuncionarioCadastro = new JMenuItem("Cadastro");
+		menuItemFuncionarioCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(cadastroDeFuncionario);
 				revalidate();
 			}
 		});
-		mnNewMenu.add(mntmCadastro);
+		menuItemFuncionario.add(menuItemFuncionarioCadastro);
 		
-		JMenu mnNewMenu_1 = new JMenu("Carros");
-		menuBar.add(mnNewMenu_1);
+		JMenu menuItemCarros = new JMenu("Carros");
+		menuBar.add(menuItemCarros);
 		
-		JMenuItem mntmListagem = new JMenuItem("Listagem");
-		mntmListagem.addActionListener(new ActionListener() {
+		JMenuItem menuItemCarrosListagem = new JMenuItem("Listagem");
+		menuItemCarrosListagem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(listagemDeCarros);
 				revalidate();
 			}
 		});
-		mnNewMenu_1.add(mntmListagem);
+		menuItemCarros.add(menuItemCarrosListagem);
 		
-		JMenuItem mntmCadastro_1 = new JMenuItem("Cadastro");
-		mntmCadastro_1.addActionListener(new ActionListener() {
+		JMenuItem menuItemCarrosCadastro = new JMenuItem("Cadastro");
+		menuItemCarrosCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(cadastroDeCarros);
 				revalidate();
 			}
 		});
-		mnNewMenu_1.add(mntmCadastro_1);
+		menuItemCarros.add(menuItemCarrosCadastro);
 		
-		JMenu mnNewMenu_2 = new JMenu("Locação");
-		menuBar.add(mnNewMenu_2);
+		JMenu menuItemLocacao = new JMenu("Locação");
+		menuBar.add(menuItemLocacao);
 		
-		JMenuItem mntmListagem_1 = new JMenuItem("Listagem");
-		mntmListagem_1.addActionListener(new ActionListener() {
+		JMenuItem menuItemLocacaoListagem = new JMenuItem("Listagem");
+		menuItemLocacaoListagem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(listagemDeLocacao);
 				revalidate();
 			}
 		});
-		mnNewMenu_2.add(mntmListagem_1);
+		menuItemLocacao.add(menuItemLocacaoListagem);
 		
-		JMenuItem mntmCadastro_1_1 = new JMenuItem("Cadastro");
-		mntmCadastro_1_1.addActionListener(new ActionListener() {
+		JMenuItem menuItemLocacaoCadastro = new JMenuItem("Cadastro");
+		menuItemLocacaoCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(cadastroDeLocacao);
 				revalidate();
 			}
 		});
-		mnNewMenu_2.add(mntmCadastro_1_1);
+		menuItemLocacao.add(menuItemLocacaoCadastro);
 		
-		JMenu mnNewMenu_3 = new JMenu("Cliente");
-		menuBar.add(mnNewMenu_3);
+		JMenu menuItemCliente = new JMenu("Cliente");
+		menuBar.add(menuItemCliente);
 		
-		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Listagem");
-		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+		JMenuItem menuItemClienteListagem = new JMenuItem("Listagem");
+		menuItemClienteListagem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(listagemDeCliente);
 				revalidate();
 			}
 		});
-		mnNewMenu_3.add(mntmNewMenuItem_1);
+		menuItemCliente.add(menuItemClienteListagem);
 		
-		JMenuItem mntmNewMenuItem_1_2 = new JMenuItem("Cadastro");
-		mntmNewMenuItem_1_2.addActionListener(new ActionListener() {
+		JMenuItem menuItemClienteCadastro = new JMenuItem("Cadastro");
+		menuItemClienteCadastro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setContentPane(cadastroDeCliente);
 				revalidate();
 			}
 		});
-		mnNewMenu_3.add(mntmNewMenuItem_1_2);
+		menuItemCliente.add(menuItemClienteCadastro);
 		
 		
 		contentPane = new JPanel();

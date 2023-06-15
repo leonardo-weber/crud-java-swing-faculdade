@@ -21,6 +21,9 @@ import java.awt.event.ActionEvent;
 public class TelaInicial extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel title;
+	private JLabel subtitle;
+	private JButton enterButton;
 
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -51,27 +54,27 @@ public class TelaInicial extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("BASTOS");
-		lblNewLabel.setBounds(274, 147, 186, 49);
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 41));
-		contentPane.add(lblNewLabel);
+		title = new JLabel("BASTOS");
+		title.setBounds(274, 147, 186, 49);
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setFont(new Font("Dialog", Font.BOLD, 41));
+		contentPane.add(title);
 		
-		JLabel lblAluguelDeCarris = new JLabel("ALUGUEL DE CARROS");
-		lblAluguelDeCarris.setBounds(247, 216, 239, 24);
-		lblAluguelDeCarris.setFont(new Font("Dialog", Font.BOLD, 20));
-		contentPane.add(lblAluguelDeCarris);
+		subtitle = new JLabel("ALUGUEL DE CARROS");
+		subtitle.setBounds(247, 216, 239, 24);
+		subtitle.setFont(new Font("Dialog", Font.BOLD, 20));
+		contentPane.add(subtitle);
 		
-		JButton btnNewButton = new JButton("ENTRAR");
-		btnNewButton.setBounds(72, 272, 593, 54);
-		btnNewButton.addActionListener(new ActionListener() {
+		enterButton = new JButton("ENTRAR");
+		enterButton.setBounds(72, 272, 593, 54);
+		enterButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaLogin login = new TelaLogin();
 				dispose();
 				login.setVisible(true);
 			}
 		});
-		contentPane.add(btnNewButton);
+		contentPane.add(enterButton);
 	}
 
 }

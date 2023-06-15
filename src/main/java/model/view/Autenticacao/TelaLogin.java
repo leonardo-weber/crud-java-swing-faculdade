@@ -25,10 +25,15 @@ import java.awt.event.ActionEvent;
 public class TelaLogin extends JFrame {
 
 	private JPanel contentPane;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JButton btnNewButton;
-	private JButton btnNewButton_2;
+	
+	private JTextField loginInputField;
+	private JTextField passwordInputField;
+	private JButton loginButton;
+	private JButton signupButton;
+	
+	private JLabel loginLabel;
+	private JLabel passwordLabel;
+	
 	
 	TelaCadastro cadastro = new TelaCadastro();
 	TelaPrincipal principal = new TelaPrincipal();
@@ -62,45 +67,45 @@ public class TelaLogin extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("LOGIN");
-		lblNewLabel.setBounds(53, 128, 92, 36);
-		lblNewLabel.setFont(new Font("Dialog", Font.BOLD, 24));
-		contentPane.add(lblNewLabel);
+		loginLabel = new JLabel("LOGIN");
+		loginLabel.setBounds(53, 128, 92, 36);
+		loginLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		contentPane.add(loginLabel);
 		
-		textField = new JTextField();
-		textField.setBounds(163, 128, 505, 36);
-		contentPane.add(textField);
-		textField.setColumns(10);
+		loginInputField = new JTextField();
+		loginInputField.setBounds(163, 128, 505, 36);
+		contentPane.add(loginInputField);
+		loginInputField.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("SENHA");
-		lblNewLabel_1.setBounds(53, 212, 92, 36);
-		lblNewLabel_1.setFont(new Font("Dialog", Font.BOLD, 24));
-		contentPane.add(lblNewLabel_1);
+		passwordLabel = new JLabel("SENHA");
+		passwordLabel.setBounds(53, 212, 92, 36);
+		passwordLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		contentPane.add(passwordLabel);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(163, 212, 505, 36);
-		textField_1.setColumns(10);
-		contentPane.add(textField_1);
+		passwordInputField = new JTextField();
+		passwordInputField.setBounds(163, 212, 505, 36);
+		passwordInputField.setColumns(10);
+		contentPane.add(passwordInputField);
 		
-		btnNewButton = new JButton("Entrar");
-		btnNewButton.addActionListener(new ActionListener() {
+		loginButton = new JButton("Entrar");
+		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				principal.setVisible(true);
 			}
 		});
-		btnNewButton.setBounds(51, 370, 281, 51);
-		contentPane.add(btnNewButton);
+		loginButton.setBounds(51, 370, 281, 51);
+		contentPane.add(loginButton);
 		
-		btnNewButton_2 = new JButton("Cadastro");
-		btnNewButton_2.setBounds(387, 370, 281, 51);
-		btnNewButton_2.addActionListener(new ActionListener() {
+		signupButton = new JButton("Cadastro");
+		signupButton.setBounds(387, 370, 281, 51);
+		signupButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				dispose();
 				cadastro.setVisible(true);
 			}
 		});
-		contentPane.add(btnNewButton_2);
+		contentPane.add(signupButton);
 	}
 
 }
