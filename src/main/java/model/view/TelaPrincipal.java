@@ -21,10 +21,16 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.SystemColor;
+import javax.swing.UIManager;
+import javax.swing.JLabel;
+import java.awt.Font;
 
 public class TelaPrincipal extends JFrame {
 
 	private JPanel contentPane;
+	private JLabel title;
+	private JLabel subtitle;
 	
 	private CarroCadastro cadastroDeCarros = new CarroCadastro();
 	private CarroListagem listagemDeCarros = new CarroListagem();
@@ -69,6 +75,7 @@ public class TelaPrincipal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
+	
 		JMenu menuItemFuncionario = new JMenu("Funcionário");
 		menuBar.add(menuItemFuncionario);
 		
@@ -155,10 +162,21 @@ public class TelaPrincipal extends JFrame {
 		
 		
 		contentPane = new JPanel();
+		contentPane.setBackground(UIManager.getColor("Button.darkShadow"));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		contentPane.setLayout(null);
+		
+		title = new JLabel("BASTOS");
+		title.setFont(new Font("Dialog", Font.BOLD, 41));
+		title.setBounds(268, 146, 288, 49);
+		contentPane.add(title);
+		
+		subtitle = new JLabel("ALUGUEL DE CARROS");
+		subtitle.setFont(new Font("Dialog", Font.BOLD, 20));
+		subtitle.setBounds(240, 207, 288, 24);
+		contentPane.add(subtitle);
 	}
 
 }
