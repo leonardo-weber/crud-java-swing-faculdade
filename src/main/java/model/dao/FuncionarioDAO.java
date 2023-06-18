@@ -5,8 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 import model.vo.FuncionarioVO;
+import model.vo.UsuarioVO;
 
 public class FuncionarioDAO {
 	
@@ -95,6 +98,32 @@ public class FuncionarioDAO {
 		}
 		
 		return retorno;
+	
+	}
+	
+	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {
+		
+		Connection connection = Banco.getConnection();
+		Statement statement = Banco.getStatement(connection);
+		ResultSet resultado = null;
+		
+		String query = "SELECT * "
+				+ "FROM USUARIO u "
+				+ "WHERE u.login like '" + funcionario.getNome() + "' "
+				+ "AND u.senha = " + funcionario.getSenha();
+		
+		try {
+			resultado = statement.executeQuery(query);
+		} catch (SQLException erro) {
+			System.out.println("FUncionarioDAO - Erro ao executar a query do método checarFuncionarioValido");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(statement);
+			Banco.closeConnection(connection);
+		}
+		
+		return funcionario;
 	
 	}
 

@@ -11,6 +11,10 @@ public class FuncionarioBO {
 		return FuncionarioDAO.cadastrarFuncionario(funcionario);
 	}
 	
+	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {
+		return FuncionarioDAO.checarFuncionarioValido(funcionario);
+	}
+	
 	public boolean deletarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.deletarFuncionario(funcionario);
 	}

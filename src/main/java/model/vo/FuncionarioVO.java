@@ -6,17 +6,19 @@ public class FuncionarioVO {
 	private String nome;
 	private String telefone;
 	private String cpf;
+	private String senha;
 	
 	public FuncionarioVO() {
 		super();
 	}
 	
-	public FuncionarioVO(int id, String nome, String telefone, String cpf) {
+	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.cpf = cpf;
+		this.senha = senha;
 	}
 	
 	public int getId() {
@@ -49,6 +51,14 @@ public class FuncionarioVO {
 	
 	public void setCPF(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public String getSenha() {
+		return senha;
+	}
+	
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }
