@@ -7,7 +7,7 @@ public class LocacaoBO {
 	
 	LocacaoDAO LocacaoDAO = new LocacaoDAO();
 	
-	public LocacaoVO cadastrarCarro(LocacaoVO locacao) throws CpfJaUtilizadoException {
+	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) throws CpfJaUtilizadoException {
 		
 		if (userDAO.cpfJaUtilizado(locacao.getCpf())) {
 			throw new CpfJaUtilizadoException("Este CPF já está cadastrado!");
@@ -16,11 +16,11 @@ public class LocacaoBO {
 		return LocacaoDAO.cadastrarLocacao(locacao);
 	}
 	
-	public boolean deletarCarro(LocacaoVO locacao) {
+	public boolean deletarLocacao(LocacaoVO locacao) {
 		return LocacaoDAO.deletarLocacao(locacao);
 	}
 
-	public boolean atualizarCarro(LocacaoVO locacao) {
+	public boolean atualizarLocacao(LocacaoVO locacao) {
 		return LocacaoDAO.atualizarLocacao(locacao);
 	}
 

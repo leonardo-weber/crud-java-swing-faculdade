@@ -11,6 +11,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
 import model.view.TelaPrincipal;
+import model.vo.FuncionarioVO;
 
 import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
@@ -33,10 +34,11 @@ public class TelaLogin extends JFrame {
 	
 	private JLabel loginLabel;
 	private JLabel passwordLabel;
-	
-	
+
 	TelaCadastro cadastro = new TelaCadastro();
 	TelaPrincipal principal = new TelaPrincipal();
+	
+	FuncionarioVO funcionarioVO = new FuncionarioVO();
 
 
 	public static void main(String[] args) {
@@ -90,8 +92,9 @@ public class TelaLogin extends JFrame {
 		loginButton = new JButton("Entrar");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				dispose();
-				principal.setVisible(true);
+				
+				
+				
 			}
 		});
 		loginButton.setBounds(51, 370, 281, 51);

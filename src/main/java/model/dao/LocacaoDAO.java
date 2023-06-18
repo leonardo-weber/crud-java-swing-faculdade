@@ -12,7 +12,7 @@ public class LocacaoDAO {
 	
 	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) {
 		
-		String query ="INSERT INTO nometabela () VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO LOCACAO (DATA_INICIO, DATA_FIM, MODELO, VALOR) VALUES (?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -50,7 +50,7 @@ public class LocacaoDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM usuario " + "WHERE idusuario = " + locacao.getIdUsuario();
+		String query = "DELETE FROM LOCACAO " + "WHERE IDLOCACAO = " + locacao.getIdUsuario();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -75,12 +75,12 @@ public class LocacaoDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE usuario SET nome = '" + locacao.getNome()
+		String query = "UPDATE LOCACAO SET nome = '" + locacao.getNome()
 				+ "', email = '" + locacao.getEmail()
 				+ "', salariol = " + locacao.getSalariol()
 				+ ", login = '" + locacao.getLogin()
 				+ "', senha = '" + locacao.getSenha()
-				+ "' WHERE idusuario = " + locacao.getIdUsuario();
+				+ "' WHERE IDLOCACAO = " + locacao.getIdUsuario();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

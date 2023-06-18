@@ -7,20 +7,15 @@ public class FuncionarioBO {
 	
 	FuncionarioDAO FuncionarioDAO = new FuncionarioDAO();
 	
-	public FuncionarioVO cadastrarCarro(FuncionarioVO funcionario) throws CpfJaUtilizadoException {
-		
-		if (userDAO.cpfJaUtilizado(carro.getCpf())) {
-			throw new CpfJaUtilizadoException("Este CPF já está cadastrado!");
-		}
-		
+	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.cadastrarFuncionario(funcionario);
 	}
 	
-	public boolean deletarCarro(FuncionarioVO funcionario) {
+	public boolean deletarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.deletarFuncionario(funcionario);
 	}
 
-	public boolean atualizarCarro(FuncionarioVO funcionario) {
+	public boolean atualizarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.atualizarFuncionario(funcionario);
 	}
 

@@ -12,7 +12,7 @@ public class FuncionarioDAO {
 	
 	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
 		
-		String query ="INSERT INTO nometabela () VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO FUNCIONARIO (NOME, TELEFONE, CPF) VALUES (?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -51,7 +51,7 @@ public class FuncionarioDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM usuario " + "WHERE idusuario = " + funcionario.getIdUsuario();
+		String query = "DELETE FROM FUNCIONARIO " + "WHERE IDFUNCIONARIO = " + funcionario.getIdUsuario();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -75,12 +75,12 @@ public class FuncionarioDAO {
 		Statement statement = Banco.getStatement(connection);
 		boolean retorno = false;
 		
-		String query = "UPDATE usuario SET nome = '" + funcionario.getNome()
+		String query = "UPDATE FUNCIONARIO SET nome = '" + funcionario.getNome()
 				+ "', email = '" + funcionario.getEmail()
 				+ "', salariol = " + funcionario.getSalariol()
 				+ ", login = '" + funcionario.getLogin()
 				+ "', senha = '" + funcionario.getSenha()
-				+ "' WHERE idusuario = " + funcionario.getIdUsuario();
+				+ "' WHERE IDFUNCIONARIO = " + funcionario.getIdUsuario();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

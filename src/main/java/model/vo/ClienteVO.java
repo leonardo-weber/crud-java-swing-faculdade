@@ -37,19 +37,19 @@ public class ClienteVO {
 		this.nome = nome;
 	}
 	
-	public String getCnh() {
+	public String getCNH() {
 		return cnh;
 	}
 	
-	public void setCnh(String cnh) {
+	public void setCNH(String cnh) {
 		this.cnh = cnh;
 	}
 	
-	public String getCpf() {
+	public String getCPF() {
 		return cpf;
 	}
 	
-	public void setCpf(String cpf) {
+	public void setCPF(String cpf) {
 		this.cpf = cpf;
 	}
 	

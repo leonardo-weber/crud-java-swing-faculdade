@@ -7,7 +7,7 @@ public class ClienteBO {
 	
 	ClienteDAO ClienteDAO = new ClienteDAO();
 	
-	public ClienteVO cadastrarCarro(ClienteVO cliente) throws CpfJaUtilizadoException {
+	public ClienteVO cadastrarCliente(ClienteVO cliente) throws CpfJaUtilizadoException {
 		
 		if (userDAO.cpfJaUtilizado(cliente.getCpf())) {
 			throw new CpfJaUtilizadoException("Este CPF já está cadastrado!");
@@ -16,11 +16,11 @@ public class ClienteBO {
 		return ClienteDAO.cadastrarCliente(cliente);
 	}
 	
-	public boolean deletarCarro(ClienteVO cliente) {
+	public boolean deletarCliente(ClienteVO cliente) {
 		return ClienteDAO.deletarCliente(cliente);
 	}
 
-	public boolean atualizarCarro(ClienteVO cliente) {
+	public boolean atualizarCliente(ClienteVO cliente) {
 		return ClienteDAO.atualizarCliente(cliente);
 	}
 

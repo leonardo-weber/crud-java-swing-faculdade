@@ -12,7 +12,7 @@ public class ClienteDAO {
 	
 	public ClienteVO cadastrarCliente(ClienteVO cliente) {
 		
-		String query ="INSERT INTO nometabela () VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO CLIENTE (NOME, CPF, TELEFONE) VALUES (?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -50,7 +50,7 @@ public class ClienteDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM usuario " + "WHERE idusuario = " + cliente.getIdUsuario();
+		String query = "DELETE FROM CLIENTE " + "WHERE IDCLIENTE = " + cliente.getIdUsuario();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -75,12 +75,12 @@ public class ClienteDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE usuario SET nome = '" + cliente.getNome()
+		String query = "UPDATE CLIENTE SET nome = '" + cliente.getNome()
 				+ "', email = '" + cliente.getEmail()
 				+ "', salariol = " + cliente.getSalariol()
 				+ ", login = '" + cliente.getLogin()
 				+ "', senha = '" + cliente.getSenha()
-				+ "' WHERE idusuario = " + cliente.getIdUsuario();
+				+ "' WHERE IDCLIENTE = " + cliente.getIdUsuario();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

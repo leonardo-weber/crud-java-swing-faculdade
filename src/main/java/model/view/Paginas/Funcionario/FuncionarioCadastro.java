@@ -1,6 +1,7 @@
 package model.view.Paginas.Funcionario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.JTextField;
@@ -9,6 +10,12 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
+
+import controller.FuncionarioController;
+import model.vo.FuncionarioVO;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class FuncionarioCadastro extends JPanel {
 	
@@ -20,6 +27,11 @@ public class FuncionarioCadastro extends JPanel {
 	private JLabel nameLabel;
 	private JLabel phoneLabel;
 	private JLabel cpfLabel;
+	
+	private JButton cadastrarFuncionarioButton;
+	
+	FuncionarioVO funcionarioVO = new FuncionarioVO();
+	FuncionarioController funcionarioController = new FuncionarioController();
 
 	public FuncionarioCadastro() {
 		
@@ -81,8 +93,23 @@ public class FuncionarioCadastro extends JPanel {
 		cpfTextField.setColumns(10);
 		add(cpfTextField, "4, 8, 2, 1, fill, top");
 		
-		JButton btnNewButton = new JButton("Cadastrar funcionário");
-		add(btnNewButton, "5, 24, fill, top");
+		cadastrarFuncionarioButton = new JButton("Cadastrar funcionário");
+		cadastrarFuncionarioButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				funcionarioVO.setNome(nameTextField.getText());
+				funcionarioVO.setTelefone(phoneTextField.getText());
+				funcionarioVO.setCPF(cpfTextField.getText());
+				
+				try {
+					funcionarioController.cadastrarFuncionario(funcionarioVO);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "erro");
+				}
+				
+			}
+		});
+		add(cadastrarFuncionarioButton, "5, 24, fill, top");
 
 	}
 }

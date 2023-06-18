@@ -12,7 +12,7 @@ public class CarroDAO {
 	
 	public CarroVO cadastrarCarro(CarroVO carro) {
 		
-		String query ="INSERT INTO nometabela () VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO CARRO (MARCA, MODELO, ANO, PLACA) VALUES (?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -50,7 +50,7 @@ public class CarroDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM usuario " + "WHERE idusuario = " + carro.getIdUsuario();
+		String query = "DELETE FROM CARRO " + "WHERE IDCARRO = " + carro.getIdUsuario();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -75,12 +75,12 @@ public class CarroDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE usuario SET nome = '" + carro.getNome()
+		String query = "UPDATE CARRO SET nome = '" + carro.getNome()
 				+ "', email = '" + carro.getEmail()
 				+ "', salariol = " + carro.getSalariol()
 				+ ", login = '" + carro.getLogin()
 				+ "', senha = '" + carro.getSenha()
-				+ "' WHERE idusuario = " + carro.getIdUsuario();
+				+ "' WHERE IDCARRO = " + carro.getIdUsuario();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

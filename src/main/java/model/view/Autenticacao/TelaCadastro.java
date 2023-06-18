@@ -6,7 +6,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import controller.FuncionarioController;
 import model.view.TelaPrincipal;
+import model.vo.FuncionarioVO;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -14,6 +16,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 
 public class TelaCadastro extends JFrame {
@@ -28,8 +32,9 @@ public class TelaCadastro extends JFrame {
 	private JLabel cpfLabel;
 	private JLabel phoneLabel;
 	
-
-
+	FuncionarioVO funcionarioVO = new FuncionarioVO();
+	FuncionarioController funcionarioController = new FuncionarioController();
+	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -59,10 +64,21 @@ public class TelaCadastro extends JFrame {
 		JButton btnNewButton = new JButton("Cadastrar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaPrincipal
-				telaPrincipal = new TelaPrincipal();
+			
+				funcionarioVO.setNome(nameInputField.getText());
+				funcionarioVO.setTelefone(phoneInputField.getText());
+				funcionarioVO.setCPF(cpfInputField.getText());
+				
+				try {
+					funcionarioController.cadastrarFuncionario(funcionarioVO);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "erro");
+				}
+				
+				TelaPrincipal principal = new TelaPrincipal();
 				dispose();
-				telaPrincipal.setVisible(true);
+				principal.setVisible(true);
+				
 			}
 		});
 		btnNewButton.setBounds(45, 362, 309, 64);

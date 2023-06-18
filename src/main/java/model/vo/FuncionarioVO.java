@@ -1,6 +1,7 @@
 package model.vo;
 
 public class FuncionarioVO {
+	
 	private int id;
 	private String nome;
 	private String telefone;
@@ -42,11 +43,11 @@ public class FuncionarioVO {
 		this.telefone = telefone;
 	}
 	
-	public String getCpf() {
+	public String getCPF() {
 		return cpf;
 	}
 	
-	public void setCpf(String cpf) {
+	public void setCPF(String cpf) {
 		this.cpf = cpf;
 	}
 

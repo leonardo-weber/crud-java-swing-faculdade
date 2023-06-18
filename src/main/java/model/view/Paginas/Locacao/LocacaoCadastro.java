@@ -2,21 +2,33 @@ package model.view.Paginas.Locacao;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import controller.LocacaoController;
+import model.vo.LocacaoVO;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
 public class LocacaoCadastro extends JPanel {
 	
-	private JTextField titleTextField;
 	private JTextField dataInicialTextField;
 	private JTextField dataFinalTextField;
 	private JTextField valorTextField;
+	private JTextField modeloTextField;
 	
 	private JLabel titleLabel;
 	private JLabel dataInicialLabel;
 	private JLabel dataFinalLabel;
 	private JLabel valorLabel;
+	private JLabel modeloLabel;
+	
+	private JButton cadastrarLocacaoButton;
+
+	LocacaoVO locacaoVO = new LocacaoVO();
+	LocacaoController locacaoController = new LocacaoController();
 
 	public LocacaoCadastro() {
 		
@@ -39,33 +51,48 @@ public class LocacaoCadastro extends JPanel {
 		valorLabel.setBounds(26, 174, 70, 15);
 		add(valorLabel);
 		
-		titleTextField = new JTextField();
-		titleTextField.setBounds(226, 104, 476, 19);
-		add(titleTextField);
-		titleTextField.setColumns(10);
-		
 		dataInicialTextField = new JTextField();
-		dataInicialTextField.setBounds(226, 138, 476, 19);
-		dataInicialTextField.setColumns(10);
+		dataInicialTextField.setBounds(226, 104, 476, 19);
 		add(dataInicialTextField);
+		dataInicialTextField.setColumns(10);
 		
 		dataFinalTextField = new JTextField();
-		dataFinalTextField.setBounds(226, 172, 476, 19);
+		dataFinalTextField.setBounds(226, 138, 476, 19);
 		dataFinalTextField.setColumns(10);
 		add(dataFinalTextField);
 		
-		JLabel lblNome_1_1_1 = new JLabel("Modelo");
-		lblNome_1_1_1.setBounds(26, 205, 70, 15);
-		add(lblNome_1_1_1);
-		
-		JButton btnNewButton = new JButton("Cadastrar Locação");
-		btnNewButton.setBounds(420, 391, 282, 25);
-		add(btnNewButton);
-		
 		valorTextField = new JTextField();
+		valorTextField.setBounds(226, 172, 476, 19);
 		valorTextField.setColumns(10);
-		valorTextField.setBounds(226, 203, 476, 19);
 		add(valorTextField);
+		
+		modeloLabel = new JLabel("Modelo");
+		modeloLabel.setBounds(26, 205, 70, 15);
+		add(modeloLabel);
+		
+		cadastrarLocacaoButton = new JButton("Cadastrar Locação");
+		cadastrarLocacaoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				locacaoVO.getData_inicio(dataInicialTextField.getText());
+				locacaoVO.getData_fim(dataFinalTextField.getText());
+				locacaoVO.getCarro(modeloTextField.getText());
+
+				try {
+					locacaoController.cadastrarLocacao(locacaoVO);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "erro");
+				}
+				
+			}
+		});
+		cadastrarLocacaoButton.setBounds(420, 391, 282, 25);
+		add(cadastrarLocacaoButton);
+		
+		modeloTextField = new JTextField();
+		modeloTextField.setColumns(10);
+		modeloTextField.setBounds(226, 203, 476, 19);
+		add(modeloTextField);
 
 	}
 
