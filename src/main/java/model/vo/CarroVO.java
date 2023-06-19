@@ -6,9 +6,9 @@ public class CarroVO {
 	private String marca;
 	private String modelo;
 	private String placa;
-	private int ano;
+	private String ano;
 	
-	public CarroVO(int id, String marca, String modelo, String placa, int ano) {
+	public CarroVO(int id, String marca, String modelo, String placa, String ano) {
 		super();
 		this.id = id;
 		this.marca = marca;
@@ -53,11 +53,11 @@ public class CarroVO {
 		this.placa = placa;
 	}
 
-	public int getAno() {
+	public String getAno() {
 		return ano;
 	}
 
-	public void setAno(int ano) {
+	public void setAno(String ano) {
 		this.ano = ano;
 	}
 	

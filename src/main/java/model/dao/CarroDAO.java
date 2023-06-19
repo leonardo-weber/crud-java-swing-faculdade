@@ -12,24 +12,20 @@ public class CarroDAO {
 	
 	public CarroVO cadastrarCarro(CarroVO carro) {
 		
-		String query ="INSERT INTO CARRO (MARCA, MODELO, ANO, PLACA) VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO CARRO (MARCA, MODELO, ANO, PLACA) VALUES (?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
 		try {
-			statement.setInt(1, carro.getTipocarro());
-			statement.setString(2, carro.getNome());
-			statement.setString(3, carro.getCpf());
-			statement.setObject(4, carro.getDataNasci());
-			statement.setString(5, carro.getEmail());
-			statement.setDouble(6, carro.getSalariol());
-			statement.setString(7, carro.getLogin());
-			statement.setString(8, carro.getSenha());
+			statement.setString(1, carro.getMarca());
+			statement.setString(2, carro.getModelo());
+			statement.setString(3, carro.getPlaca());
+			statement.setString(4, carro.getAno());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
-				carro.setIdcarro(Integer.parseInt(resultado.getString(1)));
+				carro.setId(Integer.parseInt(resultado.getString(1)));
 			}
 		} catch (SQLException erro) {
 			System.out.println("CarroDAO - Erro ao executar a query do método cadastrarCarro");
@@ -50,7 +46,7 @@ public class CarroDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM CARRO " + "WHERE IDCARRO = " + carro.getIdUsuario();
+		String query = "DELETE FROM CARRO " + "WHERE IDCARRO = " + carro.getId();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -75,12 +71,11 @@ public class CarroDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE CARRO SET nome = '" + carro.getNome()
-				+ "', email = '" + carro.getEmail()
-				+ "', salariol = " + carro.getSalariol()
-				+ ", login = '" + carro.getLogin()
-				+ "', senha = '" + carro.getSenha()
-				+ "' WHERE IDCARRO = " + carro.getIdUsuario();
+		String query = "UPDATE CARRO SET marca = '" + carro.getMarca()
+				+ "', modelo = '" + carro.getModelo()
+				+ "', ano = " + carro.getAno()
+				+ ", placa = '" + carro.getPlaca()
+				+ "' WHERE IDCARRO = " + carro.getId();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

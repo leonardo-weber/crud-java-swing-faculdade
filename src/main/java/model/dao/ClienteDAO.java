@@ -12,24 +12,20 @@ public class ClienteDAO {
 	
 	public ClienteVO cadastrarCliente(ClienteVO cliente) {
 		
-		String query ="INSERT INTO CLIENTE (NOME, CPF, TELEFONE) VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO CLIENTE (NOME, CPF, TELEFONE, CNH) VALUES (?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
 		try {
-			statement.setInt(1, cliente.getTipocliente());
-			statement.setString(2, cliente.getNome());
-			statement.setString(3, cliente.getCpf());
-			statement.setObject(4, cliente.getDataNasci());
-			statement.setString(5, cliente.getEmail());
-			statement.setDouble(6, cliente.getSalariol());
-			statement.setString(7, cliente.getLogin());
-			statement.setString(8, cliente.getSenha());
+			statement.setString(1, cliente.getNome());
+			statement.setString(2, cliente.getCPF());
+			statement.setString(3, cliente.getTelefone());
+			statement.setObject(4, cliente.getCNH());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
-				cliente.setIdcliente(Integer.parseInt(resultado.getString(1)));
+				cliente.setId(Integer.parseInt(resultado.getString(1)));
 			}
 		} catch (SQLException erro) {
 			System.out.println("ClienteDAO - Erro ao executar a query do método cadastrarcliente");
@@ -50,7 +46,7 @@ public class ClienteDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM CLIENTE " + "WHERE IDCLIENTE = " + cliente.getIdUsuario();
+		String query = "DELETE FROM CLIENTE " + "WHERE IDCLIENTE = " + cliente.getId();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -76,11 +72,10 @@ public class ClienteDAO {
 		boolean retorno = false;
 		
 		String query = "UPDATE CLIENTE SET nome = '" + cliente.getNome()
-				+ "', email = '" + cliente.getEmail()
-				+ "', salariol = " + cliente.getSalariol()
-				+ ", login = '" + cliente.getLogin()
-				+ "', senha = '" + cliente.getSenha()
-				+ "' WHERE IDCLIENTE = " + cliente.getIdUsuario();
+				+ "', cpf = " + cliente.getCPF()
+				+ ", telefone = '" + cliente.getTelefone()
+				+ "', cnh = '" + cliente.getCNH()
+				+ "' WHERE IDCLIENTE = " + cliente.getId();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

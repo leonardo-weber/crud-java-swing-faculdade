@@ -10,16 +10,17 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 
+import controller.LoginController;
 import model.view.TelaPrincipal;
 import model.vo.FuncionarioVO;
 
-import com.jgoodies.forms.layout.FormSpecs;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.JButton;
-import java.awt.SystemColor;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -29,6 +30,7 @@ public class TelaLogin extends JFrame {
 	
 	private JTextField loginInputField;
 	private JTextField passwordInputField;
+	
 	private JButton loginButton;
 	private JButton signupButton;
 	
@@ -39,6 +41,7 @@ public class TelaLogin extends JFrame {
 	TelaPrincipal principal = new TelaPrincipal();
 	
 	FuncionarioVO funcionarioVO = new FuncionarioVO();
+	LoginController loginController = new LoginController();
 
 
 	public static void main(String[] args) {
@@ -54,9 +57,6 @@ public class TelaLogin extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
@@ -93,7 +93,16 @@ public class TelaLogin extends JFrame {
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
+				funcionarioVO.setNome(loginInputField.getText());
+				funcionarioVO.setSenha(passwordInputField.getText());
 				
+				try {
+					loginController.realizarLogin(funcionarioVO);
+					dispose();
+					principal.setVisible(true);
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "erro");
+				}
 				
 			}
 		});

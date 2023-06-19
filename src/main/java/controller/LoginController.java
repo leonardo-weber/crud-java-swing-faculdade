@@ -10,7 +10,6 @@ public class LoginController {
 	
 	public FuncionarioVO realizarLogin (FuncionarioVO funcionario) {
 		
-		boolean loginAutorizado = false;
 		boolean camposValidos = this.validarCamposLoginForm(funcionario);
 		
 		if (camposValidos) {		

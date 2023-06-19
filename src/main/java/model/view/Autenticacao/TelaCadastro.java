@@ -27,10 +27,12 @@ public class TelaCadastro extends JFrame {
 	private JTextField nameInputField;
 	private JTextField cpfInputField;
 	private JTextField phoneInputField;
+	private JTextField passwordInputField;
 	
 	private JLabel nameLabel;
 	private JLabel cpfLabel;
 	private JLabel phoneLabel;
+	private JLabel passwordLabel;
 	
 	FuncionarioVO funcionarioVO = new FuncionarioVO();
 	FuncionarioController funcionarioController = new FuncionarioController();
@@ -66,6 +68,7 @@ public class TelaCadastro extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			
 				funcionarioVO.setNome(nameInputField.getText());
+				funcionarioVO.setSenha(passwordInputField.getText());
 				funcionarioVO.setTelefone(phoneInputField.getText());
 				funcionarioVO.setCPF(cpfInputField.getText());
 				
@@ -96,13 +99,13 @@ public class TelaCadastro extends JFrame {
 		contentPane.add(btnVoltar);
 		
 		nameInputField = new JTextField();
-		nameInputField.setBounds(224, 90, 477, 33);
+		nameInputField.setBounds(224, 53, 477, 33);
 		contentPane.add(nameInputField);
 		nameInputField.setColumns(10);
 		
 		nameLabel = new JLabel("NOME");
 		nameLabel.setFont(new Font("Dialog", Font.BOLD, 24));
-		nameLabel.setBounds(56, 86, 100, 33);
+		nameLabel.setBounds(56, 53, 100, 33);
 		contentPane.add(nameLabel);
 		
 		cpfInputField = new JTextField();
@@ -117,12 +120,22 @@ public class TelaCadastro extends JFrame {
 		
 		phoneInputField = new JTextField();
 		phoneInputField.setColumns(10);
-		phoneInputField.setBounds(224, 249, 478, 33);
+		phoneInputField.setBounds(223, 224, 478, 33);
 		contentPane.add(phoneInputField);
 		
 		phoneLabel = new JLabel("TELEFONE");
 		phoneLabel.setFont(new Font("Dialog", Font.BOLD, 24));
-		phoneLabel.setBounds(56, 245, 163, 33);
+		phoneLabel.setBounds(56, 224, 163, 33);
 		contentPane.add(phoneLabel);
+		
+		passwordInputField = new JTextField();
+		passwordInputField.setColumns(10);
+		passwordInputField.setBounds(224, 108, 477, 33);
+		contentPane.add(passwordInputField);
+		
+		passwordLabel = new JLabel("SENHA");
+		passwordLabel.setFont(new Font("Dialog", Font.BOLD, 24));
+		passwordLabel.setBounds(52, 104, 121, 33);
+		contentPane.add(passwordLabel);
 	}
 }

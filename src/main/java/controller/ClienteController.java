@@ -1,10 +1,7 @@
 package controller;
 
-import java.util.ArrayList;
-
 import model.bo.ClienteBO;
-import model.bo.FuncionarioBO;
-import model.vo.CarroVO;
+import model.exception.CampoInvalidoException;
 import model.vo.ClienteVO;
 import utils.ValidarCamposFormulario;
 
@@ -12,9 +9,11 @@ public class ClienteController {
 	
 	ClienteBO clienteBO = new ClienteBO();
 	
-	public ClienteVO cadastrarCliente(ClienteVO cliente) throws CpfJaUtilizadoException, CampoInvalidoException {
+	public ClienteVO cadastrarCliente(ClienteVO cliente) throws CampoInvalidoException {
         if (this.validarCamposCadastroClienteForm(cliente)) {
         	return clienteBO.cadastrarCliente(cliente);
+        } else {
+        	return cliente;
         }
 	}
 	

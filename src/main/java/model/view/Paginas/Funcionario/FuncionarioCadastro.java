@@ -20,84 +20,64 @@ import java.awt.event.ActionEvent;
 public class FuncionarioCadastro extends JPanel {
 	
 	private JTextField nameTextField;
+	private JTextField passwordTextField;
 	private JTextField phoneTextField;
 	private JTextField cpfTextField;
 	
 	private JLabel titleLabel;
 	private JLabel nameLabel;
+	private JLabel passwordLabel;
 	private JLabel phoneLabel;
 	private JLabel cpfLabel;
 	
 	private JButton cadastrarFuncionarioButton;
 	
 	FuncionarioVO funcionarioVO = new FuncionarioVO();
-	FuncionarioController funcionarioController = new FuncionarioController();
+	FuncionarioController funcionarioController = new FuncionarioController(); 
 
 	public FuncionarioCadastro() {
 		
 		setBackground(UIManager.getColor("Button.darkShadow"));
-		setLayout(new FormLayout(new ColumnSpec[] {
-				ColumnSpec.decode("26px"),
-				ColumnSpec.decode("70px"),
-				ColumnSpec.decode("22px"),
-				ColumnSpec.decode("302px"),
-				ColumnSpec.decode("282px"),
-				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,},
-			new RowSpec[] {
-				FormSpecs.UNRELATED_GAP_ROWSPEC,
-				RowSpec.decode("58px"),
-				RowSpec.decode("35px"),
-				RowSpec.decode("19px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("19px"),
-				FormSpecs.PARAGRAPH_GAP_ROWSPEC,
-				RowSpec.decode("19px"),
-				RowSpec.decode("80px"),
-				RowSpec.decode("25px"),
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,
-				FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.DEFAULT_ROWSPEC,}));
+		setLayout(null);
 		
 		titleLabel = new JLabel("Cadastro de Funcionário");
-		add(titleLabel, "2, 2, 3, 1, left, fill");
+		titleLabel.setBounds(26, 11, 174, 58);
+		add(titleLabel);
 		
 		nameLabel = new JLabel("Nome");
-		add(nameLabel, "2, 4, fill, center");
+		nameLabel.setBounds(26, 106, 70, 15);
+		add(nameLabel);
 		
-		phoneLabel = new JLabel("Telefone");
-		add(phoneLabel, "2, 6, fill, center");
+		passwordLabel = new JLabel("Senha");
+		passwordLabel.setBounds(26, 140, 70, 15);
+		add(passwordLabel);
 		
 		cpfLabel = new JLabel("CPF");
-		add(cpfLabel, "2, 8, fill, center");
+		cpfLabel.setBounds(26, 174, 70, 15);
+		add(cpfLabel);
 		
 		nameTextField = new JTextField();
-		add(nameTextField, "4, 4, 2, 1, fill, top");
+		nameTextField.setBounds(118, 104, 584, 19);
+		add(nameTextField);
 		nameTextField.setColumns(10);
 		
-		phoneTextField = new JTextField();
-		phoneTextField.setColumns(10);
-		add(phoneTextField, "4, 6, 2, 1, fill, top");
+		passwordTextField = new JTextField();
+		passwordTextField.setBounds(118, 138, 584, 19);
+		passwordTextField.setColumns(10);
+		add(passwordTextField);
 		
 		cpfTextField = new JTextField();
+		cpfTextField.setBounds(118, 172, 584, 19);
 		cpfTextField.setColumns(10);
-		add(cpfTextField, "4, 8, 2, 1, fill, top");
+		add(cpfTextField);
 		
 		cadastrarFuncionarioButton = new JButton("Cadastrar funcionário");
+		cadastrarFuncionarioButton.setBounds(420, 414, 282, 25);
 		cadastrarFuncionarioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				funcionarioVO.setNome(nameTextField.getText());
+				funcionarioVO.setSenha(passwordTextField.getText());
 				funcionarioVO.setTelefone(phoneTextField.getText());
 				funcionarioVO.setCPF(cpfTextField.getText());
 				
@@ -109,7 +89,16 @@ public class FuncionarioCadastro extends JPanel {
 				
 			}
 		});
-		add(cadastrarFuncionarioButton, "5, 24, fill, top");
+		
+		phoneLabel = new JLabel("Telefone");
+		phoneLabel.setBounds(26, 205, 70, 15);
+		add(phoneLabel);
+		add(cadastrarFuncionarioButton);
+		
+		phoneTextField = new JTextField();
+		phoneTextField.setColumns(10);
+		phoneTextField.setBounds(118, 203, 584, 19);
+		add(phoneTextField);
 
 	}
 }

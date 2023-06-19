@@ -18,18 +18,13 @@ public class LocacaoDAO {
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
 		try {
-			statement.setInt(1, locacao.getTipolocacao());
-			statement.setString(2, locacao.getNome());
-			statement.setString(3, locacao.getCpf());
-			statement.setObject(4, locacao.getDataNasci());
-			statement.setString(5, locacao.getEmail());
-			statement.setDouble(6, locacao.getSalariol());
-			statement.setString(7, locacao.getLogin());
-			statement.setString(8, locacao.getSenha());
+			statement.setDate(1, locacao.getData_inicio());
+			statement.setDate(2, locacao.getData_fim());
+			statement.setInt(3, locacao.getValor());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
-				locacao.setIdlocacao(Integer.parseInt(resultado.getString(1)));
+				locacao.setId(Integer.parseInt(resultado.getString(1)));
 			}
 		} catch (SQLException erro) {
 			System.out.println("LocacaoDAO - Erro ao executar a query do método cadastrarlocacao");
@@ -75,12 +70,11 @@ public class LocacaoDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE LOCACAO SET nome = '" + locacao.getNome()
-				+ "', email = '" + locacao.getEmail()
-				+ "', salariol = " + locacao.getSalariol()
-				+ ", login = '" + locacao.getLogin()
-				+ "', senha = '" + locacao.getSenha()
-				+ "' WHERE IDLOCACAO = " + locacao.getIdUsuario();
+		String query = "UPDATE LOCACAO SET DATA_INICIO = '" + locacao.getData_inicio()
+				+ "', DATA_FIM = '" + locacao.getData_fim()
+				+ "', MODELO = " + locacao.getCarro()
+				+ "', VALOR = " + locacao.getValor()
+				+ "' WHERE IDLOCACAO = " + locacao.getId();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

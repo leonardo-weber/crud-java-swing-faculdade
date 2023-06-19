@@ -80,10 +80,13 @@ public class CarroCadastro extends JPanel {
 		cadastrarCarroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				carroVO.setMarca(modeloTextField.getText());
-				carroVO.setModelo(anoTextField.getText());
+				carroVO.setMarca(marcaTextField.getText());
+				carroVO.setModelo(modeloTextField.getText());
 				carroVO.setPlaca(placaTextField.getText());
 				carroVO.setAno(anoTextField.getText());
+				
+				
+				System.out.println();
 				
 				try {
 					carroController.cadastrarCarro(carroVO);

@@ -1,38 +1,30 @@
 package model.dao;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 import model.vo.FuncionarioVO;
-import model.vo.UsuarioVO;
 
 public class FuncionarioDAO {
 	
 	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
 		
-		String query ="INSERT INTO FUNCIONARIO (NOME, TELEFONE, CPF) VALUES (?, ?, ?, ?, ?)";
+		String query ="INSERT INTO FUNCIONARIO (NOME, SENHA, TELEFONE, CPF) VALUES (?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
 		try {
-			statement.setInt(1, funcionario.getTipofuncionario());
-			statement.setString(2, funcionario.getNome());
-			statement.setString(3, funcionario.getCpf());
-			statement.setObject(4, funcionario.getDataNasci());
-			statement.setString(5, funcionario.getEmail());
-			statement.setDouble(6, funcionario.getSalariol());
-			statement.setString(7, funcionario.getLogin());
-			statement.setString(8, funcionario.getSenha());
+			statement.setString(1, funcionario.getNome());
+			statement.setString(2, funcionario.getSenha());
+			statement.setString(3, funcionario.getTelefone());
+			statement.setObject(4, funcionario.getCPF());
 			statement.execute();
-			ResultSet resultado = statement.getGeneratedKeys();	
+			ResultSet resultado = statement.getGeneratedKeys();
 			if(resultado.next()) {
-				funcionario.setIdfuncionario(Integer.parseInt(resultado.getString(1)));
+				funcionario.setId(Integer.parseInt(resultado.getString(1)));
 			}
 		} catch (SQLException erro) {
 			System.out.println("FuncionarioDAO - Erro ao executar a query do método cadastrarFuncionario");
@@ -54,7 +46,7 @@ public class FuncionarioDAO {
 		
 		boolean retorno = false;
 		
-		String query = "DELETE FROM FUNCIONARIO " + "WHERE IDFUNCIONARIO = " + funcionario.getIdUsuario();
+		String query = "DELETE FROM FUNCIONARIO " + "WHERE IDFUNCIONARIO = " + funcionario.getId();
 		
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -79,11 +71,10 @@ public class FuncionarioDAO {
 		boolean retorno = false;
 		
 		String query = "UPDATE FUNCIONARIO SET nome = '" + funcionario.getNome()
-				+ "', email = '" + funcionario.getEmail()
-				+ "', salariol = " + funcionario.getSalariol()
-				+ ", login = '" + funcionario.getLogin()
 				+ "', senha = '" + funcionario.getSenha()
-				+ "' WHERE IDFUNCIONARIO = " + funcionario.getIdUsuario();
+				+ "', telefone = " + funcionario.getTelefone()
+				+ ", cpf = '" + funcionario.getCPF()
+				+ "' WHERE IDFUNCIONARIO = " + funcionario.getId();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -104,13 +95,13 @@ public class FuncionarioDAO {
 	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {
 		
 		Connection connection = Banco.getConnection();
-		Statement statement = Banco.getStatement(connection);
+		Statement statement = Banco.getStatement(connection); 
 		ResultSet resultado = null;
 		
 		String query = "SELECT * "
-				+ "FROM USUARIO u "
-				+ "WHERE u.login like '" + funcionario.getNome() + "' "
-				+ "AND u.senha = " + funcionario.getSenha();
+				+ "FROM FUNCIONARIO f "
+				+ "WHERE f.nome like '" + funcionario.getNome() + "' "
+				+ "AND f.senha = " + funcionario.getSenha();
 		
 		try {
 			resultado = statement.executeQuery(query);

@@ -1,4 +1,4 @@
-package controller;
+package controller; 
 
 import model.bo.FuncionarioBO;
 import model.vo.ClienteVO;
@@ -11,9 +11,9 @@ public class FuncionarioController {
 	
 	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
         if (this.validarCamposCadastroFuncionarioForm(funcionario)) {
-        	return null;
+        	return funcionarioBO.cadastrarFuncionario(funcionario);
         } else {
-        	return funcionario;
+        	return funcionario; 
         }
 	}
 	

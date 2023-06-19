@@ -7,12 +7,7 @@ public class CarroBO {
 	
 	CarroDAO CarroDAO = new CarroDAO();
 	
-	public CarroVO cadastrarCarro(CarroVO carro) throws CpfJaUtilizadoException {
-		
-		if (userDAO.cpfJaUtilizado(usuario.getCpf())) {
-			throw new CpfJaUtilizadoException("Este CPF já está cadastrado!");
-		}
-		
+	public CarroVO cadastrarCarro(CarroVO carro) {
 		return CarroDAO.cadastrarCarro(carro);
 	}
 	

@@ -1,6 +1,7 @@
 package controller;
 
 import model.bo.LocacaoBO;
+import model.exception.CampoInvalidoException;
 import model.vo.FuncionarioVO;
 import model.vo.LocacaoVO;
 import utils.ValidarCamposFormulario;
@@ -9,9 +10,11 @@ public class LocacaoController {
 	
 	LocacaoBO locacaoBO = new LocacaoBO();
 	
-	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) throws CpfJaUtilizadoException, CampoInvalidoException {
+	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) throws CampoInvalidoException {
         if (this.validarCamposCadastroLocacaoForm(locacao)) {
         	return locacaoBO.cadastrarLocacao(locacao);
+        } else {
+        	return locacao;
         }
 	}
 	

@@ -8,7 +8,7 @@ public class FuncionarioBO {
 	FuncionarioDAO FuncionarioDAO = new FuncionarioDAO();
 	
 	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
-		return FuncionarioDAO.cadastrarFuncionario(funcionario);
+		return FuncionarioDAO.cadastrarFuncionario(funcionario); 
 	}
 	
 	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {

@@ -7,12 +7,7 @@ public class ClienteBO {
 	
 	ClienteDAO ClienteDAO = new ClienteDAO();
 	
-	public ClienteVO cadastrarCliente(ClienteVO cliente) throws CpfJaUtilizadoException {
-		
-		if (userDAO.cpfJaUtilizado(cliente.getCpf())) {
-			throw new CpfJaUtilizadoException("Este CPF já está cadastrado!");
-		}
-		
+	public ClienteVO cadastrarCliente(ClienteVO cliente) {
 		return ClienteDAO.cadastrarCliente(cliente);
 	}
 	

@@ -1,18 +1,18 @@
 package controller;
 
 import model.bo.CarroBO;
+import model.exception.CampoInvalidoException;
 import model.vo.CarroVO;
 import utils.ValidarCamposFormulario;
-import java.util.ArrayList;
-import java.util.Collections;
-
 public class CarroController {
 	
 	CarroBO carroBO = new CarroBO();
 	
-	public CarroVO cadastrarCarro(CarroVO carro) throws CpfJaUtilizadoException, CampoInvalidoException {
+	public CarroVO cadastrarCarro(CarroVO carro) throws CampoInvalidoException {
 		if (this.validarCamposCadastroCarroForm(carro)) {
 			return carroBO.cadastrarCarro(carro);
+		} else {
+			return carro;
 		}
 	}
 	
@@ -29,7 +29,7 @@ public class CarroController {
 		boolean valido = true;
 		
 		boolean marca = ValidarCamposFormulario.validacao(carro.getMarca());
-		boolean ano = ValidarCamposFormulario.validacao(Integer.toString(carro.getAno()));
+		boolean ano = ValidarCamposFormulario.validacao(carro.getAno());
 		boolean modelo = ValidarCamposFormulario.validacao(carro.getModelo());
 		boolean placa = ValidarCamposFormulario.validacao(carro.getPlaca());
 		

@@ -7,12 +7,7 @@ public class LocacaoBO {
 	
 	LocacaoDAO LocacaoDAO = new LocacaoDAO();
 	
-	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) throws CpfJaUtilizadoException {
-		
-		if (userDAO.cpfJaUtilizado(locacao.getCpf())) {
-			throw new CpfJaUtilizadoException("Este CPF já está cadastrado!");
-		}
-		
+	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) {
 		return LocacaoDAO.cadastrarLocacao(locacao);
 	}
 	
