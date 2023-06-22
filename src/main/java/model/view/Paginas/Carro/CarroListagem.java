@@ -18,6 +18,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
 
 public class CarroListagem extends JPanel {
 	
@@ -39,6 +43,7 @@ public class CarroListagem extends JPanel {
 	}
 	
 	private void popularTabelaFuncionarios() {	
+		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaCarros.getModel();
 		for (CarroVO carro: listaCarros) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
@@ -61,27 +66,32 @@ public class CarroListagem extends JPanel {
 		setLayout(null);
 		
 		titleLabel = new JLabel("Listagem de carros");
-		titleLabel.setBounds(26, 11, 696, 58);
+		titleLabel.setBounds(26, 11, 702, 58);
 		add(titleLabel);
 		
 		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar.setBounds(603, 375, 117, 25);
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
 					listaCarros = (ArrayList<CarroVO>) carroController.consultarListaCarros();
 					popularTabelaFuncionarios();
+					
+					if (listaCarros.size() == 0) {
+						JOptionPane.showMessageDialog(null, "Não existem registros de carros no banco");
+					}
+					
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");
 				}
 				
 			}
 		});
-		
-		btnPesquisar.setBounds(572, 375, 117, 25);
 		add(btnPesquisar);
 		
 		btnDeletar = new JButton("Deletar");
+		btnDeletar.setBounds(474, 375, 117, 25);
 		btnDeletar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -91,17 +101,16 @@ public class CarroListagem extends JPanel {
 				}
 			}
 		});
-		btnDeletar.setBounds(443, 375, 117, 25);
 		btnDeletar.setEnabled(false);
 		add(btnDeletar);
 		
 		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(314, 375, 117, 25);
+		btnEditar.setBounds(345, 375, 117, 25);
 		btnEditar.setEnabled(false);
 		add(btnEditar);
 	
 		tabelaCarros = new JTable();
-		tabelaCarros.setBounds(26, 81, 663, 252);
+		tabelaCarros.setBounds(26, 81, 694, 252);
 		add(tabelaCarros);
 		
 		tabelaCarros.addMouseListener(new MouseAdapter() {

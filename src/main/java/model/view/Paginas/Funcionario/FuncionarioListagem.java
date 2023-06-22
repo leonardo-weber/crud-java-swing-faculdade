@@ -39,6 +39,7 @@ public class FuncionarioListagem extends JPanel {
 	}
 	
 	private void popularTabelaFuncionarios() {	
+		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaFuncionarios.getModel();
 		for (FuncionarioVO func : listaFuncionarios) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
@@ -72,6 +73,10 @@ public class FuncionarioListagem extends JPanel {
 				try {
 					listaFuncionarios = (ArrayList<FuncionarioVO>) funcionarioController.consultarListaFuncionarios();
 					popularTabelaFuncionarios();
+					
+					if (listaFuncionarios.size() == 0) {
+						JOptionPane.showMessageDialog(null, "Não existem registros de funcionários no banco");
+					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");
 				}
@@ -79,11 +84,11 @@ public class FuncionarioListagem extends JPanel {
 			}
 		});
 		
-		btnPesquisar.setBounds(572, 375, 117, 25);
+		btnPesquisar.setBounds(603, 375, 117, 25);
 		add(btnPesquisar);
 		
 		tabelaFuncionarios = new JTable();
-		tabelaFuncionarios.setBounds(26, 81, 663, 252);
+		tabelaFuncionarios.setBounds(26, 81, 694, 252);
 		add(tabelaFuncionarios);
 		
 		btnDeletar = new JButton("Deletar");
@@ -93,12 +98,12 @@ public class FuncionarioListagem extends JPanel {
 				deletarFuncionario();
 			}
 		});
-		btnDeletar.setBounds(443, 375, 117, 25);
+		btnDeletar.setBounds(474, 375, 117, 25);
 		add(btnDeletar);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(314, 375, 117, 25);
+		btnEditar.setBounds(345, 375, 117, 25);
 		add(btnEditar);
 		
 		tabelaFuncionarios.addMouseListener(new MouseAdapter() {

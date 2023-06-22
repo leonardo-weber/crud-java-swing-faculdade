@@ -130,5 +130,38 @@ public class ClienteDAO {
           return listaClientes;
 		
 	}
+	
+	public ClienteVO consultarClientePorCPF(String cpf) {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		ClienteVO cliente = new ClienteVO();
+		
+		String query = "SELECT * FROM CLIENTE WHERE CPF = " + cpf;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				cliente.setId(Integer.parseInt(resultado.getString(1)));
+				cliente.setNome(resultado.getString(2));
+				cliente.setCPF(resultado.getString(3));
+				cliente.setTelefone(resultado.getString(4));
+				cliente.setCNH(resultado.getString(5));
+			}
+			System.out.println(resultado.getString(2));
+		} catch (SQLException erro) {
+			System.out.println("ClienteDAO - Erro ao executar a query do método consultarClientePorCPF");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return cliente;
+		
+	}
 
 }

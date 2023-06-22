@@ -38,7 +38,8 @@ public class ClienteListagem extends JPanel {
 		tabelaClientes.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
 	}
 	
-	private void popularTabelaFuncionarios() {	
+	private void popularTabelaFuncionarios() {
+		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaClientes.getModel();
 		for (ClienteVO cliente : listaClientes) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
@@ -71,17 +72,22 @@ public class ClienteListagem extends JPanel {
 				try {
 					listaClientes = (ArrayList<ClienteVO>) clienteController.consultarListaClientes();
 					popularTabelaFuncionarios();
+					
+					if (listaClientes.size() == 0) {
+						JOptionPane.showMessageDialog(null, "Não existem registros de clientes no banco");
+					}
+					
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");
 				}
 				
 			}
 		});
-		btnPesquisar.setBounds(572, 375, 117, 25);
+		btnPesquisar.setBounds(603, 375, 117, 25);
 		add(btnPesquisar);
 		
 		tabelaClientes = new JTable();
-		tabelaClientes.setBounds(26, 81, 663, 252);
+		tabelaClientes.setBounds(26, 81, 694, 252);
 		add(tabelaClientes);
 		
 		btnDeletar = new JButton("Deletar");
@@ -91,12 +97,12 @@ public class ClienteListagem extends JPanel {
 			}
 		});
 		btnDeletar.setEnabled(false);
-		btnDeletar.setBounds(443, 375, 117, 25);
+		btnDeletar.setBounds(474, 375, 117, 25);
 		add(btnDeletar);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(314, 375, 117, 25);
+		btnEditar.setBounds(345, 375, 117, 25);
 		add(btnEditar);
 		
 		tabelaClientes.addMouseListener(new MouseAdapter() {

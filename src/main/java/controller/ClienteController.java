@@ -31,6 +31,10 @@ public class ClienteController {
 		return clienteBO.consultarListaClientes();
 	}
 	
+	public ClienteVO consultarClientePorCPF(String cpf) {
+		return clienteBO.consultarClientePorCPF(cpf);
+	}
+	
 	private boolean validarCamposCadastroClienteForm (ClienteVO cliente) {
 		
 		boolean valido = true;

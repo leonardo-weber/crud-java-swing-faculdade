@@ -61,6 +61,10 @@ public class CarroVO {
 		this.ano = ano;
 	}
 	
+	@Override
+	public String toString() {
+		return marca + " / " + modelo + " / " + ano.substring(0, 4);
+	}
 	
 	
 }

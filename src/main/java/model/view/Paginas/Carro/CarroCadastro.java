@@ -32,9 +32,17 @@ public class CarroCadastro extends JPanel {
 	private JLabel placaLabel;
 	
 	private JButton cadastrarCarroButton;
+	private JButton limparCamposBotao;
 	
 	CarroVO carroVO = new CarroVO();
 	CarroController carroController = new CarroController();
+	
+	public void limparCampos () {
+		marcaTextField.setText("");
+		modeloTextField.setText("");
+		anoTextField.setText("");
+		placaTextField.setText("");
+	}
 	
 	public CarroCadastro() {
 		
@@ -104,6 +112,15 @@ public class CarroCadastro extends JPanel {
 		placaTextField.setColumns(10);
 		placaTextField.setBounds(226, 203, 476, 19);
 		add(placaTextField);
+		
+		limparCamposBotao = new JButton("Limpar campos");
+		limparCamposBotao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparCampos();
+			}
+		});
+		limparCamposBotao.setBounds(420, 351, 282, 25);
+		add(limparCamposBotao);
 
 	}
 

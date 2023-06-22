@@ -8,22 +8,26 @@ import model.vo.ClienteVO;
 
 public class ClienteBO {
 	
-	ClienteDAO ClienteDAO = new ClienteDAO();
+	ClienteDAO clienteDAO = new ClienteDAO();
 	
 	public ClienteVO cadastrarCliente(ClienteVO cliente) {
-		return ClienteDAO.cadastrarCliente(cliente);
+		return clienteDAO.cadastrarCliente(cliente);
 	}
 	
 	public List<ClienteVO> consultarListaClientes() {
-		return ClienteDAO.consultarListaClientes();
+		return clienteDAO.consultarListaClientes();
 	}
 	
 	public boolean deletarCliente(ClienteVO cliente) {
-		return ClienteDAO.deletarCliente(cliente);
+		return clienteDAO.deletarCliente(cliente);
 	}
 
 	public boolean atualizarCliente(ClienteVO cliente) {
-		return ClienteDAO.atualizarCliente(cliente);
+		return clienteDAO.atualizarCliente(cliente);
+	}
+	
+	public ClienteVO consultarClientePorCPF(String cpf) {
+		return clienteDAO.consultarClientePorCPF(cpf);
 	}
 
 }

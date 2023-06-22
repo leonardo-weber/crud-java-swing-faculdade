@@ -37,11 +37,12 @@ public class LocacaoListagem extends JPanel {
 	}
 	
 	private void popularTabelaFuncionarios() {	
+		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaLocacao.getModel();
 		for (LocacaoVO locacao : listaLocacoes) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
-			novaLinhaDaTabela[0] = locacao.getData_inicio();
-			novaLinhaDaTabela[1] = locacao.getData_fim();
+			novaLinhaDaTabela[0] = locacao.getDataInicial();
+			novaLinhaDaTabela[1] = locacao.getDataFinal();
 			novaLinhaDaTabela[2] = locacao.getValor();
 			novaLinhaDaTabela[3] = locacao.getCliente().getNome();
 			novaLinhaDaTabela[4] = locacao.getCarro().getModelo();
@@ -76,21 +77,30 @@ public class LocacaoListagem extends JPanel {
 				
 			}
 		});
-		btnPesquisar.setBounds(572, 375, 117, 25);
+		btnPesquisar.setBounds(603, 375, 117, 25);
 		add(btnPesquisar);
 		
 		tabelaLocacao = new JTable();
-		tabelaLocacao.setBounds(26, 81, 663, 252);
+		tabelaLocacao.setBounds(26, 81, 694, 252);
 		add(tabelaLocacao);
 		
 		btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deletarFuncionario();
+			}
+		});
 		btnDeletar.setEnabled(false);
-		btnDeletar.setBounds(443, 375, 117, 25);
+		btnDeletar.setBounds(474, 375, 117, 25);
 		add(btnDeletar);
 		
 		btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(314, 375, 117, 25);
+		btnEditar.setBounds(345, 375, 117, 25);
 		add(btnEditar);
 		
 		this.inicializarTabela();

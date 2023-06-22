@@ -6,22 +6,22 @@ public class LocacaoVO {
 	private int id;
 	private CarroVO carro;
 	private ClienteVO cliente;
-	private LocalDateTime data_inicio;
-	private LocalDateTime data_fim;
+	private LocalDateTime dataInicial;
+	private LocalDateTime dataFinal;
 	private int valor;
 	
 	public LocacaoVO() {
 		super();
 	}
 	
-	public LocacaoVO(int id, CarroVO carro, ClienteVO cliente, LocalDateTime data_inicio, LocalDateTime data_fim,
+	public LocacaoVO(int id, CarroVO carro, ClienteVO cliente, LocalDateTime dataInicial, LocalDateTime dataFinal,
 			int valor) {
 		super();
 		this.id = id;
 		this.carro = carro;
 		this.cliente = cliente;
-		this.data_inicio = data_inicio;
-		this.data_fim = data_fim;
+		this.dataInicial = dataInicial;
+		this.dataFinal = dataFinal;
 		this.valor = valor;
 	}
 	
@@ -47,20 +47,20 @@ public class LocacaoVO {
 		this.cliente = cliente;
 	}
 	
-	public LocalDateTime getData_inicio() {
-		return data_inicio;
+	public LocalDateTime getDataInicial() {
+		return dataInicial;
 	}
 	
-	public void setData_inicio(LocalDateTime data_inicio) {
-		this.data_inicio = data_inicio;
+	public void setDataInicial(LocalDateTime dataInicial) {
+		this.dataInicial = dataInicial;
 	}
 	
-	public LocalDateTime getData_fim() {
-		return data_fim;
+	public LocalDateTime getDataFinal() {
+		return dataFinal;
 	}
 	
-	public void setData_fim(LocalDateTime data_fim) {
-		this.data_fim = data_fim;
+	public void setDataFinal(LocalDateTime dataFinal) {
+		this.dataFinal = dataFinal;
 	}
 	
 	public int getValor() {
