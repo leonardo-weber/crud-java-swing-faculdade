@@ -1,5 +1,8 @@
 package controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import model.bo.LocacaoBO;
 import model.exception.CampoInvalidoException;
 import model.vo.FuncionarioVO;
@@ -24,6 +27,10 @@ public class LocacaoController {
 	
 	public boolean excluirLocacao(LocacaoVO locacao) {
 		return locacaoBO.deletarLocacao(locacao);
+	}
+	
+	public List<LocacaoVO> consultarListaLocacao () {
+		return locacaoBO.consultarListaLocacao();
 	}
 	
 	private boolean validarCamposCadastroLocacaoForm (LocacaoVO locacao) {

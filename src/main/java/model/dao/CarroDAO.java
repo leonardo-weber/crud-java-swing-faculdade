@@ -100,7 +100,9 @@ public class CarroDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+		
 		ArrayList<CarroVO> listaCarros = new ArrayList<CarroVO>(); 
+		CarroVO carro = new CarroVO();
 		
 
 		String query = "SELECT * FROM CARRO";
@@ -108,7 +110,7 @@ public class CarroDAO {
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				CarroVO carro = new CarroVO();
+				carro.setId(Integer.parseInt(resultado.getString(1)));
 				carro.setMarca(resultado.getString(2));
 				carro.setModelo(resultado.getString(3));
 				carro.setAno(resultado.getString(4));

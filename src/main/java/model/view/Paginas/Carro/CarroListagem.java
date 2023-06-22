@@ -8,11 +8,14 @@ import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+import controller.CarroController;
 import model.bo.CarroBO;
 import model.vo.CarroVO;
 import model.vo.FuncionarioVO;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -20,14 +23,16 @@ public class CarroListagem extends JPanel {
 	
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
+	private JButton btnDeletar;
+	private JButton btnEditar;
 	
-	CarroBO carroBO = new CarroBO();
+	CarroController carroController = new CarroController();
 	
 	private JTable tabelaCarros;
 	private ArrayList<CarroVO> listaCarros; 
 	private String[] colunasTabelas = { "Marca", "Modelo", "Ano", "Placa" } ;
-	private JButton btnDeletar;
-	private JButton btnEditar;
+	
+	private CarroVO carroSelecionado;
 	
 	private void inicializarTabela() {
 		tabelaCarros.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
@@ -45,6 +50,10 @@ public class CarroListagem extends JPanel {
 			model.addRow(novaLinhaDaTabela);
 		}
 	}
+	
+	private boolean deletarCarro () {
+		return carroController.excluirCarro(carroSelecionado);
+	}
 
 	public CarroListagem() {
 		
@@ -60,7 +69,7 @@ public class CarroListagem extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					listaCarros = (ArrayList<CarroVO>) carroBO.consultarListaCarros();
+					listaCarros = (ArrayList<CarroVO>) carroController.consultarListaCarros();
 					popularTabelaFuncionarios();
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");
@@ -68,21 +77,50 @@ public class CarroListagem extends JPanel {
 				
 			}
 		});
+		
 		btnPesquisar.setBounds(572, 375, 117, 25);
 		add(btnPesquisar);
 		
-		tabelaCarros = new JTable();
-		tabelaCarros.setBounds(26, 81, 663, 252);
-		add(tabelaCarros);
-		
 		btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					deletarCarro();
+				} catch (Exception e2) {
+					
+				}
+			}
+		});
 		btnDeletar.setBounds(443, 375, 117, 25);
+		btnDeletar.setEnabled(false);
 		add(btnDeletar);
 		
 		btnEditar = new JButton("Editar");
 		btnEditar.setBounds(314, 375, 117, 25);
+		btnEditar.setEnabled(false);
 		add(btnEditar);
+	
+		tabelaCarros = new JTable();
+		tabelaCarros.setBounds(26, 81, 663, 252);
+		add(tabelaCarros);
 		
+		tabelaCarros.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int indiceSelecionado = tabelaCarros.getSelectedRow();
+
+				if (indiceSelecionado > 0) {
+					btnEditar.setEnabled(true);
+					btnDeletar.setEnabled(true);
+					carroSelecionado = listaCarros.get(indiceSelecionado - 1);
+				} else {
+					btnEditar.setEnabled(false);
+					btnDeletar.setEnabled(false);
+				}
+			}
+		});
+			
 		this.inicializarTabela();
 
 	}

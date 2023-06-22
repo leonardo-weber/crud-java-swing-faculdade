@@ -7,26 +7,32 @@ import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
+import controller.ClienteController;
 import model.bo.ClienteBO;
+import model.vo.CarroVO;
 import model.vo.ClienteVO;
 import model.vo.FuncionarioVO;
 
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
 public class ClienteListagem extends JPanel {
 
 	private JLabel titleLabel;
+	private JButton btnDeletar;
+	private JButton btnEditar;
 	
 	private JTable tabelaClientes;
-	private ArrayList<ClienteVO> clientes; 
+	private ArrayList<ClienteVO> listaClientes; 
 	private String[] colunasTabelas = {"Nome", "CPF", "Telefone", "CNH"};
 	
-	ClienteBO clienteBO = new ClienteBO();
-	private JButton btnEditar;
-	private JButton btnAtualizar;
+	ClienteController clienteController = new ClienteController();
+		
+	private ClienteVO clienteSelecionado;
 	
 	private void inicializarTabela() {
 		tabelaClientes.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
@@ -34,7 +40,7 @@ public class ClienteListagem extends JPanel {
 	
 	private void popularTabelaFuncionarios() {	
 		DefaultTableModel model = (DefaultTableModel) tabelaClientes.getModel();
-		for (ClienteVO cliente : clientes) {
+		for (ClienteVO cliente : listaClientes) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
 			novaLinhaDaTabela[0] = cliente.getNome();
 			novaLinhaDaTabela[1] = cliente.getCPF();
@@ -43,6 +49,10 @@ public class ClienteListagem extends JPanel {
 
 			model.addRow(novaLinhaDaTabela);
 		}
+	}
+	
+	private boolean deletarCliente () {
+		return clienteController.excluirCliente(clienteSelecionado);
 	}
 
 	public ClienteListagem() {
@@ -59,7 +69,7 @@ public class ClienteListagem extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					clientes = (ArrayList<ClienteVO>) clienteBO.consultarListaClientes();
+					listaClientes = (ArrayList<ClienteVO>) clienteController.consultarListaClientes();
 					popularTabelaFuncionarios();
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");
@@ -74,13 +84,37 @@ public class ClienteListagem extends JPanel {
 		tabelaClientes.setBounds(26, 81, 663, 252);
 		add(tabelaClientes);
 		
-		btnEditar = new JButton("Deletar");
-		btnEditar.setBounds(443, 375, 117, 25);
+		btnDeletar = new JButton("Deletar");
+		btnDeletar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deletarCliente();
+			}
+		});
+		btnDeletar.setEnabled(false);
+		btnDeletar.setBounds(443, 375, 117, 25);
+		add(btnDeletar);
+		
+		btnEditar = new JButton("Editar");
+		btnEditar.setEnabled(false);
+		btnEditar.setBounds(314, 375, 117, 25);
 		add(btnEditar);
 		
-		btnAtualizar = new JButton("Editar");
-		btnAtualizar.setBounds(314, 375, 117, 25);
-		add(btnAtualizar);
+		tabelaClientes.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int indiceSelecionado = tabelaClientes.getSelectedRow();
+
+				if (indiceSelecionado > 0) {
+					btnEditar.setEnabled(true);
+					btnDeletar.setEnabled(true);
+					clienteSelecionado = listaClientes.get(indiceSelecionado - 1);
+				} else {
+					btnEditar.setEnabled(false);
+					btnDeletar.setEnabled(false);
+				}
+			}
+		});
 		
 		this.inicializarTabela();
 

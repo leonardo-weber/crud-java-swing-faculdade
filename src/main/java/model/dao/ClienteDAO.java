@@ -101,7 +101,9 @@ public class ClienteDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+		
 		ArrayList<ClienteVO> listaClientes = new ArrayList<ClienteVO>(); 
+		ClienteVO cliente = new ClienteVO();
 		
 
 		String query = "SELECT * FROM CLIENTE";
@@ -109,7 +111,7 @@ public class ClienteDAO {
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				ClienteVO cliente = new ClienteVO();
+				cliente.setId(Integer.parseInt(resultado.getString(1)));
 				cliente.setNome(resultado.getString(2));
 				cliente.setCPF(resultado.getString(3));
 				cliente.setTelefone(resultado.getString(4));

@@ -127,7 +127,9 @@ public class FuncionarioDAO {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
+		
 		ArrayList<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>(); 
+		FuncionarioVO funcionario = new FuncionarioVO();
 		
 
 		String query = "SELECT * FROM FUNCIONARIO";
@@ -135,7 +137,7 @@ public class FuncionarioDAO {
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				FuncionarioVO funcionario = new FuncionarioVO();
+				funcionario.setId(Integer.parseInt(resultado.getString(1)));
 				funcionario.setNome(resultado.getString(2));
 				funcionario.setSenha(resultado.getString(3));
 				funcionario.setTelefone(resultado.getString(4));

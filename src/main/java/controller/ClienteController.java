@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import model.bo.ClienteBO;
 import model.exception.CampoInvalidoException;
 import model.vo.ClienteVO;
@@ -23,6 +25,10 @@ public class ClienteController {
 	
 	public boolean excluirCliente(ClienteVO cliente) {
 		return clienteBO.deletarCliente(cliente);
+	}
+	
+	public List<ClienteVO> consultarListaClientes () {
+		return clienteBO.consultarListaClientes();
 	}
 	
 	private boolean validarCamposCadastroClienteForm (ClienteVO cliente) {

@@ -85,9 +85,7 @@ public class CarroCadastro extends JPanel {
 				carroVO.setPlaca(placaTextField.getText());
 				carroVO.setAno(anoTextField.getText());
 				
-				
-				System.out.println();
-				
+							
 				try {
 					carroController.cadastrarCarro(carroVO);
 				} catch (Exception e2) {

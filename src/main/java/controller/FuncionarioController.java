@@ -1,5 +1,7 @@
 package controller; 
 
+import java.util.List;
+
 import model.bo.FuncionarioBO;
 import model.vo.ClienteVO;
 import model.vo.FuncionarioVO;
@@ -25,10 +27,13 @@ public class FuncionarioController {
 		return funcionarioBO.deletarFuncionario(funcionario);
 	}
 	
+	public List<FuncionarioVO> consultarListaFuncionarios () {
+		return funcionarioBO.consultarListaFuncionarios();
+	}
+	
 	private boolean validarCamposCadastroFuncionarioForm (FuncionarioVO funcionario) {
 		
 		boolean valido = true;
-		String campoInvalido = null;
 		
 		boolean nome = ValidarCamposFormulario.validacao(funcionario.getNome());
 		boolean telefone = ValidarCamposFormulario.validacao(funcionario.getTelefone());

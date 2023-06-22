@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.List;
+
 import model.bo.CarroBO;
 import model.exception.CampoInvalidoException;
 import model.vo.CarroVO;
@@ -22,6 +24,10 @@ public class CarroController {
 	
 	public boolean excluirCarro(CarroVO carro) {
 		return carroBO.deletarCarro(carro);
+	}
+	
+	public List<CarroVO> consultarListaCarros() {
+		return carroBO.consultarListaCarros();
 	}
 		
 	private boolean validarCamposCadastroCarroForm (CarroVO carro) {
