@@ -54,26 +54,26 @@ public class CarroCadastro extends JPanel {
 		add(modeloLabel);
 		
 		anoLabel = new JLabel("Ano de fabricação");
-		anoLabel.setBounds(26, 174, 70, 15);
+		anoLabel.setBounds(26, 174, 165, 15);
 		add(anoLabel);
 		
 		marcaTextField = new JTextField();
-		marcaTextField.setBounds(118, 104, 584, 19);
+		marcaTextField.setBounds(226, 104, 476, 19);
 		add(marcaTextField);
 		marcaTextField.setColumns(10);
 		
 		modeloTextField = new JTextField();
-		modeloTextField.setBounds(118, 138, 584, 19);
+		modeloTextField.setBounds(226, 138, 476, 19);
 		modeloTextField.setColumns(10);
 		add(modeloTextField);
 		
 		anoTextField = new JTextField();
-		anoTextField.setBounds(118, 172, 584, 19);
+		anoTextField.setBounds(226, 172, 476, 19);
 		anoTextField.setColumns(10);
 		add(anoTextField);
 		
 		placaLabel = new JLabel("Placa");
-		placaLabel.setBounds(26, 213, 70, 15);
+		placaLabel.setBounds(26, 205, 70, 15);
 		add(placaLabel);
 		
 		cadastrarCarroButton = new JButton("Cadastrar carro");
@@ -99,12 +99,12 @@ public class CarroCadastro extends JPanel {
 			}
 		});
 		
-		cadastrarCarroButton.setBounds(420, 396, 282, 25);
+		cadastrarCarroButton.setBounds(420, 388, 282, 25);
 		add(cadastrarCarroButton);
 		
 		placaTextField = new JTextField();
 		placaTextField.setColumns(10);
-		placaTextField.setBounds(118, 211, 584, 19);
+		placaTextField.setBounds(226, 203, 476, 19);
 		add(placaTextField);
 
 	}

@@ -4,7 +4,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.vo.CarroVO;
+import model.vo.ClienteVO;
 import model.vo.FuncionarioVO;
 
 public class FuncionarioDAO {
@@ -116,6 +120,39 @@ public class FuncionarioDAO {
 		
 		return funcionario;
 	
+	}
+	
+	public List<FuncionarioVO> consultarListaFuncionarios () {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>(); 
+		
+
+		String query = "SELECT * FROM FUNCIONARIO";
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				FuncionarioVO funcionario = new FuncionarioVO();
+				funcionario.setNome(resultado.getString(2));
+				funcionario.setSenha(resultado.getString(3));
+				funcionario.setTelefone(resultado.getString(4));
+				funcionario.setCPF(resultado.getString(5));
+				listaFuncionarios.add(funcionario);
+			}
+		} catch (SQLException erro) {
+			System.out.println("FuncionarioDAO - Erro ao executar a query do método consultarListaFuncionarios");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return listaFuncionarios;
+		
 	}
 
 }

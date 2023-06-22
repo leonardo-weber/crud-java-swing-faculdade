@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
+import model.vo.CarroVO;
 import model.vo.ClienteVO;
 
 public class ClienteDAO {
@@ -91,7 +94,39 @@ public class ClienteDAO {
 		
 		return retorno;
 	
+	}
 	
+	public List<ClienteVO> consultarListaClientes () {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<ClienteVO> listaClientes = new ArrayList<ClienteVO>(); 
+		
+
+		String query = "SELECT * FROM CLIENTE";
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				ClienteVO cliente = new ClienteVO();
+				cliente.setNome(resultado.getString(2));
+				cliente.setCPF(resultado.getString(3));
+				cliente.setTelefone(resultado.getString(4));
+				cliente.setCNH(resultado.getString(5));
+				listaClientes.add(cliente);
+			}
+		} catch (SQLException erro) {
+			System.out.println("ClienteDAO - Erro ao executar a query do método consultarListaClientes");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return listaClientes;
+		
 	}
 
 }

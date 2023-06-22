@@ -1,6 +1,9 @@
 package model.bo;
 
+import java.util.List;
+
 import model.dao.ClienteDAO;
+import model.vo.CarroVO;
 import model.vo.ClienteVO;
 
 public class ClienteBO {
@@ -9,6 +12,10 @@ public class ClienteBO {
 	
 	public ClienteVO cadastrarCliente(ClienteVO cliente) {
 		return ClienteDAO.cadastrarCliente(cliente);
+	}
+	
+	public List<ClienteVO> consultarListaClientes() {
+		return ClienteDAO.consultarListaClientes();
 	}
 	
 	public boolean deletarCliente(ClienteVO cliente) {

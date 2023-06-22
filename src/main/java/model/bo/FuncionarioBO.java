@@ -1,6 +1,9 @@
 package model.bo;
 
+import java.util.List;
+
 import model.dao.FuncionarioDAO;
+import model.vo.CarroVO;
 import model.vo.FuncionarioVO;
 
 public class FuncionarioBO {
@@ -9,6 +12,10 @@ public class FuncionarioBO {
 	
 	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.cadastrarFuncionario(funcionario); 
+	}
+	
+	public List<FuncionarioVO> consultarListaFuncionarios() {
+		return FuncionarioDAO.consultarListaFuncionarios();
 	}
 	
 	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {

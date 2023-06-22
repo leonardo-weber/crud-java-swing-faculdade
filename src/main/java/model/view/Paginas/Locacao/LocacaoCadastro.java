@@ -86,7 +86,7 @@ public class LocacaoCadastro extends JPanel {
 				
 			}
 		});
-		cadastrarLocacaoButton.setBounds(420, 391, 282, 25);
+		cadastrarLocacaoButton.setBounds(420, 388, 282, 25);
 		add(cadastrarLocacaoButton);
 		
 		modeloTextField = new JTextField();

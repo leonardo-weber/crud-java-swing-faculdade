@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.vo.CarroVO;
 
@@ -91,6 +93,39 @@ public class CarroDAO {
 		
 		return retorno;
 	
+	}
+	
+	public List<CarroVO> consultarListaCarros() {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		ArrayList<CarroVO> listaCarros = new ArrayList<CarroVO>(); 
+		
+
+		String query = "SELECT * FROM CARRO";
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				CarroVO carro = new CarroVO();
+				carro.setMarca(resultado.getString(2));
+				carro.setModelo(resultado.getString(3));
+				carro.setAno(resultado.getString(4));
+				carro.setPlaca(resultado.getString(5));
+				listaCarros.add(carro);
+			}
+		} catch (SQLException erro) {
+			System.out.println("CarroDA0 - Erro ao executar a query do método consultarListaCarros");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return listaCarros;
+		
 	}
 
 }

@@ -2,15 +2,25 @@ package model.view.Paginas.Locacao;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.UIManager;
+
+import model.bo.LocacaoBO;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class LocacaoListagem extends JPanel {
 
 	private JLabel titleLabel;
+	private JButton btnNewButton;
+	private JTable tabelaLocacao;
 	
-	private JButton deleteButton;
-	private JButton editButton;
+	private JButton btnEditar;
+	private JButton btnAtualizar;
+	LocacaoBO locacaoBO = new LocacaoBO();
 
 	public LocacaoListagem() {
 		
@@ -21,14 +31,32 @@ public class LocacaoListagem extends JPanel {
 		titleLabel.setBounds(26, 11, 646, 58);
 		add(titleLabel);
 		
+		btnNewButton = new JButton("Pesquisar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			
+				try {
+					locacaoBO.consultarListaLocacao();
+				} catch (Exception e2) {
+					JOptionPane.showMessageDialog(null, "erro");
+				}
+				
+			}
+		});
+		btnNewButton.setBounds(572, 375, 117, 25);
+		add(btnNewButton);
 		
-		deleteButton = new JButton("Deletar");
-		deleteButton.setBounds(40, 448, 302, 25);
-		add(deleteButton);
+		tabelaLocacao = new JTable();
+		tabelaLocacao.setBounds(26, 81, 663, 252);
+		add(tabelaLocacao);
 		
-		editButton = new JButton("Editar");
-		editButton.setBounds(406, 448, 282, 25);
-		add(editButton);
+		btnEditar = new JButton("Deletar");
+		btnEditar.setBounds(443, 375, 117, 25);
+		add(btnEditar);
+		
+		btnAtualizar = new JButton("Editar");
+		btnAtualizar.setBounds(314, 375, 117, 25);
+		add(btnAtualizar);
 
 	}
 

@@ -44,11 +44,6 @@ public class TelaPrincipal extends JFrame {
 	private LocacaoCadastro cadastroDeLocacao = new LocacaoCadastro();
 	private LocacaoListagem listagemDeLocacao = new LocacaoListagem();
 	
-	
-
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -62,9 +57,6 @@ public class TelaPrincipal extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
 	public TelaPrincipal() {
 		
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

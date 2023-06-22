@@ -1,6 +1,9 @@
 package model.bo;
 
+import java.util.List;
+
 import model.dao.LocacaoDAO;
+import model.vo.FuncionarioVO;
 import model.vo.LocacaoVO;
 
 public class LocacaoBO {
@@ -9,6 +12,10 @@ public class LocacaoBO {
 	
 	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) {
 		return LocacaoDAO.cadastrarLocacao(locacao);
+	}
+	
+	public List<LocacaoVO> consultarListaLocacao() {
+		return LocacaoDAO.consultarListaLocacao();
 	}
 	
 	public boolean deletarLocacao(LocacaoVO locacao) {

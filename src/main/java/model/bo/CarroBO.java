@@ -1,5 +1,7 @@
 package model.bo;
 
+import java.util.List;
+
 import model.dao.CarroDAO;
 import model.vo.CarroVO;
 
@@ -9,6 +11,10 @@ public class CarroBO {
 	
 	public CarroVO cadastrarCarro(CarroVO carro) {
 		return CarroDAO.cadastrarCarro(carro);
+	}
+	
+	public List<CarroVO> consultarListaCarros() {
+		return CarroDAO.consultarListaCarros();
 	}
 	
 	public boolean deletarCarro(CarroVO carro) {
