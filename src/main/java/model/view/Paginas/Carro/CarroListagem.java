@@ -59,6 +59,20 @@ public class CarroListagem extends JPanel {
 	private boolean deletarCarro () {
 		return carroController.excluirCarro(carroSelecionado);
 	}
+	
+	private void pesquisarListaCarros () {
+		try {
+			listaCarros = (ArrayList<CarroVO>) carroController.consultarListaCarros();
+			popularTabelaFuncionarios();
+			
+			if (listaCarros.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Não existem registros de carros no banco");
+			}
+			
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
+	}
 
 	public CarroListagem() {
 		
@@ -73,19 +87,7 @@ public class CarroListagem extends JPanel {
 		btnPesquisar.setBounds(603, 375, 117, 25);
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					listaCarros = (ArrayList<CarroVO>) carroController.consultarListaCarros();
-					popularTabelaFuncionarios();
-					
-					if (listaCarros.size() == 0) {
-						JOptionPane.showMessageDialog(null, "Não existem registros de carros no banco");
-					}
-					
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				pesquisarListaCarros();
 			}
 		});
 		add(btnPesquisar);

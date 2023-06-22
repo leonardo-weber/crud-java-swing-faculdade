@@ -31,7 +31,7 @@ public class FuncionarioController {
 		return funcionarioBO.consultarListaFuncionarios();
 	}
 	
-	private boolean validarCamposCadastroFuncionarioForm (FuncionarioVO funcionario) {
+	public boolean validarCamposCadastroFuncionarioForm (FuncionarioVO funcionario) {
 		
 		boolean valido = true;
 		

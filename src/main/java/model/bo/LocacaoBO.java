@@ -26,4 +26,7 @@ public class LocacaoBO {
 		return LocacaoDAO.atualizarLocacao(locacao);
 	}
 
+	public boolean cadastrarDevolucao(LocacaoVO locacao) {
+		return LocacaoDAO.cadastrarDevolucao(locacao);
+	}
 }

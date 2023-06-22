@@ -13,6 +13,7 @@ import model.view.Paginas.Cliente.ClienteListagem;
 import model.view.Paginas.Funcionario.FuncionarioCadastro;
 import model.view.Paginas.Funcionario.FuncionarioListagem;
 import model.view.Paginas.Locacao.LocacaoCadastro;
+import model.view.Paginas.Locacao.LocacaoDevolucao;
 import model.view.Paginas.Locacao.LocacaoListagem;
 
 import java.awt.FlowLayout;
@@ -43,6 +44,7 @@ public class TelaPrincipal extends JFrame {
 	
 	private LocacaoCadastro cadastroDeLocacao = new LocacaoCadastro();
 	private LocacaoListagem listagemDeLocacao = new LocacaoListagem();
+	private LocacaoDevolucao devolucaoDeLocacao = new LocacaoDevolucao();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -130,6 +132,15 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuItemLocacao.add(menuItemLocacaoCadastro);
+		
+		JMenuItem menuItemLocacaoDevolucao = new JMenuItem("Devolução");
+		menuItemLocacaoDevolucao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(devolucaoDeLocacao);
+				revalidate();
+			}
+		});
+		menuItemLocacao.add(menuItemLocacaoDevolucao);
 		
 		JMenu menuItemCliente = new JMenu("Cliente");
 		menuBar.add(menuItemCliente);

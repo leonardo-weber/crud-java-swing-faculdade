@@ -58,7 +58,7 @@ public class LocacaoCadastro extends JPanel {
 	LocacaoVO locacaoVO = new LocacaoVO();
 	LocacaoController locacaoController = new LocacaoController();
 	
-	public void limparCampos () {
+	public void limparCamposForm () {
 		dataInicialTextField.setText("");
 		dataFinalTextField.setText("");
 		valorTextField.setText("");
@@ -72,6 +72,21 @@ public class LocacaoCadastro extends JPanel {
 		nomeClienteTextField.setText(cliente.getNome());
 		telefoneClienteTextField.setText(cliente.getTelefone());
 		cnhClienteTextField.setText(cliente.getCNH());
+	}
+	
+	public void cadastrarLocacao () {
+		locacaoVO.getDataInicial(dataInicialTextField.getText());
+		locacaoVO.getDataFinal(dataFinalTextField.getText());
+		locacaoVO.getCarro(modeloTextField.getText());
+		locacaoVO.getCliente();
+		locacaoVO.getCarro();
+
+		try {
+			 locacaoController.cadastrarLocacao(locacaoVO);
+			 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
 	}
 
 	public LocacaoCadastro() {
@@ -127,21 +142,8 @@ public class LocacaoCadastro extends JPanel {
 		cadastrarLocacaoButton = new JButton("Cadastrar Locação");
 		cadastrarLocacaoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				locacaoVO.getDataInicial(dataInicialTextField.getText());
-				locacaoVO.getDataFinal(dataFinalTextField.getText());
-				locacaoVO.getCarro(modeloTextField.getText());
-				locacaoVO.getCliente();
-				locacaoVO.getCarro();
-
-				try {
-					 locacaoController.cadastrarLocacao(locacaoVO);
-					
-					System.out.println();
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				cadastrarLocacao();
+				limparCamposForm();
 			}
 		});
 		cadastrarLocacaoButton.setBounds(420, 388, 282, 25);
@@ -192,7 +194,7 @@ public class LocacaoCadastro extends JPanel {
 		limparCamposBotao = new JButton("Limpar campos");
 		limparCamposBotao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limparCampos();
+				limparCamposForm();
 			}
 		});
 		limparCamposBotao.setBounds(420, 351, 282, 25);

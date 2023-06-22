@@ -56,6 +56,19 @@ public class FuncionarioListagem extends JPanel {
 		return funcionarioController.excluirFuncionario(funcionarioSelecionado);
 	}
 	
+	private void pesquisarListaFuncionarios () {
+		try {
+			listaFuncionarios = (ArrayList<FuncionarioVO>) funcionarioController.consultarListaFuncionarios();
+			popularTabelaFuncionarios();
+			
+			if (listaFuncionarios.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Não existem registros de funcionários no banco");
+			}
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
+	}
+	
 
 	public FuncionarioListagem() {
 		
@@ -69,18 +82,7 @@ public class FuncionarioListagem extends JPanel {
 		btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					listaFuncionarios = (ArrayList<FuncionarioVO>) funcionarioController.consultarListaFuncionarios();
-					popularTabelaFuncionarios();
-					
-					if (listaFuncionarios.size() == 0) {
-						JOptionPane.showMessageDialog(null, "Não existem registros de funcionários no banco");
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				pesquisarListaFuncionarios();			
 			}
 		});
 		

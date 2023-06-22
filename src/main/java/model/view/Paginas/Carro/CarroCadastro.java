@@ -37,11 +37,26 @@ public class CarroCadastro extends JPanel {
 	CarroVO carroVO = new CarroVO();
 	CarroController carroController = new CarroController();
 	
-	public void limparCampos () {
+	public void limparCamposForm () {
 		marcaTextField.setText("");
 		modeloTextField.setText("");
 		anoTextField.setText("");
 		placaTextField.setText("");
+	}
+	
+	public void cadastrarCarro () {
+		carroVO.setMarca(marcaTextField.getText());
+		carroVO.setModelo(modeloTextField.getText());
+		carroVO.setPlaca(placaTextField.getText());
+		carroVO.setAno(anoTextField.getText());
+		
+					
+		try {
+			carroController.cadastrarCarro(carroVO);
+			JOptionPane.showMessageDialog(null, "Carro cadastrado com sucesso");
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
 	}
 	
 	public CarroCadastro() {
@@ -87,19 +102,8 @@ public class CarroCadastro extends JPanel {
 		cadastrarCarroButton = new JButton("Cadastrar carro");
 		cadastrarCarroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				carroVO.setMarca(marcaTextField.getText());
-				carroVO.setModelo(modeloTextField.getText());
-				carroVO.setPlaca(placaTextField.getText());
-				carroVO.setAno(anoTextField.getText());
-				
-							
-				try {
-					carroController.cadastrarCarro(carroVO);
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				cadastrarCarro();
+				limparCamposForm();
 				
 				
 			}
@@ -116,7 +120,7 @@ public class CarroCadastro extends JPanel {
 		limparCamposBotao = new JButton("Limpar campos");
 		limparCamposBotao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limparCampos();
+				limparCamposForm();
 			}
 		});
 		limparCamposBotao.setBounds(420, 351, 282, 25);

@@ -33,6 +33,10 @@ public class LocacaoController {
 		return locacaoBO.consultarListaLocacao();
 	}
 	
+	public boolean cadastrarDevolucao(LocacaoVO locacao) {
+		return locacaoBO.cadastrarDevolucao(locacao);
+	}
+	
 	private boolean validarCamposCadastroLocacaoForm (LocacaoVO locacao) {
 		
 		boolean valido = true;

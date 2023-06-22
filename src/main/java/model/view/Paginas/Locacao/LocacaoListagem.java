@@ -54,6 +54,15 @@ public class LocacaoListagem extends JPanel {
 	private boolean deletarFuncionario () {
 		return locacaoController.excluirLocacao(locacaoSelecionada);
 	}
+	
+	private void pesquisarListaLocacoes () {
+		try {
+			listaLocacoes = (ArrayList<LocacaoVO>) locacaoController.consultarListaLocacao();
+			popularTabelaFuncionarios();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
+	}
 
 	public LocacaoListagem() {
 		
@@ -67,14 +76,7 @@ public class LocacaoListagem extends JPanel {
 		btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-				try {
-					listaLocacoes = (ArrayList<LocacaoVO>) locacaoController.consultarListaLocacao();
-					popularTabelaFuncionarios();
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				pesquisarListaLocacoes();
 			}
 		});
 		btnPesquisar.setBounds(603, 375, 117, 25);

@@ -55,6 +55,20 @@ public class ClienteListagem extends JPanel {
 	private boolean deletarCliente () {
 		return clienteController.excluirCliente(clienteSelecionado);
 	}
+	
+	public void pesquisarListaClientes () {
+		try {
+			listaClientes = (ArrayList<ClienteVO>) clienteController.consultarListaClientes();
+			popularTabelaFuncionarios();
+			
+			if (listaClientes.size() == 0) {
+				JOptionPane.showMessageDialog(null, "Não existem registros de clientes no banco");
+			}
+			
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
+	}
 
 	public ClienteListagem() {
 		
@@ -68,19 +82,7 @@ public class ClienteListagem extends JPanel {
 		JButton btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					listaClientes = (ArrayList<ClienteVO>) clienteController.consultarListaClientes();
-					popularTabelaFuncionarios();
-					
-					if (listaClientes.size() == 0) {
-						JOptionPane.showMessageDialog(null, "Não existem registros de clientes no banco");
-					}
-					
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				pesquisarListaClientes();			
 			}
 		});
 		btnPesquisar.setBounds(603, 375, 117, 25);
