@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class LocacaoDAO {
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
 		try {
-			statement.setTimestamp(1, Timestamp.valueOf(locacao.getData_inicio()));
-			statement.setTimestamp(2, Timestamp.valueOf(locacao.getData_fim()));
+			statement.setTimestamp(1, Timestamp.valueOf(locacao.getDataInicial()));
+			statement.setTimestamp(2, Timestamp.valueOf(locacao.getDataFinal()));
 			statement.setInt(3, locacao.getValor());
 			statement.setInt(4,  locacao.getCarro().getId());
 			statement.setInt(5,  locacao.getCliente().getId());
@@ -76,10 +77,12 @@ public class LocacaoDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE LOCACAO SET DATA_INICIO = '" + locacao.getData_inicio()
-				+ "', DATA_FIM = '" + locacao.getData_fim()
+		String query = "UPDATE LOCACAO SET DATA_INICIO = '" + locacao.getDataInicial()
+				+ "', DATA_FIM = '" + locacao.getDataFinal()
 				+ "', MODELO = " + locacao.getCarro()
 				+ "', VALOR = " + locacao.getValor()
+				+ "', IDCARRO = " + locacao.getCarro().getId()
+				+ "', IDCLIENTE = " + locacao.getCliente().getId()
 				+ "' WHERE IDLOCACAO = " + locacao.getId();
 		 
 		try {
@@ -112,11 +115,10 @@ public List<LocacaoVO> consultarListaLocacao () {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
 				LocacaoVO locacao = new LocacaoVO();
-				System.out.println(resultado.getString(1)); 
-				System.out.println(resultado.getString(2));
-				System.out.println(resultado.getString(3));
-				System.out.println(resultado.getString(4));
-				System.out.println(resultado.getString(5));
+				locacao.setId(Integer.parseInt(resultado.getString(1)));
+				locacao.setDataInicial(LocalDateTime.parse(resultado.getString(4)));
+				locacao.setDataFinal(LocalDateTime.parse(resultado.getString(5)));
+				locacao.setValor(Integer.parseInt(resultado.getString(6)));
 			}
 		} catch (SQLException erro) {
 			System.out.println("LocacaoDAO - Erro ao executar a query do método consultarListaLocacao");

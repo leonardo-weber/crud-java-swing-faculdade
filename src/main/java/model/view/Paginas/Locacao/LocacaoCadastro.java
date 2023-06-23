@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.text.MaskFormatter;
 
 import controller.CarroController;
 import controller.ClienteController;
@@ -17,15 +18,18 @@ import java.awt.event.ActionListener;
 import java.util.List;
 import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 
 public class LocacaoCadastro extends JPanel {
 	
 	private JTextField dataInicialTextField;
 	private JTextField dataFinalTextField;
 	private JTextField valorTextField;
-	private JTextField cpfClienteTextField;
+	private JFormattedTextField cpfClienteTextField;
 	
 	private JTextField nomeClienteTextField;
 	private JTextField telefoneClienteTextField;
@@ -58,6 +62,8 @@ public class LocacaoCadastro extends JPanel {
 	LocacaoVO locacaoVO = new LocacaoVO();
 	LocacaoController locacaoController = new LocacaoController();
 	
+	private MaskFormatter mascaraCPF;
+	
 	public void limparCamposForm () {
 		dataInicialTextField.setText("");
 		dataFinalTextField.setText("");
@@ -75,6 +81,13 @@ public class LocacaoCadastro extends JPanel {
 	}
 	
 	public void cadastrarLocacao () {
+		
+		try {
+			String cpfSemMascara = (String)  mascaraCPF.stringToValue(cpfClienteTextField.getText());
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE); 
+		}
+		
 		locacaoVO.getDataInicial(dataInicialTextField.getText());
 		locacaoVO.getDataFinal(dataFinalTextField.getText());
 		locacaoVO.getCarro(modeloTextField.getText());
@@ -93,6 +106,14 @@ public class LocacaoCadastro extends JPanel {
 		
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
+		
+		try {
+			mascaraCPF = new MaskFormatter("###.###.###-##");
+		} catch (ParseException e1) {
+			e1.printStackTrace();
+		}
+		
+		mascaraCPF.setValueContainsLiteralCharacters(false);
 		
 		listaCarros = carroController.consultarListaCarros();
 				
@@ -176,7 +197,7 @@ public class LocacaoCadastro extends JPanel {
 		cnhClienteTextField.setBounds(190, 394, 107, 19);
 		add(cnhClienteTextField);
 		
-		cpfClienteTextField = new JTextField();
+		cpfClienteTextField = new JFormattedTextField(mascaraCPF);
 		cpfClienteTextField.setColumns(10);
 		cpfClienteTextField.setBounds(226, 242, 476, 19);
 		add(cpfClienteTextField);
