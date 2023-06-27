@@ -23,21 +23,20 @@ public class FuncionarioListagem extends JPanel {
 
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
-	private JButton btnDeletar;
 	private JButton btnEditar;
 	
 	FuncionarioController funcionarioController = new FuncionarioController();
 	
 	private JTable tabelaFuncionarios;
 	private ArrayList<FuncionarioVO> listaFuncionarios; 
-	private String[] colunasTabelas = { "Nome", "Senha", "Telefone", "CPF" } ;
+	private String[] colunasTabelas = { "Nome", "Senha", "Telefone", "CPF", "Sexo", "Data Nascimento" } ;
 	
 	private FuncionarioVO funcionarioSelecionado;
 		
 	private void inicializarTabela() {
 		tabelaFuncionarios.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
 	}
-	
+	 
 	private void popularTabelaFuncionarios() {	
 		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaFuncionarios.getModel();
@@ -50,10 +49,6 @@ public class FuncionarioListagem extends JPanel {
 
 			model.addRow(novaLinhaDaTabela);
 		}
-	}
-	
-	private boolean deletarFuncionario () {
-		return funcionarioController.excluirFuncionario(funcionarioSelecionado);
 	}
 	
 	private void pesquisarListaFuncionarios () {
@@ -93,19 +88,9 @@ public class FuncionarioListagem extends JPanel {
 		tabelaFuncionarios.setBounds(26, 81, 694, 252);
 		add(tabelaFuncionarios);
 		
-		btnDeletar = new JButton("Deletar");
-		btnDeletar.setEnabled(false);
-		btnDeletar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deletarFuncionario();
-			}
-		});
-		btnDeletar.setBounds(474, 375, 117, 25);
-		add(btnDeletar);
-		
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(345, 375, 117, 25);
+		btnEditar.setBounds(468, 375, 117, 25);
 		add(btnEditar);
 		
 		tabelaFuncionarios.addMouseListener(new MouseAdapter() {
@@ -116,11 +101,9 @@ public class FuncionarioListagem extends JPanel {
 
 				if (indiceSelecionado > 0) {
 					btnEditar.setEnabled(true);
-					btnDeletar.setEnabled(true);
 					funcionarioSelecionado = listaFuncionarios.get(indiceSelecionado - 1);
 				} else {
 					btnEditar.setEnabled(false);
-					btnDeletar.setEnabled(false);
 				}
 			}
 		});

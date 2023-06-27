@@ -26,8 +26,8 @@ import java.text.ParseException;
 
 public class LocacaoCadastro extends JPanel {
 	
-	private JTextField dataInicialTextField;
-	private JTextField dataFinalTextField;
+	private JFormattedTextField dataInicialTextField;
+	private JFormattedTextField dataFinalTextField;
 	private JTextField valorTextField;
 	private JFormattedTextField cpfClienteTextField;
 	
@@ -63,6 +63,7 @@ public class LocacaoCadastro extends JPanel {
 	LocacaoController locacaoController = new LocacaoController();
 	
 	private MaskFormatter mascaraCPF;
+	private MaskFormatter mascaraData;
 	
 	public void limparCamposForm () {
 		dataInicialTextField.setText("");
@@ -78,7 +79,7 @@ public class LocacaoCadastro extends JPanel {
 		nomeClienteTextField.setText(cliente.getNome());
 		telefoneClienteTextField.setText(cliente.getTelefone());
 		cnhClienteTextField.setText(cliente.getCNH());
-	}
+	} 
 	
 	public void cadastrarLocacao () {
 		
@@ -88,8 +89,8 @@ public class LocacaoCadastro extends JPanel {
 			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE); 
 		}
 		
-		locacaoVO.getDataInicial(dataInicialTextField.getText());
-		locacaoVO.getDataFinal(dataFinalTextField.getText());
+		locacaoVO.getDataPrevistaDevolucao(dataInicialTextField.getText());
+		locacaoVO.getDataEfetivaDevolucao(dataFinalTextField.getText());
 		locacaoVO.getCarro(modeloTextField.getText());
 		locacaoVO.getCliente();
 		locacaoVO.getCarro();
@@ -109,11 +110,13 @@ public class LocacaoCadastro extends JPanel {
 		
 		try {
 			mascaraCPF = new MaskFormatter("###.###.###-##");
+			mascaraData = new MaskFormatter("##/##/####");
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 		
 		mascaraCPF.setValueContainsLiteralCharacters(false);
+		mascaraData.setValueContainsLiteralCharacters(false);
 		
 		listaCarros = carroController.consultarListaCarros();
 				
@@ -133,12 +136,12 @@ public class LocacaoCadastro extends JPanel {
 		valorLabel.setBounds(26, 174, 70, 15);
 		add(valorLabel);
 		
-		dataInicialTextField = new JTextField();
+		dataInicialTextField = new JFormattedTextField(mascaraData);
 		dataInicialTextField.setBounds(226, 104, 476, 19);
 		add(dataInicialTextField);
 		dataInicialTextField.setColumns(10);
 		
-		dataFinalTextField = new JTextField();
+		dataFinalTextField = new JFormattedTextField(mascaraData);
 		dataFinalTextField.setBounds(226, 138, 476, 19);
 		dataFinalTextField.setColumns(10);
 		add(dataFinalTextField);

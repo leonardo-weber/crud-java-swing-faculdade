@@ -30,7 +30,7 @@ public class CarroController {
 		return carroBO.consultarListaCarros();
 	}
 		
-	private boolean validarCamposCadastroCarroForm (CarroVO carro) {
+	public boolean validarCamposCadastroCarroForm (CarroVO carro) {
 		
 		boolean valido = true;
 		
@@ -38,8 +38,9 @@ public class CarroController {
 		boolean ano = ValidarCamposFormulario.validacao(carro.getAno());
 		boolean modelo = ValidarCamposFormulario.validacao(carro.getModelo());
 		boolean placa = ValidarCamposFormulario.validacao(carro.getPlaca());
+		boolean cor = ValidarCamposFormulario.validacao(carro.getCor());
 		
-		boolean[] campos = { marca, ano, modelo, placa };
+		boolean[] campos = { marca, ano, modelo, placa, cor };
 				
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {

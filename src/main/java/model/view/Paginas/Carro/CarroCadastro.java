@@ -17,6 +17,8 @@ import model.vo.CarroVO;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class CarroCadastro extends JPanel {
 
@@ -24,12 +26,14 @@ public class CarroCadastro extends JPanel {
 	private JTextField modeloTextField;
 	private JTextField anoTextField;
 	private JTextField placaTextField;
+	private JTextField corTextField;
 	
 	private JLabel titleLabel;
 	private JLabel marcaLabel;
 	private JLabel modeloLabel;
 	private JLabel anoLabel;
 	private JLabel placaLabel;
+	private JLabel corLabel;
 	
 	private JButton cadastrarCarroButton;
 	private JButton limparCamposBotao;
@@ -42,14 +46,16 @@ public class CarroCadastro extends JPanel {
 		modeloTextField.setText("");
 		anoTextField.setText("");
 		placaTextField.setText("");
+		corTextField.setText("");
 	}
 	
 	public void cadastrarCarro () {
+		
 		carroVO.setMarca(marcaTextField.getText());
 		carroVO.setModelo(modeloTextField.getText());
 		carroVO.setPlaca(placaTextField.getText());
 		carroVO.setAno(anoTextField.getText());
-		
+		carroVO.setCor(corTextField.getText());
 					
 		try {
 			carroController.cadastrarCarro(carroVO);
@@ -81,23 +87,62 @@ public class CarroCadastro extends JPanel {
 		add(anoLabel);
 		
 		marcaTextField = new JTextField();
+		marcaTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		});
 		marcaTextField.setBounds(226, 104, 476, 19);
 		add(marcaTextField);
 		marcaTextField.setColumns(10);
 		
 		modeloTextField = new JTextField();
+		modeloTextField.addActionListener(new ActionListener() {
+			public void keyTyped(KeyEvent e) {
+			}
+		});
 		modeloTextField.setBounds(226, 138, 476, 19);
 		modeloTextField.setColumns(10);
 		add(modeloTextField);
 		
 		anoTextField = new JTextField();
+		anoTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		});
 		anoTextField.setBounds(226, 172, 476, 19);
 		anoTextField.setColumns(10);
 		add(anoTextField);
 		
+		corTextField = new JTextField();
+		corTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				
+			}
+		});
+		corTextField.setColumns(10);
+		corTextField.setBounds(226, 234, 476, 19);
+		add(corTextField);
+		
+		corLabel = new JLabel("Cor");
+		corLabel.setBounds(26, 232, 70, 15);
+		add(corLabel);
+		
 		placaLabel = new JLabel("Placa");
 		placaLabel.setBounds(26, 205, 70, 15);
 		add(placaLabel);
+		
+		placaTextField = new JTextField();
+		placaTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		});
+		placaTextField.setColumns(10);
+		placaTextField.setBounds(226, 203, 476, 19);
+		add(placaTextField);
 		
 		cadastrarCarroButton = new JButton("Cadastrar carro");
 		cadastrarCarroButton.addActionListener(new ActionListener() {
@@ -111,12 +156,7 @@ public class CarroCadastro extends JPanel {
 		
 		cadastrarCarroButton.setBounds(420, 388, 282, 25);
 		add(cadastrarCarroButton);
-		
-		placaTextField = new JTextField();
-		placaTextField.setColumns(10);
-		placaTextField.setBounds(226, 203, 476, 19);
-		add(placaTextField);
-		
+				
 		limparCamposBotao = new JButton("Limpar campos");
 		limparCamposBotao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

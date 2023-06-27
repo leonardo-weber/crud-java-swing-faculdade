@@ -36,10 +36,13 @@ public class FuncionarioController {
 		boolean valido = true;
 		
 		boolean nome = ValidarCamposFormulario.validacao(funcionario.getNome());
+		boolean senha = ValidarCamposFormulario.validacao(funcionario.getSenha());
 		boolean telefone = ValidarCamposFormulario.validacao(funcionario.getTelefone());
 		boolean cpf = ValidarCamposFormulario.validacao(funcionario.getCPF());
+		boolean sexo = ValidarCamposFormulario.validacao(funcionario.getSexo());
+		boolean dataNascimento = ValidarCamposFormulario.validacao(funcionario.getDataNascimento());
 		
-		boolean[] campos = { nome, telefone, cpf };
+		boolean[] campos = { nome, senha, telefone, cpf, sexo, dataNascimento };
 				
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {

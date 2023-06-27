@@ -15,7 +15,7 @@ public class ClienteDAO {
 	
 	public ClienteVO cadastrarCliente(ClienteVO cliente) {
 		
-		String query ="INSERT INTO CLIENTE (NOME, CPF, TELEFONE, CNH) VALUES (?, ?, ?, ?)";
+		String query ="INSERT INTO CLIENTE (NOME, CPF, TELEFONE, CNH, SEXO, DATA_NASCIMENTO) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -25,6 +25,8 @@ public class ClienteDAO {
 			statement.setString(2, cliente.getCPF());
 			statement.setString(3, cliente.getTelefone());
 			statement.setObject(4, cliente.getCNH());
+			statement.setObject(5, cliente.getSexo());
+			statement.setObject(6, cliente.getDataNascimento());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
@@ -78,6 +80,8 @@ public class ClienteDAO {
 				+ "', cpf = " + cliente.getCPF()
 				+ ", telefone = '" + cliente.getTelefone()
 				+ "', cnh = '" + cliente.getCNH()
+				+ "', sexo = '" + cliente.getSexo()
+				+ "', data_nascimento = '" + cliente.getDataNascimento()	
 				+ "' WHERE IDCLIENTE = " + cliente.getId();
 		 
 		try {
@@ -116,6 +120,8 @@ public class ClienteDAO {
 				cliente.setCPF(resultado.getString(3));
 				cliente.setTelefone(resultado.getString(4));
 				cliente.setCNH(resultado.getString(5));
+				cliente.setSexo(resultado.getString(6));
+				cliente.setDataNascimento(resultado.getString(7));
 				listaClientes.add(cliente);
 			}
 		} catch (SQLException erro) {
@@ -149,8 +155,9 @@ public class ClienteDAO {
 				cliente.setCPF(resultado.getString(3));
 				cliente.setTelefone(resultado.getString(4));
 				cliente.setCNH(resultado.getString(5));
+				cliente.setSexo(resultado.getString(6));
+				cliente.setDataNascimento(resultado.getString(7));
 			}
-			System.out.println(resultado.getString(2));
 		} catch (SQLException erro) {
 			System.out.println("ClienteDAO - Erro ao executar a query do método consultarClientePorCPF");
 			System.out.println("Erro: " + erro.getMessage());

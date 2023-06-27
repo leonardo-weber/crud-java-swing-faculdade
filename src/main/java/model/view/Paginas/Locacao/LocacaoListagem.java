@@ -21,7 +21,6 @@ public class LocacaoListagem extends JPanel {
 
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
-	private JButton btnDeletar;
 	private JButton btnEditar;
 	
 	private JTable tabelaLocacao;
@@ -35,7 +34,7 @@ public class LocacaoListagem extends JPanel {
 	private void inicializarTabela() {
 		tabelaLocacao.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
 	}
-	
+	 
 	private void popularTabelaFuncionarios() {	
 		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaLocacao.getModel();
@@ -85,24 +84,14 @@ public class LocacaoListagem extends JPanel {
 		tabelaLocacao = new JTable();
 		tabelaLocacao.setBounds(26, 81, 694, 252);
 		add(tabelaLocacao);
-		
-		btnDeletar = new JButton("Deletar");
-		btnDeletar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deletarFuncionario();
-			}
-		});
-		btnDeletar.setEnabled(false);
-		btnDeletar.setBounds(474, 375, 117, 25);
-		add(btnDeletar);
-		
+			 
 		btnEditar = new JButton("Editar");
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(345, 375, 117, 25);
+		btnEditar.setBounds(468, 375, 117, 25);
 		add(btnEditar);
 		
 		this.inicializarTabela();

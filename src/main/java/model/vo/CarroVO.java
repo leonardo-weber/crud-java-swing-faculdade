@@ -7,8 +7,9 @@ public class CarroVO {
 	private String modelo;
 	private String placa;
 	private String ano;
+	private String cor;
 	
-	public CarroVO(int id, String marca, String modelo, String placa, String ano) {
+	public CarroVO(int id, String marca, String modelo, String placa, String ano, String cor) {
 		super();
 		this.id = id;
 		this.marca = marca;
@@ -59,6 +60,14 @@ public class CarroVO {
 
 	public void setAno(String ano) {
 		this.ano = ano;
+	}
+	
+	public String getCor() {
+		return cor;
+	}
+
+	public void setCor(String cor) {
+		this.cor= cor;
 	}
 	
 	@Override

@@ -27,7 +27,6 @@ public class CarroListagem extends JPanel {
 	
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
-	private JButton btnDeletar;
 	private JButton btnEditar;
 	
 	CarroController carroController = new CarroController();
@@ -35,7 +34,7 @@ public class CarroListagem extends JPanel {
 	private JTable tabelaCarros;
 	private ArrayList<CarroVO> listaCarros; 
 	private String[] colunasTabelas = { "Marca", "Modelo", "Ano", "Placa" } ;
-	
+	 
 	private CarroVO carroSelecionado;
 	
 	private void inicializarTabela() {
@@ -92,22 +91,12 @@ public class CarroListagem extends JPanel {
 		});
 		add(btnPesquisar);
 		
-		btnDeletar = new JButton("Deletar");
-		btnDeletar.setBounds(474, 375, 117, 25);
-		btnDeletar.addActionListener(new ActionListener() {
+		btnEditar = new JButton("Editar");
+		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					deletarCarro();
-				} catch (Exception e2) {
-					
-				}
 			}
 		});
-		btnDeletar.setEnabled(false);
-		add(btnDeletar);
-		
-		btnEditar = new JButton("Editar");
-		btnEditar.setBounds(345, 375, 117, 25);
+		btnEditar.setBounds(468, 375, 117, 25);
 		btnEditar.setEnabled(false);
 		add(btnEditar);
 	
@@ -123,11 +112,9 @@ public class CarroListagem extends JPanel {
 
 				if (indiceSelecionado > 0) {
 					btnEditar.setEnabled(true);
-					btnDeletar.setEnabled(true);
 					carroSelecionado = listaCarros.get(indiceSelecionado - 1);
 				} else {
 					btnEditar.setEnabled(false);
-					btnDeletar.setEnabled(false);
 				}
 			}
 		});

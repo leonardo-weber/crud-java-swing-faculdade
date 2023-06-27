@@ -23,9 +23,8 @@ import java.awt.event.ActionEvent;
 public class ClienteListagem extends JPanel {
 
 	private JLabel titleLabel;
-	private JButton btnDeletar;
 	private JButton btnEditar;
-	
+ 	
 	private JTable tabelaClientes;
 	private ArrayList<ClienteVO> listaClientes; 
 	private String[] colunasTabelas = {"Nome", "CPF", "Telefone", "CNH"};
@@ -92,19 +91,9 @@ public class ClienteListagem extends JPanel {
 		tabelaClientes.setBounds(26, 81, 694, 252);
 		add(tabelaClientes);
 		
-		btnDeletar = new JButton("Deletar");
-		btnDeletar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deletarCliente();
-			}
-		});
-		btnDeletar.setEnabled(false);
-		btnDeletar.setBounds(474, 375, 117, 25);
-		add(btnDeletar);
-		
 		btnEditar = new JButton("Editar");
 		btnEditar.setEnabled(false);
-		btnEditar.setBounds(345, 375, 117, 25);
+		btnEditar.setBounds(468, 375, 117, 25);
 		add(btnEditar);
 		
 		tabelaClientes.addMouseListener(new MouseAdapter() {
@@ -115,11 +104,9 @@ public class ClienteListagem extends JPanel {
 
 				if (indiceSelecionado > 0) {
 					btnEditar.setEnabled(true);
-					btnDeletar.setEnabled(true);
 					clienteSelecionado = listaClientes.get(indiceSelecionado - 1);
 				} else {
 					btnEditar.setEnabled(false);
-					btnDeletar.setEnabled(false);
 				}
 			}
 		});

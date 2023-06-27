@@ -14,7 +14,7 @@ public class CarroDAO {
 	
 	public CarroVO cadastrarCarro(CarroVO carro) {
 		
-		String query ="INSERT INTO CARRO (MARCA, MODELO, ANO, PLACA) VALUES (?, ?, ?, ?)";
+		String query ="INSERT INTO CARRO (MARCA, MODELO, ANO, PLACA, COR) VALUES (?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -24,6 +24,7 @@ public class CarroDAO {
 			statement.setString(2, carro.getModelo());
 			statement.setString(3, carro.getPlaca());
 			statement.setString(4, carro.getAno());
+			statement.setString(5, carro.getCor());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
@@ -77,6 +78,7 @@ public class CarroDAO {
 				+ "', modelo = '" + carro.getModelo()
 				+ "', ano = " + carro.getAno()
 				+ ", placa = '" + carro.getPlaca()
+				+ ", cor = '" + carro.getCor()
 				+ "' WHERE IDCARRO = " + carro.getId();
 		 
 		try {
@@ -115,6 +117,7 @@ public class CarroDAO {
 				carro.setModelo(resultado.getString(3));
 				carro.setAno(resultado.getString(4));
 				carro.setPlaca(resultado.getString(5));
+				carro.setCor(resultado.getString(6));
 				listaCarros.add(carro);
 			}
 		} catch (SQLException erro) {

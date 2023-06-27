@@ -43,8 +43,10 @@ public class ClienteController {
 		boolean telefone = ValidarCamposFormulario.validacao(cliente.getTelefone());
 		boolean cpf = ValidarCamposFormulario.validacao(cliente.getCPF());
 		boolean cnh = ValidarCamposFormulario.validacao(cliente.getCNH());
+		boolean sexo = ValidarCamposFormulario.validacao(cliente.getSexo());
+		boolean dataNascimento = ValidarCamposFormulario.validacao(cliente.getDataNascimento());
 		
-		boolean[] campos = { nome, telefone, cpf, cnh };
+		boolean[] campos = { nome, telefone, cpf, cnh, sexo, dataNascimento };
 				
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {

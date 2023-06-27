@@ -15,7 +15,7 @@ public class FuncionarioDAO {
 	
 	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
 		
-		String query ="INSERT INTO FUNCIONARIO (NOME, SENHA, TELEFONE, CPF) VALUES (?, ?, ?, ?)";
+		String query ="INSERT INTO FUNCIONARIO (NOME, SENHA, TELEFONE, CPF, SEXO, DATA_NASCIMENTO) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -25,7 +25,9 @@ public class FuncionarioDAO {
 			statement.setString(2, funcionario.getSenha());
 			statement.setString(3, funcionario.getTelefone());
 			statement.setObject(4, funcionario.getCPF());
-			statement.execute();
+			statement.setObject(5, funcionario.getSexo());
+			statement.setObject(6, funcionario.getDataNascimento());
+			statement.execute();	
 			ResultSet resultado = statement.getGeneratedKeys();
 			if(resultado.next()) {
 				funcionario.setId(Integer.parseInt(resultado.getString(1)));
@@ -78,6 +80,8 @@ public class FuncionarioDAO {
 				+ "', senha = '" + funcionario.getSenha()
 				+ "', telefone = " + funcionario.getTelefone()
 				+ ", cpf = '" + funcionario.getCPF()
+				+ ", cpf = '" + funcionario.getSexo()
+				+ ", cpf = '" + funcionario.getDataNascimento()
 				+ "' WHERE IDFUNCIONARIO = " + funcionario.getId();
 		 
 		try {
@@ -142,6 +146,8 @@ public class FuncionarioDAO {
 				funcionario.setSenha(resultado.getString(3));
 				funcionario.setTelefone(resultado.getString(4));
 				funcionario.setCPF(resultado.getString(5));
+				funcionario.setSexo(resultado.getString(6));
+				funcionario.setDataNascimento(resultado.getString(7));
 				listaFuncionarios.add(funcionario);
 			}
 		} catch (SQLException erro) {

@@ -7,18 +7,22 @@ public class FuncionarioVO {
 	private String telefone;
 	private String cpf;
 	private String senha;
+	private String sexo;
+	private String dataNascimento;
 	
 	public FuncionarioVO() {
 		super();
 	}
 	
-	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha) {
+	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha, String sexo, String dataNascimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.telefone = telefone;
 		this.cpf = cpf;
 		this.senha = senha;
+		this.sexo = sexo;
+		this.dataNascimento = dataNascimento;
 	}
 	
 	public int getId() {
@@ -59,6 +63,22 @@ public class FuncionarioVO {
 	
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+	
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 
 }

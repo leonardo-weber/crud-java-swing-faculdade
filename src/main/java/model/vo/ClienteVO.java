@@ -7,14 +7,18 @@ public class ClienteVO {
 	private String cnh;
 	private String cpf;
 	private String telefone;
+	private String sexo;
+	private String dataNascimento;
 	
-	public ClienteVO(int id, String nome, String cnh, String cpf, String telefone) {
+	public ClienteVO(int id, String nome, String cnh, String cpf, String telefone, String sexo, String dataNascimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
 		this.cnh = cnh;
 		this.cpf = cpf;
 		this.telefone = telefone;
+		this.sexo = sexo;
+		this.dataNascimento = dataNascimento;
 	}
 
 	public ClienteVO() {
@@ -59,6 +63,22 @@ public class ClienteVO {
 	
 	public void setTelefone(String telefone) {
 		this.telefone = telefone;
+	}
+	
+	public String getSexo() {
+		return sexo;
+	}
+	
+	public void setSexo(String sexo) {
+		this.sexo = sexo;
+	}
+	
+	public String getDataNascimento() {
+		return dataNascimento;
+	}
+	
+	public void setDataNascimento(String dataNascimento) {
+		this.dataNascimento = dataNascimento;
 	}
 	
 	@Override

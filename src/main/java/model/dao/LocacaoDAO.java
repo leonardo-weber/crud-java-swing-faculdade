@@ -17,17 +17,21 @@ public class LocacaoDAO {
 	
 	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) {
 		
-		String query ="INSERT INTO LOCACAO (DATA_INICIO, DATA_FIM, VALOR, IDCARRO, IDCLIENTE) VALUES (?, ?, ?, ?, ?)";
+		
+		String query = "INSERT INTO LOCACAO (IDCLIENTE, IDCARRO, DATA_LOCACAO, DATA_PREVISTA_DEVOLUCAO, DATA_EFETIVA_DEVOLUCAO, VALOR_PREVISTO, VALOR_EFETIVO, MULTA) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
 		try {
-			statement.setTimestamp(1, Timestamp.valueOf(locacao.getDataInicial()));
-			statement.setTimestamp(2, Timestamp.valueOf(locacao.getDataFinal()));
-			statement.setInt(3, locacao.getValor());
-			statement.setInt(4,  locacao.getCarro().getId());
-			statement.setInt(5,  locacao.getCliente().getId());
+			statement.setTimestamp(1, Timestamp.valueOf(locacao.getDataLocacao()));
+			statement.setTimestamp(2, Timestamp.valueOf(locacao.getDataPrevistaDevolucao()));
+			statement.setTimestamp(3, Timestamp.valueOf(locacao.getDataEfetivaDevolucao()));
+			statement.setInt(3, locacao.getValorPrevisto());
+			statement.setInt(4, locacao.getValorEfetivo());
+			statement.setDouble(5, locacao.getMulta());
+			statement.setInt(6,  locacao.getCarro().getId());
+			statement.setInt(7,  locacao.getCliente().getId());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
@@ -77,13 +81,15 @@ public class LocacaoDAO {
 		
 		boolean retorno = false;
 		
-		String query = "UPDATE LOCACAO SET DATA_INICIO = '" + locacao.getDataInicial()
-				+ "', DATA_FIM = '" + locacao.getDataFinal()
-				+ "', MODELO = " + locacao.getCarro()
-				+ "', VALOR = " + locacao.getValor()
+		String query = "UPDATE LOCACAO SET DATA_LOCACAO = '" + locacao.getDataLocacao()
+				+ "', DATA_PREVISTA_DEVOLUCAO = '" + locacao.getDataPrevistaDevolucao()
+				+ "', DATA_EFETIVA_DEVOLUCAO = " + locacao.getDataEfetivaDevolucao()
+				+ "', VALOR_PREVISTO = " + locacao.getValorPrevisto()
+				+ "', VALOR_EFETIVO = " + locacao.getValorEfetivo()
+				+ "', MULTA = " + locacao.getMulta()
+				+ "', IDCLIENTE = " + locacao.getMulta()
 				+ "', IDCARRO = " + locacao.getCarro().getId()
-				+ "', IDCLIENTE = " + locacao.getCliente().getId()
-				+ "' WHERE IDLOCACAO = " + locacao.getId();
+				+ "' WHERE IDLOCACAO = " + locacao.getCliente().getId()
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {
