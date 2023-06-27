@@ -24,9 +24,9 @@ public class FuncionarioDAO {
 			statement.setString(1, funcionario.getNome());
 			statement.setString(2, funcionario.getSenha());
 			statement.setString(3, funcionario.getTelefone());
-			statement.setObject(4, funcionario.getCPF());
-			statement.setObject(5, funcionario.getSexo());
-			statement.setObject(6, funcionario.getDataNascimento());
+			statement.setString(4, funcionario.getCPF());
+			statement.setString(5, funcionario.getSexo());
+			statement.setString(6, funcionario.getDataNascimento());
 			statement.execute();	
 			ResultSet resultado = statement.getGeneratedKeys();
 			if(resultado.next()) {
@@ -80,8 +80,8 @@ public class FuncionarioDAO {
 				+ "', senha = '" + funcionario.getSenha()
 				+ "', telefone = " + funcionario.getTelefone()
 				+ ", cpf = '" + funcionario.getCPF()
-				+ ", cpf = '" + funcionario.getSexo()
-				+ ", cpf = '" + funcionario.getDataNascimento()
+				+ ", sexo = '" + funcionario.getSexo()
+				+ ", data_nascimento = '" + funcionario.getDataNascimento()
 				+ "' WHERE IDFUNCIONARIO = " + funcionario.getId();
 		 
 		try {
@@ -147,7 +147,6 @@ public class FuncionarioDAO {
 				funcionario.setTelefone(resultado.getString(4));
 				funcionario.setCPF(resultado.getString(5));
 				funcionario.setSexo(resultado.getString(6));
-				funcionario.setDataNascimento(resultado.getString(7));
 				listaFuncionarios.add(funcionario);
 			}
 		} catch (SQLException erro) {

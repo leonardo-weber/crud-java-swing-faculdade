@@ -38,6 +38,7 @@ public class LocacaoDevolucao extends JPanel {
 	private JButton cadastrarDevolucaoButton;
 	private JButton buscarLocacaoButton;
 	private JButton btnLimparCampos;
+	private JTextField textField;
 	
 	public void cadastrarDevolucao () {
 		
@@ -63,7 +64,7 @@ public class LocacaoDevolucao extends JPanel {
 				limparCamposForm();
 			}
 		});
-		cadastrarDevolucaoButton.setBounds(407, 28, 237, 25);
+		cadastrarDevolucaoButton.setBounds(448, 120, 237, 25);
 		add(cadastrarDevolucaoButton);
 		
 		idLocacaoLabel = new JLabel("Identificador da locação");
@@ -78,11 +79,6 @@ public class LocacaoDevolucao extends JPanel {
 		dataLocacaoLabel = new JLabel("Data da Locação");
 		dataLocacaoLabel.setBounds(26, 234, 237, 15);
 		add(dataLocacaoLabel);
-		
-		dataLocacaoTextField = new JTextField();
-		dataLocacaoTextField.setColumns(10);
-		dataLocacaoTextField.setBounds(26, 261, 176, 19);
-		add(dataLocacaoTextField);
 		
 		dataDevolucaoLabel = new JLabel("Data da Devolução");
 		dataDevolucaoLabel.setBounds(26, 292, 237, 15);
@@ -103,61 +99,60 @@ public class LocacaoDevolucao extends JPanel {
 		add(valorPrevistoTextField);
 		
 		valorEfetivoLabel = new JLabel("Valor Efetivo");
-		valorEfetivoLabel.setBounds(233, 234, 237, 15);
+		valorEfetivoLabel.setBounds(271, 234, 237, 15);
 		add(valorEfetivoLabel);
 		
 		valorEfetivoTextField = new JTextField();
 		valorEfetivoTextField.setColumns(10);
-		valorEfetivoTextField.setBounds(233, 261, 176, 19);
+		valorEfetivoTextField.setBounds(271, 261, 176, 19);
 		add(valorEfetivoTextField);
 		
 		valorMultaLabel = new JLabel("Valor Multa");
-		valorMultaLabel.setBounds(233, 292, 237, 15);
+		valorMultaLabel.setBounds(271, 292, 237, 15);
 		add(valorMultaLabel);
 		
 		valorMultaTextField = new JTextField();
 		valorMultaTextField.setColumns(10);
-		valorMultaTextField.setBounds(233, 319, 176, 19);
+		valorMultaTextField.setBounds(271, 319, 176, 19);
 		add(valorMultaTextField);
 		
 		valorCarroLabel = new JLabel("Carro");
-		valorCarroLabel.setBounds(233, 350, 237, 15);
+		valorCarroLabel.setBounds(271, 350, 237, 15);
 		add(valorCarroLabel);
 		
 		valorCarroTextField = new JTextField();
 		valorCarroTextField.setColumns(10);
-		valorCarroTextField.setBounds(233, 377, 176, 19);
+		valorCarroTextField.setBounds(271, 377, 176, 19);
 		add(valorCarroTextField);
 		
 		nomeClienteLabel = new JLabel("Nome do Cliente");
-		nomeClienteLabel.setBounds(448, 234, 237, 15);
+		nomeClienteLabel.setBounds(509, 234, 237, 15);
 		add(nomeClienteLabel);
 		
 		nomeClienteTextField = new JTextField();
 		nomeClienteTextField.setColumns(10);
-		nomeClienteTextField.setBounds(448, 261, 176, 19);
+		nomeClienteTextField.setBounds(509, 261, 176, 19);
 		add(nomeClienteTextField);
 		
 		telefoneClienteLabel = new JLabel("Telefone do Cliente");
-		telefoneClienteLabel.setBounds(448, 292, 237, 15);
+		telefoneClienteLabel.setBounds(509, 292, 237, 15);
 		add(telefoneClienteLabel);
 		
 		telefoneClienteTextField = new JTextField();
 		telefoneClienteTextField.setColumns(10);
-		telefoneClienteTextField.setBounds(448, 319, 176, 19);
+		telefoneClienteTextField.setBounds(509, 319, 176, 19);
 		add(telefoneClienteTextField);
 		
 		cpfClienteLabel = new JLabel("CPF do cliente");
-		cpfClienteLabel.setBounds(448, 350, 237, 15);
+		cpfClienteLabel.setBounds(509, 350, 237, 15);
 		add(cpfClienteLabel);
 		
 		cpfClienteTextField = new JTextField();
 		cpfClienteTextField.setColumns(10);
-		dataLocacaoTextField.setBounds(448, 377, 176, 19);
 		add(cpfClienteTextField);
 		
 		btnLimparCampos = new JButton("Limpar Campos");
-		btnLimparCampos.setBounds(407, 65, 237, 25);
+		btnLimparCampos.setBounds(448, 154, 237, 25);
 		add(btnLimparCampos);
 		
 		buscarLocacaoButton = new JButton("Buscar locação");
@@ -168,6 +163,11 @@ public class LocacaoDevolucao extends JPanel {
 		dataLocacaoTextField.setColumns(10);
 		dataLocacaoTextField.setBounds(26, 261, 176, 19);
 		add(dataLocacaoTextField);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(509, 377, 176, 19);
+		add(textField);
 
 	}
 }

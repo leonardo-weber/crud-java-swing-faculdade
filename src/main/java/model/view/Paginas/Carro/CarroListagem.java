@@ -33,7 +33,7 @@ public class CarroListagem extends JPanel {
 	
 	private JTable tabelaCarros;
 	private ArrayList<CarroVO> listaCarros; 
-	private String[] colunasTabelas = { "Marca", "Modelo", "Ano", "Placa" } ;
+	private String[] colunasTabelas = { "Marca", "Modelo", "Ano", "Placa", "Cor" } ;
 	 
 	private CarroVO carroSelecionado;
 	

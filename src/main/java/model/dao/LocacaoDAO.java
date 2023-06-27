@@ -106,8 +106,8 @@ public class LocacaoDAO {
 		return retorno;
 	
 	}
-	
-public List<LocacaoVO> consultarListaLocacao () {
+		
+	public List<LocacaoVO> consultarListaLocacao () {
 		
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
