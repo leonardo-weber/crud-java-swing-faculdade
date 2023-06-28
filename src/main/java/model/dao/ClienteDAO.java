@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +23,11 @@ public class ClienteDAO {
 		
 		try {
 			statement.setString(1, cliente.getNome());
-			statement.setString(2, cliente.getCPF());
-			statement.setString(3, cliente.getTelefone());
-			statement.setObject(4, cliente.getCNH());
-			statement.setObject(5, cliente.getSexo());
-			statement.setObject(6, cliente.getDataNascimento());
+			statement.setString(2, cliente.getCNH());
+			statement.setString(3, cliente.getCPF());
+			statement.setString(4, cliente.getSexo());
+			statement.setTimestamp(5, Timestamp.valueOf(cliente.getDataNascimento()));
+			statement.setString(6, cliente.getTelefone());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
@@ -77,11 +78,11 @@ public class ClienteDAO {
 		boolean retorno = false;
 		
 		String query = "UPDATE CLIENTE SET nome = '" + cliente.getNome()
-				+ "', cpf = " + cliente.getCPF()
-				+ ", telefone = '" + cliente.getTelefone()
-				+ "', cnh = '" + cliente.getCNH()
+				+ "', cnh = " + cliente.getCNH()
+				+ ", cpf = '" + cliente.getCPF()
 				+ "', sexo = '" + cliente.getSexo()
-				+ "', data_nascimento = '" + cliente.getDataNascimento()	
+				+ "', data_nascimento = '" + cliente.getDataNascimento()
+				+ "', telefone = '" + cliente.getTelefone()	
 				+ "' WHERE IDCLIENTE = " + cliente.getId();
 		 
 		try {
@@ -117,11 +118,11 @@ public class ClienteDAO {
 			while(resultado.next()) {
 				cliente.setId(Integer.parseInt(resultado.getString(1)));
 				cliente.setNome(resultado.getString(2));
-				cliente.setCPF(resultado.getString(3));
-				cliente.setTelefone(resultado.getString(4));
-				cliente.setCNH(resultado.getString(5));
-				cliente.setSexo(resultado.getString(6));
-				cliente.setDataNascimento(resultado.getString(7));
+				cliente.setCNH(resultado.getString(3));
+				cliente.setCPF(resultado.getString(4));
+				cliente.setSexo(resultado.getString(5));
+				cliente.setDataNascimento(resultado.getString(6));
+				cliente.setTelefone(resultado.getString(7));
 				listaClientes.add(cliente);
 			}
 		} catch (SQLException erro) {
@@ -152,11 +153,11 @@ public class ClienteDAO {
 			while(resultado.next()) {
 				cliente.setId(Integer.parseInt(resultado.getString(1)));
 				cliente.setNome(resultado.getString(2));
-				cliente.setCPF(resultado.getString(3));
-				cliente.setTelefone(resultado.getString(4));
-				cliente.setCNH(resultado.getString(5));
-				cliente.setSexo(resultado.getString(6));
-				cliente.setDataNascimento(resultado.getString(7));
+				cliente.setCNH(resultado.getString(3));
+				cliente.setCPF(resultado.getString(4));
+				cliente.setSexo(resultado.getString(5));
+				cliente.setDataNascimento(resultado.getString(6));
+				cliente.setTelefone(resultado.getString(7));
 			}
 		} catch (SQLException erro) {
 			System.out.println("ClienteDAO - Erro ao executar a query do método consultarClientePorCPF");

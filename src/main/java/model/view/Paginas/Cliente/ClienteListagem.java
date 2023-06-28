@@ -27,7 +27,7 @@ public class ClienteListagem extends JPanel {
  	
 	private JTable tabelaClientes;
 	private ArrayList<ClienteVO> listaClientes; 
-	private String[] colunasTabelas = {"Nome", "CPF", "Telefone", "CNH"};
+	private String[] colunasTabelas = {"Nome", "CNH", "CPF", "Sexo", "Data de Nascimento", "Telefone"};
 	
 	ClienteController clienteController = new ClienteController();
 		

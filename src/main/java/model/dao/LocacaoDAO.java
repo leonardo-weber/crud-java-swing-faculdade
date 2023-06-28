@@ -89,7 +89,7 @@ public class LocacaoDAO {
 				+ "', MULTA = " + locacao.getMulta()
 				+ "', IDCLIENTE = " + locacao.getMulta()
 				+ "', IDCARRO = " + locacao.getCarro().getId()
-				+ "' WHERE IDLOCACAO = " + locacao.getCliente().getId()
+				+ "' WHERE IDLOCACAO = " + locacao.getCliente().getId();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -122,9 +122,15 @@ public class LocacaoDAO {
 			while(resultado.next()) {
 				LocacaoVO locacao = new LocacaoVO();
 				locacao.setId(Integer.parseInt(resultado.getString(1)));
-				locacao.setDataInicial(LocalDateTime.parse(resultado.getString(4)));
-				locacao.setDataFinal(LocalDateTime.parse(resultado.getString(5)));
-				locacao.setValor(Integer.parseInt(resultado.getString(6)));
+				locacao.setCliente(resultado.getString(2));
+				locacao.setCarro(resultado.getString(3));
+				locacao.setDataLocacao(resultado.getString(4));
+				locacao.setDataPrevistaDevolucao(resultado.getString(5));
+				locacao.setDataEfetivaDevolucao(resultado.getString(5));
+				locacao.setValorPrevisto(resultado.getString(6));
+				locacao.setValorEfetivo(resultado.getString(7));
+				locacao.setMulta(resultado.getString(8));
+				locacao.setDisponibilidade(resultado.getString(9));
 			}
 		} catch (SQLException erro) {
 			System.out.println("LocacaoDAO - Erro ao executar a query do método consultarListaLocacao");

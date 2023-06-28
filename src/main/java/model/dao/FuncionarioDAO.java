@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +27,7 @@ public class FuncionarioDAO {
 			statement.setString(3, funcionario.getTelefone());
 			statement.setString(4, funcionario.getCPF());
 			statement.setString(5, funcionario.getSexo());
-			statement.setString(6, funcionario.getDataNascimento());
+			statement.setTimestamp(6, Timestamp.valueOf(funcionario.getDataNascimento()));
 			statement.execute();	
 			ResultSet resultado = statement.getGeneratedKeys();
 			if(resultado.next()) {
@@ -147,6 +148,7 @@ public class FuncionarioDAO {
 				funcionario.setTelefone(resultado.getString(4));
 				funcionario.setCPF(resultado.getString(5));
 				funcionario.setSexo(resultado.getString(6));
+				funcionario.setDataNascimento(resultado.getString(7));
 				listaFuncionarios.add(funcionario);
 			}
 		} catch (SQLException erro) {

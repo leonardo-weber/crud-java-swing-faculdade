@@ -22,8 +22,8 @@ public class CarroDAO {
 		try {
 			statement.setString(1, carro.getMarca());
 			statement.setString(2, carro.getModelo());
-			statement.setString(3, carro.getPlaca());
-			statement.setString(4, carro.getAno());
+			statement.setString(3, carro.getAno());
+			statement.setString(4, carro.getPlaca());
 			statement.setString(5, carro.getCor());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
@@ -115,7 +115,7 @@ public class CarroDAO {
 				carro.setId(Integer.parseInt(resultado.getString(1)));
 				carro.setMarca(resultado.getString(2));
 				carro.setModelo(resultado.getString(3));
-				carro.setAno(resultado.getString(4));
+				carro.setAno(resultado.getString(3));
 				carro.setPlaca(resultado.getString(5));
 				carro.setCor(resultado.getString(6));
 				listaCarros.add(carro);
