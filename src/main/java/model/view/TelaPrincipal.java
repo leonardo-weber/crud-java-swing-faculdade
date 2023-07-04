@@ -15,6 +15,7 @@ import model.view.Paginas.Funcionario.FuncionarioListagem;
 import model.view.Paginas.Locacao.LocacaoCadastro;
 import model.view.Paginas.Locacao.LocacaoDevolucao;
 import model.view.Paginas.Locacao.LocacaoListagem;
+import model.view.Paginas.Sobre.SobreLogOut;
 
 import java.awt.FlowLayout;
 import javax.swing.JMenuBar;
@@ -45,6 +46,8 @@ public class TelaPrincipal extends JFrame {
 	private LocacaoCadastro cadastroDeLocacao = new LocacaoCadastro();
 	private LocacaoListagem listagemDeLocacao = new LocacaoListagem();
 	private LocacaoDevolucao devolucaoDeLocacao = new LocacaoDevolucao();
+	
+	private SobreLogOut sobreLogOut = new SobreLogOut();
 	
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
@@ -163,6 +166,16 @@ public class TelaPrincipal extends JFrame {
 		});
 		menuItemCliente.add(menuItemClienteCadastro);
 		
+		JMenu menuItemSobre = new JMenu("Sobre");
+		menuBar.add(menuItemSobre);
+		
+		JMenuItem menuItemSobreLogOut = new JMenuItem("Log Out");
+		menuItemSobreLogOut.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				sobreLogOut.setVisible(true);
+			}
+		});
+		menuItemSobre.add(menuItemSobreLogOut);
 		
 		contentPane = new JPanel();
 		contentPane.setBackground(UIManager.getColor("Button.darkShadow"));

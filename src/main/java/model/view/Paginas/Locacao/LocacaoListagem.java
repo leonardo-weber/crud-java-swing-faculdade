@@ -25,7 +25,7 @@ public class LocacaoListagem extends JPanel {
 	
 	private JTable tabelaLocacao;
 	private ArrayList<LocacaoVO> listaLocacoes; 
-	private String[] colunasTabelas = { "Data Inicial", "Data Final", "Valor", "Cliente", "Carro" } ;
+	private String[] colunasTabelas = { "Data Locação", "Data Devolução", "Atraso em dias", "Valor", "Multa", "Valor Final" } ;
 	
 	LocacaoController locacaoController = new LocacaoController();
 	
@@ -40,11 +40,12 @@ public class LocacaoListagem extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tabelaLocacao.getModel();
 		for (LocacaoVO locacao : listaLocacoes) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
-			novaLinhaDaTabela[0] = locacao.getDataInicial();
-			novaLinhaDaTabela[1] = locacao.getDataFinal();
-			novaLinhaDaTabela[2] = locacao.getValor();
-			novaLinhaDaTabela[3] = locacao.getCliente().getNome();
-			novaLinhaDaTabela[4] = locacao.getCarro().getModelo();
+			novaLinhaDaTabela[0] = locacao.getDataLocacao();
+			novaLinhaDaTabela[1] = locacao.getDataPrevistaDevolucao();
+			novaLinhaDaTabela[2] = locacao.getValor(); // atraso
+			novaLinhaDaTabela[3] = locacao.getValorPrevisto();
+			novaLinhaDaTabela[4] = locacao.getMulta();
+			novaLinhaDaTabela[5] = locacao.getValorEfetivo();
 			
 			model.addRow(novaLinhaDaTabela);
 		}

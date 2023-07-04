@@ -46,6 +46,8 @@ public class FuncionarioListagem extends JPanel {
 			novaLinhaDaTabela[1] = func.getSenha();
 			novaLinhaDaTabela[2] = func.getTelefone();
 			novaLinhaDaTabela[3] = func.getCPF();
+			novaLinhaDaTabela[4] = func.getSexo();
+			novaLinhaDaTabela[5] = func.getDataNascimento();
 
 			model.addRow(novaLinhaDaTabela);
 		}

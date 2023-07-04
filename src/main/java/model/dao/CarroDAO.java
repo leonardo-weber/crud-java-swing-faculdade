@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.vo.CarroVO;
 
 public class CarroDAO {
@@ -29,8 +31,10 @@ public class CarroDAO {
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
 				carro.setId(Integer.parseInt(resultado.getString(1)));
+				JOptionPane.showMessageDialog(null, "Carro Cadastrado com sucesso!");
 			}
 		} catch (SQLException erro) {
+			JOptionPane.showMessageDialog(null, "Falha ao cadastrar carro!");
 			System.out.println("CarroDAO - Erro ao executar a query do método cadastrarCarro");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
@@ -103,22 +107,21 @@ public class CarroDAO {
 		Statement stmt = Banco.getStatement(conn);
 		ResultSet resultado = null;
 		
-		ArrayList<CarroVO> listaCarros = new ArrayList<CarroVO>(); 
-		CarroVO carro = new CarroVO();
-		
+		ArrayList<CarroVO> listaCarros = new ArrayList<CarroVO>(); 		
 
 		String query = "SELECT * FROM CARRO";
 		
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
-				carro.setId(Integer.parseInt(resultado.getString(1)));
-				carro.setMarca(resultado.getString(2));
-				carro.setModelo(resultado.getString(3));
-				carro.setAno(resultado.getString(3));
-				carro.setPlaca(resultado.getString(5));
-				carro.setCor(resultado.getString(6));
-				listaCarros.add(carro);
+				CarroVO carroVO = new CarroVO();
+				carroVO.setId(Integer.parseInt(resultado.getString(1)));
+				carroVO.setMarca(resultado.getString(2));
+				carroVO.setModelo(resultado.getString(3));
+				carroVO.setAno(resultado.getString(4));
+				carroVO.setPlaca(resultado.getString(5));
+				carroVO.setCor(resultado.getString(6));
+				listaCarros.add(carroVO);
 			}
 		} catch (SQLException erro) {
 			System.out.println("CarroDA0 - Erro ao executar a query do método consultarListaCarros");

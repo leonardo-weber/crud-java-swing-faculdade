@@ -1,5 +1,6 @@
 package model.dao;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,16 +9,18 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.vo.CarroVO;
 import model.vo.ClienteVO;
 import model.vo.FuncionarioVO;
 
 public class FuncionarioDAO {
 	
-	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
+	public boolean cadastrarFuncionario(FuncionarioVO funcionario) {
 		
 		String query ="INSERT INTO FUNCIONARIO (NOME, SENHA, TELEFONE, CPF, SEXO, DATA_NASCIMENTO) VALUES (?, ?, ?, ?, ?, ?)";
-		
+		boolean funcionarioCadastrado = false;
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
 		
@@ -27,11 +30,13 @@ public class FuncionarioDAO {
 			statement.setString(3, funcionario.getTelefone());
 			statement.setString(4, funcionario.getCPF());
 			statement.setString(5, funcionario.getSexo());
-			statement.setTimestamp(6, Timestamp.valueOf(funcionario.getDataNascimento()));
+			statement.setDate(6, Date.valueOf(funcionario.getDataNascimento()));
 			statement.execute();	
 			ResultSet resultado = statement.getGeneratedKeys();
 			if(resultado.next()) {
 				funcionario.setId(Integer.parseInt(resultado.getString(1)));
+				funcionarioCadastrado = true;
+				JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso!");
 			}
 		} catch (SQLException erro) {
 			System.out.println("FuncionarioDAO - Erro ao executar a query do método cadastrarFuncionario");
@@ -41,7 +46,7 @@ public class FuncionarioDAO {
 			Banco.closeConnection(connection);
 		}
 		
-		return funcionario;
+		return funcionarioCadastrado;
 		
 		
 	}
@@ -101,21 +106,22 @@ public class FuncionarioDAO {
 	
 	}
 	
-	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {
+	public boolean checarFuncionarioValido(FuncionarioVO funcionario) {
 		
 		Connection connection = Banco.getConnection();
 		Statement statement = Banco.getStatement(connection); 
 		ResultSet resultado = null;
+		boolean funcionarioValido = false;
 		
-		String query = "SELECT * "
-				+ "FROM FUNCIONARIO f "
-				+ "WHERE f.nome like '" + funcionario.getNome() + "' "
-				+ "AND f.senha = " + funcionario.getSenha();
-		
+		String query = "SELECT * FROM FUNCIONARIO f WHERE f.nome like '" + funcionario.getNome() + "' "+ "AND f.senha = " + funcionario.getSenha();
 		try {
 			resultado = statement.executeQuery(query);
+			if (resultado.next()) {
+				funcionarioValido = true;
+			}
 		} catch (SQLException erro) {
-			System.out.println("FUncionarioDAO - Erro ao executar a query do método checarFuncionarioValido");
+			JOptionPane.showMessageDialog(null, "Funcionário não encontrado");
+			System.out.println("FuncionarioDAO - Erro ao executar a query do método checarFuncionarioValido");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -123,7 +129,7 @@ public class FuncionarioDAO {
 			Banco.closeConnection(connection);
 		}
 		
-		return funcionario;
+		return funcionarioValido;
 	
 	}
 	
@@ -134,21 +140,20 @@ public class FuncionarioDAO {
 		ResultSet resultado = null;
 		
 		ArrayList<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>(); 
-		FuncionarioVO funcionario = new FuncionarioVO();
 		
-
 		String query = "SELECT * FROM FUNCIONARIO";
 		
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
+				FuncionarioVO funcionario = new FuncionarioVO();
 				funcionario.setId(Integer.parseInt(resultado.getString(1)));
 				funcionario.setNome(resultado.getString(2));
 				funcionario.setSenha(resultado.getString(3));
 				funcionario.setTelefone(resultado.getString(4));
 				funcionario.setCPF(resultado.getString(5));
 				funcionario.setSexo(resultado.getString(6));
-				funcionario.setDataNascimento(resultado.getString(7));
+				funcionario.setDataNascimento(resultado.getDate(7).toLocalDate());
 				listaFuncionarios.add(funcionario);
 			}
 		} catch (SQLException erro) {

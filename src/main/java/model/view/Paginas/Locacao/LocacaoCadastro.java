@@ -8,6 +8,8 @@ import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.text.MaskFormatter;
 
+import com.github.lgooddatepicker.components.DatePicker;
+
 import controller.CarroController;
 import controller.ClienteController;
 import controller.LocacaoController;
@@ -26,8 +28,8 @@ import java.text.ParseException;
 
 public class LocacaoCadastro extends JPanel {
 	
-	private JFormattedTextField dataInicialTextField;
-	private JFormattedTextField dataFinalTextField;
+	private DatePicker dataLocacaoDatePicker;
+	private DatePicker dataPrevistaDevolucaoDatePicker;
 	private JTextField valorTextField;
 	private JFormattedTextField cpfClienteTextField;
 	
@@ -56,6 +58,8 @@ public class LocacaoCadastro extends JPanel {
 	
 	private List<CarroVO> listaCarros;
 	
+	private String CPFSemMascara;
+	
 	CarroController carroController = new CarroController();
 	ClienteController clienteController = new ClienteController();
 
@@ -63,11 +67,10 @@ public class LocacaoCadastro extends JPanel {
 	LocacaoController locacaoController = new LocacaoController();
 	
 	private MaskFormatter mascaraCPF;
-	private MaskFormatter mascaraData;
 	
 	public void limparCamposForm () {
-		dataInicialTextField.setText("");
-		dataFinalTextField.setText("");
+		dataLocacaoDatePicker.setText("");
+		dataPrevistaDevolucaoDatePicker.setText("");
 		valorTextField.setText("");
 		cpfClienteTextField.setText("");
 		nomeClienteTextField.setText("");
@@ -89,11 +92,9 @@ public class LocacaoCadastro extends JPanel {
 			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE); 
 		}
 		
-		locacaoVO.getDataPrevistaDevolucao(dataInicialTextField.getText());
-		locacaoVO.getDataEfetivaDevolucao(dataFinalTextField.getText());
-		locacaoVO.getCarro(modeloTextField.getText());
-		locacaoVO.getCliente();
-		locacaoVO.getCarro();
+		locacaoVO.setDataLocacao(dataLocacaoDatePicker.getDate());
+		locacaoVO.setDataPrevistaDevolucao(dataPrevistaDevolucaoDatePicker.getDate());
+		locacaoVO.setValorPrevisto(ABORT);
 
 		try {
 			 locacaoController.cadastrarLocacao(locacaoVO);
@@ -110,13 +111,11 @@ public class LocacaoCadastro extends JPanel {
 		
 		try {
 			mascaraCPF = new MaskFormatter("###.###.###-##");
-			mascaraData = new MaskFormatter("##/##/####");
 		} catch (ParseException e1) {
 			e1.printStackTrace();
 		}
 		
 		mascaraCPF.setValueContainsLiteralCharacters(false);
-		mascaraData.setValueContainsLiteralCharacters(false);
 		
 		listaCarros = carroController.consultarListaCarros();
 				
@@ -136,15 +135,13 @@ public class LocacaoCadastro extends JPanel {
 		valorLabel.setBounds(26, 174, 70, 15);
 		add(valorLabel);
 		
-		dataInicialTextField = new JFormattedTextField(mascaraData);
-		dataInicialTextField.setBounds(226, 104, 476, 19);
-		add(dataInicialTextField);
-		dataInicialTextField.setColumns(10);
+		dataLocacaoDatePicker = new DatePicker();
+		dataLocacaoDatePicker.setBounds(226, 104, 476, 19);
+		add(dataLocacaoDatePicker);
 		
-		dataFinalTextField = new JFormattedTextField(mascaraData);
-		dataFinalTextField.setBounds(226, 138, 476, 19);
-		dataFinalTextField.setColumns(10);
-		add(dataFinalTextField);
+		dataPrevistaDevolucaoDatePicker = new DatePicker();
+		dataPrevistaDevolucaoDatePicker.setBounds(226, 138, 476, 19);
+		add(dataPrevistaDevolucaoDatePicker);
 		
 		valorTextField = new JTextField();
 		valorTextField.setBounds(226, 172, 476, 19);
@@ -208,7 +205,14 @@ public class LocacaoCadastro extends JPanel {
 		btnBuscarCliente = new JButton("Buscar Cliente");
 		btnBuscarCliente.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cliente = clienteController.consultarClientePorCPF(cpfClienteTextField.getText());
+				
+				try {
+					CPFSemMascara = (String) mascaraCPF.stringToValue(cpfClienteTextField.getText());
+				} catch (ParseException e1) {
+					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+				}
+				
+				cliente = clienteController.consultarClientePorCPF(CPFSemMascara);
 				preencherCamposCliente();
 			}
 		});

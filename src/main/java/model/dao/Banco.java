@@ -11,7 +11,7 @@ public class Banco {
 	
 	//private static final String DRIVER = "com.mysql.jdbc.Driver"; //MYSQL versão 5
 	private static final String DRIVER = "com.mysql.cj.jdbc.Driver"; //MYSQL versão 8
-	private static final String BANCODADOS = "DBLOCADORACARRO";
+	private static final String BANCODADOS = "LOCADORA";
 	private static final String CONEXAO = "jdbc:mysql://localhost:3306/" + BANCODADOS
 			+ "?useTimZone=true&serverTimezone=UTC" ;
 	private static final String USER = "root";

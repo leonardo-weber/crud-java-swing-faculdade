@@ -1,5 +1,7 @@
 package model.vo;
 
+import java.time.LocalDate;
+
 public class FuncionarioVO {
 	
 	private int id;
@@ -8,13 +10,13 @@ public class FuncionarioVO {
 	private String cpf;
 	private String senha;
 	private String sexo;
-	private String dataNascimento;
+	private LocalDate dataNascimento;
 	
 	public FuncionarioVO() {
 		super();
 	}
 	
-	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha, String sexo, String dataNascimento) {
+	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha, String sexo, LocalDate dataNascimento) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -73,11 +75,11 @@ public class FuncionarioVO {
 		this.sexo = sexo;
 	}
 	
-	public String getDataNascimento() {
+	public LocalDate getDataNascimento() {
 		return dataNascimento;
 	}
 	
-	public void setDataNascimento(String dataNascimento) {
+	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
 	}
 

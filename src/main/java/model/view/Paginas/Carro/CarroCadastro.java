@@ -59,9 +59,8 @@ public class CarroCadastro extends JPanel {
 					
 		try {
 			carroController.cadastrarCarro(carroVO);
-			JOptionPane.showMessageDialog(null, "Carro cadastrado com sucesso");
 		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "erro");
+			JOptionPane.showMessageDialog(null, "Erro ao cadastrar o automóvel");
 		}
 	}
 	
@@ -97,31 +96,16 @@ public class CarroCadastro extends JPanel {
 		marcaTextField.setColumns(10);
 		
 		modeloTextField = new JTextField();
-		modeloTextField.addActionListener(new ActionListener() {
-			public void keyTyped(KeyEvent e) {
-			}
-		});
 		modeloTextField.setBounds(226, 138, 476, 19);
 		modeloTextField.setColumns(10);
 		add(modeloTextField);
 		
 		anoTextField = new JTextField();
-		anoTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-		});
 		anoTextField.setBounds(226, 172, 476, 19);
 		anoTextField.setColumns(10);
 		add(anoTextField);
 		
 		corTextField = new JTextField();
-		corTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-				
-			}
-		});
 		corTextField.setColumns(10);
 		corTextField.setBounds(226, 234, 476, 19);
 		add(corTextField);
@@ -135,11 +119,6 @@ public class CarroCadastro extends JPanel {
 		add(placaLabel);
 		
 		placaTextField = new JTextField();
-		placaTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-		});
 		placaTextField.setColumns(10);
 		placaTextField.setBounds(226, 203, 476, 19);
 		add(placaTextField);
@@ -149,8 +128,6 @@ public class CarroCadastro extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				cadastrarCarro();
 				limparCamposForm();
-				
-				
 			}
 		});
 		

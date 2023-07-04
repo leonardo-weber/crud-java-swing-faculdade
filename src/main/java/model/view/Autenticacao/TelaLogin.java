@@ -42,6 +42,8 @@ public class TelaLogin extends JFrame {
 	
 	FuncionarioVO funcionarioVO = new FuncionarioVO();
 	LoginController loginController = new LoginController();
+	
+	private boolean loginAutenticado;
 
 
 	public static void main(String[] args) {
@@ -97,9 +99,13 @@ public class TelaLogin extends JFrame {
 				funcionarioVO.setSenha(passwordInputField.getText());
 				
 				try {
-					loginController.realizarLogin(funcionarioVO);
-					dispose();
-					principal.setVisible(true);
+					loginAutenticado = loginController.realizarLogin(funcionarioVO);
+					
+					if (loginAutenticado) {
+						JOptionPane.showMessageDialog(null, "Funcionário autenticado com sucesso");
+						dispose();
+						principal.setVisible(true);
+					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");
 				}

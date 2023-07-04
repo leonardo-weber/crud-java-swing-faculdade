@@ -11,11 +11,11 @@ public class FuncionarioController {
 	
 	FuncionarioBO funcionarioBO = new FuncionarioBO();
 	
-	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
+	public boolean cadastrarFuncionario(FuncionarioVO funcionario) {
         if (this.validarCamposCadastroFuncionarioForm(funcionario)) {
         	return funcionarioBO.cadastrarFuncionario(funcionario);
         } else {
-        	return funcionario; 
+        	return false; 
         }
 	}
 	
@@ -40,7 +40,7 @@ public class FuncionarioController {
 		boolean telefone = ValidarCamposFormulario.validacao(funcionario.getTelefone());
 		boolean cpf = ValidarCamposFormulario.validacao(funcionario.getCPF());
 		boolean sexo = ValidarCamposFormulario.validacao(funcionario.getSexo());
-		boolean dataNascimento = ValidarCamposFormulario.validacao(funcionario.getDataNascimento());
+		boolean dataNascimento = ValidarCamposFormulario.validacaoData(funcionario.getDataNascimento());
 		
 		boolean[] campos = { nome, senha, telefone, cpf, sexo, dataNascimento };
 				

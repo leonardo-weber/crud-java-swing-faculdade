@@ -44,7 +44,7 @@ public class ClienteController {
 		boolean cpf = ValidarCamposFormulario.validacao(cliente.getCPF());
 		boolean cnh = ValidarCamposFormulario.validacao(cliente.getCNH());
 		boolean sexo = ValidarCamposFormulario.validacao(cliente.getSexo());
-		boolean dataNascimento = ValidarCamposFormulario.validacao(cliente.getDataNascimento());
+		boolean dataNascimento = ValidarCamposFormulario.validacaoData(cliente.getDataNascimento());
 		
 		boolean[] campos = { nome, telefone, cpf, cnh, sexo, dataNascimento };
 				

@@ -1,6 +1,7 @@
 package model.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,6 +9,8 @@ import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JOptionPane;
 
 import model.vo.CarroVO;
 import model.vo.ClienteVO;
@@ -26,12 +29,13 @@ public class ClienteDAO {
 			statement.setString(2, cliente.getCNH());
 			statement.setString(3, cliente.getCPF());
 			statement.setString(4, cliente.getSexo());
-			statement.setTimestamp(5, Timestamp.valueOf(cliente.getDataNascimento()));
-			statement.setString(6, cliente.getTelefone());
+			statement.setString(5, cliente.getTelefone());
+			statement.setDate(6, Date.valueOf(cliente.getDataNascimento()));
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
 				cliente.setId(Integer.parseInt(resultado.getString(1)));
+				JOptionPane.showMessageDialog(null, "Cliente Cadastrado com sucesso!");
 			}
 		} catch (SQLException erro) {
 			System.out.println("ClienteDAO - Erro ao executar a query do método cadastrarcliente");
@@ -108,7 +112,6 @@ public class ClienteDAO {
 		ResultSet resultado = null;
 		
 		ArrayList<ClienteVO> listaClientes = new ArrayList<ClienteVO>(); 
-		ClienteVO cliente = new ClienteVO();
 		
 
 		String query = "SELECT * FROM CLIENTE";
@@ -116,12 +119,13 @@ public class ClienteDAO {
 		try {
 			resultado = stmt.executeQuery(query);
 			while(resultado.next()) {
+				ClienteVO cliente = new ClienteVO();
 				cliente.setId(Integer.parseInt(resultado.getString(1)));
 				cliente.setNome(resultado.getString(2));
 				cliente.setCNH(resultado.getString(3));
 				cliente.setCPF(resultado.getString(4));
 				cliente.setSexo(resultado.getString(5));
-				cliente.setDataNascimento(resultado.getString(6));
+				cliente.setDataNascimento(resultado.getDate(6).toLocalDate());
 				cliente.setTelefone(resultado.getString(7));
 				listaClientes.add(cliente);
 			}
@@ -156,7 +160,7 @@ public class ClienteDAO {
 				cliente.setCNH(resultado.getString(3));
 				cliente.setCPF(resultado.getString(4));
 				cliente.setSexo(resultado.getString(5));
-				cliente.setDataNascimento(resultado.getString(6));
+				cliente.setDataNascimento(resultado.getDate(6).toLocalDate());
 				cliente.setTelefone(resultado.getString(7));
 			}
 		} catch (SQLException erro) {

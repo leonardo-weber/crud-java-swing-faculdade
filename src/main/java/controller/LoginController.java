@@ -1,5 +1,7 @@
 package controller;
 
+import javax.swing.JOptionPane;
+
 import model.bo.FuncionarioBO;
 import model.vo.FuncionarioVO;
 import utils.ValidarCamposFormulario;
@@ -8,13 +10,16 @@ public class LoginController {
 	
 	FuncionarioBO funcionarioBO = new FuncionarioBO();
 	
-	public FuncionarioVO realizarLogin (FuncionarioVO funcionario) {
+	public boolean realizarLogin (FuncionarioVO funcionario) {
 		
 		boolean camposValidos = this.validarCamposLoginForm(funcionario);
 		
 		if (camposValidos) {		
 			return funcionarioBO.checarFuncionarioValido(funcionario);
-		} else return null;
+		} else {
+			JOptionPane.showMessageDialog(null, "Campos inválidos");
+			return false;
+		}
 		
 	}
 	

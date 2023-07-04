@@ -10,7 +10,7 @@ public class FuncionarioBO {
 	
 	FuncionarioDAO FuncionarioDAO = new FuncionarioDAO();
 	
-	public FuncionarioVO cadastrarFuncionario(FuncionarioVO funcionario) {
+	public boolean cadastrarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.cadastrarFuncionario(funcionario); 
 	}
 	
@@ -18,7 +18,7 @@ public class FuncionarioBO {
 		return FuncionarioDAO.consultarListaFuncionarios();
 	}
 	
-	public FuncionarioVO checarFuncionarioValido(FuncionarioVO funcionario) {
+	public boolean checarFuncionarioValido(FuncionarioVO funcionario) {
 		return FuncionarioDAO.checarFuncionarioValido(funcionario);
 	}
 	

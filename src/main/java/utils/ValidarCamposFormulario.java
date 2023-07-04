@@ -1,5 +1,7 @@
 package utils;
 
+import java.time.LocalDate;
+
 public class ValidarCamposFormulario {
 	
 	public static boolean validacao (String campo) {
@@ -13,4 +15,7 @@ public class ValidarCamposFormulario {
 		
 	}
 
+	public static boolean validacaoData(LocalDate dataNascimento) {
+		return dataNascimento != null;
+	}
 }

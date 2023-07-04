@@ -50,6 +50,7 @@ public class CarroListagem extends JPanel {
 			novaLinhaDaTabela[1] = carro.getModelo();
 ;			novaLinhaDaTabela[2] = carro.getAno();
 			novaLinhaDaTabela[3] = carro.getPlaca();
+			novaLinhaDaTabela[4] = carro.getCor();
 
 			model.addRow(novaLinhaDaTabela);
 		}

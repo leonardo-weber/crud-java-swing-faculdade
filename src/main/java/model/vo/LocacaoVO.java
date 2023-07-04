@@ -1,14 +1,14 @@
 package model.vo;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class LocacaoVO {
 	private int id;
 	private CarroVO carro;
 	private ClienteVO cliente;
-	private LocalDateTime dataLocacao;
-	private LocalDateTime dataPrevistaDevolucao;
-	private LocalDateTime dataEfetivaDevolucao;
+	private LocalDate dataLocacao;
+	private LocalDate dataPrevistaDevolucao;
+	private LocalDate dataEfetivaDevolucao;
 	private int valorPrevisto;
 	private int valorEfetivo;
 	private double multa;
@@ -22,9 +22,9 @@ public class LocacaoVO {
 			int id, 
 			CarroVO carro, 
 			ClienteVO cliente, 
-			LocalDateTime dataLocacao, 
-			LocalDateTime dataPrevistaDevolucao, 
-			LocalDateTime dataEfetivaDevolucao, 
+			LocalDate dataLocacao, 	
+			LocalDate dataPrevistaDevolucao, 
+			LocalDate dataEfetivaDevolucao, 
 			int valorPrevisto,
 			int valorEfetivo,
 			int multa,
@@ -65,27 +65,27 @@ public class LocacaoVO {
 		this.cliente = cliente;
 	}
 	
-	public LocalDateTime getDataLocacao() {
+	public LocalDate getDataLocacao() {
 		return dataLocacao;
 	}
 	
-	public void setDataLocacao(LocalDateTime dataLocacao) {
+	public void setDataLocacao(LocalDate dataLocacao) {
 		this.dataLocacao = dataLocacao;
 	}
 	
-	public LocalDateTime getDataPrevistaDevolucao() {
+	public LocalDate getDataPrevistaDevolucao() {
 		return dataPrevistaDevolucao;
 	}
 	
-	public void setDataPrevistaDevolucao(LocalDateTime dataPrevistaDevolucao) {
+	public void setDataPrevistaDevolucao(LocalDate dataPrevistaDevolucao) {
 		this.dataPrevistaDevolucao = dataPrevistaDevolucao;
 	}
 	
-	public LocalDateTime getDataEfetivaDevolucao() {
+	public LocalDate getDataEfetivaDevolucao() {
 		return dataEfetivaDevolucao;
 	}
 	
-	public void setDataEfetivaDevolucao(LocalDateTime dataEfetivaDevolucao) {
+	public void setDataEfetivaDevolucao(LocalDate dataEfetivaDevolucao) {
 		this.dataEfetivaDevolucao = dataEfetivaDevolucao;
 	}
 	
