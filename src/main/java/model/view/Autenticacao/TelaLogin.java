@@ -105,6 +105,8 @@ public class TelaLogin extends JFrame {
 						JOptionPane.showMessageDialog(null, "Funcionário autenticado com sucesso");
 						dispose();
 						principal.setVisible(true);
+					} else {
+						JOptionPane.showMessageDialog(null, "Falha ao autenticar funcionário");
 					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(null, "erro");

@@ -25,4 +25,12 @@ public class CarroBO {
 		return CarroDAO.atualizarCarro(carro);
 	}
 	
+	public CarroVO consultarCarroPorID(int id) {
+		return CarroDAO.consultarCarroPorID(id);
+	}
+	
+	public boolean atualizarDisponibilidadeCarro(int id, boolean disponibilidade) {
+		return CarroDAO.atualizarDisponibilidadeCarro(id, disponibilidade);
+	}
+	
 }

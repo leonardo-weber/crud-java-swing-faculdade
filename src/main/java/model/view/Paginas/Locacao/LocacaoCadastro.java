@@ -25,6 +25,8 @@ import javax.swing.JFormattedTextField;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.text.ParseException;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 
 public class LocacaoCadastro extends JPanel {
 	
@@ -55,6 +57,8 @@ public class LocacaoCadastro extends JPanel {
 	private JComboBox comboBoxCarro;
 	
 	private ClienteVO cliente;
+	private CarroVO carro;
+	private double valor;
 	
 	private List<CarroVO> listaCarros;
 	
@@ -76,6 +80,7 @@ public class LocacaoCadastro extends JPanel {
 		nomeClienteTextField.setText("");
 		telefoneClienteTextField.setText("");
 		cnhClienteTextField.setText("");
+		comboBoxCarro.setSelectedIndex(-1);
 	}
 	
 	public void preencherCamposCliente () {
@@ -87,20 +92,23 @@ public class LocacaoCadastro extends JPanel {
 	public void cadastrarLocacao () {
 		
 		try {
-			String cpfSemMascara = (String)  mascaraCPF.stringToValue(cpfClienteTextField.getText());
+			String CPFSemMascara = (String)  mascaraCPF.stringToValue(cpfClienteTextField.getText());
+			cliente.setCPF(CPFSemMascara);
 		} catch (ParseException e1) {
 			JOptionPane.showMessageDialog(null, "Erro ao converter o CPF", "Erro", JOptionPane.ERROR_MESSAGE); 
 		}
-		
+				
 		locacaoVO.setDataLocacao(dataLocacaoDatePicker.getDate());
 		locacaoVO.setDataPrevistaDevolucao(dataPrevistaDevolucaoDatePicker.getDate());
-		locacaoVO.setValorPrevisto(ABORT);
+		locacaoVO.setValorPrevisto(Integer.parseInt(valorTextField.getText()));
+		locacaoVO.setCarro(carro);
+		locacaoVO.setCliente(cliente);
+		
 
 		try {
 			 locacaoController.cadastrarLocacao(locacaoVO);
-			 JOptionPane.showMessageDialog(null, "Cliente cadastrado com sucesso");
 		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "erro");
+			JOptionPane.showMessageDialog(null, e2.getMessage());
 		}
 	}
 
@@ -144,6 +152,13 @@ public class LocacaoCadastro extends JPanel {
 		add(dataPrevistaDevolucaoDatePicker);
 		
 		valorTextField = new JTextField();
+		valorTextField.addFocusListener(new FocusAdapter() {
+			@Override
+			public void focusGained(FocusEvent e) {
+				valor = locacaoController.calcularValor(dataLocacaoDatePicker.getDate(), dataPrevistaDevolucaoDatePicker.getDate());
+				valorTextField.setText(Integer.toString((int) valor));
+			}
+		});
 		valorTextField.setBounds(226, 172, 476, 19);
 		valorTextField.setColumns(10);
 		add(valorTextField);
@@ -157,6 +172,12 @@ public class LocacaoCadastro extends JPanel {
 		add(cpfClienteLabel);
 					
 		comboBoxCarro = new JComboBox(listaCarros.toArray());
+		comboBoxCarro.setSelectedIndex(-1);
+		comboBoxCarro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carro = (CarroVO) comboBoxCarro.getSelectedItem();
+			}
+		});
 		comboBoxCarro.setBounds(226, 203, 476, 24);
 		add(comboBoxCarro);
 		
@@ -208,12 +229,12 @@ public class LocacaoCadastro extends JPanel {
 				
 				try {
 					CPFSemMascara = (String) mascaraCPF.stringToValue(cpfClienteTextField.getText());
+					cliente = clienteController.consultarClientePorCPF(CPFSemMascara);
+					preencherCamposCliente();
 				} catch (ParseException e1) {
 					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
 				}
 				
-				cliente = clienteController.consultarClientePorCPF(CPFSemMascara);
-				preencherCamposCliente();
 			}
 		});
 		btnBuscarCliente.setBounds(534, 273, 167, 25);

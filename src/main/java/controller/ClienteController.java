@@ -11,7 +11,7 @@ public class ClienteController {
 	
 	ClienteBO clienteBO = new ClienteBO();
 	
-	public ClienteVO cadastrarCliente(ClienteVO cliente) throws CampoInvalidoException {
+	public ClienteVO cadastrarCliente(ClienteVO cliente) {
         if (this.validarCamposCadastroClienteForm(cliente)) {
         	return clienteBO.cadastrarCliente(cliente);
         } else {
@@ -35,7 +35,11 @@ public class ClienteController {
 		return clienteBO.consultarClientePorCPF(cpf);
 	}
 	
-	private boolean validarCamposCadastroClienteForm (ClienteVO cliente) {
+	public ClienteVO consultarClientePorID(int id) {
+		return clienteBO.consultarClientePorID(id);
+	}
+	
+	public boolean validarCamposCadastroClienteForm (ClienteVO cliente) {
 		
 		boolean valido = true;
 		

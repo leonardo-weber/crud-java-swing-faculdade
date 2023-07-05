@@ -11,6 +11,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import model.vo.CarroVO;
+import model.vo.ClienteVO;
 
 public class CarroDAO {
 	
@@ -134,6 +135,66 @@ public class CarroDAO {
 
           return listaCarros;
 		
+	}
+	
+	public CarroVO consultarCarroPorID (int id) {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		CarroVO carro = new CarroVO();
+		
+		String query = "SELECT * FROM CARRO WHERE IDCARRO = " + id;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()) {
+				carro.setId(Integer.parseInt(resultado.getString(1)));
+				carro.setMarca(resultado.getString(2));
+				carro.setModelo(resultado.getString(3));
+				carro.setAno(resultado.getString(4));
+				carro.setPlaca(resultado.getString(5));
+				carro.setCor(resultado.getString(6));
+			} else {
+				JOptionPane.showMessageDialog(null, "Cliente não encontrado"); 
+			}
+		} catch (SQLException erro) {
+			System.out.println("CarroDAO - Erro ao executar a query do método consultarClientePorID");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return carro;
+		
+	}
+	
+	public boolean atualizarDisponibilidadeCarro(int id, boolean disponibilidade) {
+		
+		Connection connection = Banco.getConnection();
+		Statement statement = Banco.getStatement(connection);
+		
+		boolean retorno = false;
+		
+		String query = "UPDATE CARRO SET DISPONIBILIDADE = '" + disponibilidade + "' WHERE IDCARRO = " + id;
+		 
+		try {
+			if(statement.executeUpdate(query) == 1) {
+				retorno = true;
+			}
+		} catch (SQLException erro) {
+			System.out.println("CarroDAO - Erro ao executar a query do método atualizarCarro");
+			System.out.println("Erro: " + erro.getMessage());	
+		} finally {
+			Banco.closeStatement(statement);
+			Banco.closeConnection(connection);
+		}
+		
+		return retorno;
+	
 	}
 
 }

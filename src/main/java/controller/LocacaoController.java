@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class LocacaoController {
 	
 	LocacaoBO locacaoBO = new LocacaoBO();
 	
-	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) throws CampoInvalidoException {
+	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) {
         if (this.validarCamposCadastroLocacaoForm(locacao)) {
         	return locacaoBO.cadastrarLocacao(locacao);
         } else {
@@ -37,24 +38,35 @@ public class LocacaoController {
 		return locacaoBO.cadastrarDevolucao(locacao);
 	}
 	
+	public int calcularValor(LocalDate dataLocacao, LocalDate dataDevolucao) {
+		return locacaoBO.calcularValor(dataLocacao, dataDevolucao);
+	}
+	
+	public int calcularAtraso(LocalDate dataDevolucaoEfetiva, LocalDate dataDevolucaoPrevista) {
+		return locacaoBO.calcularAtraso(dataDevolucaoEfetiva, dataDevolucaoPrevista);
+	}
+	
+	
 	private boolean validarCamposCadastroLocacaoForm (LocacaoVO locacao) {
 		
 		boolean valido = true;
-		
-		boolean data_inicial = ValidarCamposFormulario.validacao(locacao.getData_inicio());
-		boolean data_final = ValidarCamposFormulario.validacao(locacao.getData_fim());
-		boolean carro = ValidarCamposFormulario.validacao(locacao.getCarro());
-		boolean cliente = ValidarCamposFormulario.validacao(locacao.getCliente());
-		boolean valor = ValidarCamposFormulario.validacao(locacao.getValor());
-		
-		boolean[] campos = { data_inicial, data_final, carro, cliente, valor };
+		CarroController carroController = new CarroController();
+		ClienteController clienteController = new ClienteController();
 				
+		boolean data_locacao = ValidarCamposFormulario.validacaoData(locacao.getDataLocacao());
+		boolean data_prevista_devolucao = ValidarCamposFormulario.validacaoData(locacao.getDataPrevistaDevolucao());
+		boolean valor = ValidarCamposFormulario.validacao(String.valueOf(locacao.getValorPrevisto()));
+		boolean carro = carroController.validarCamposCadastroCarroForm(locacao.getCarro());
+		boolean cliente = clienteController.validarCamposCadastroClienteForm(locacao.getCliente());
+		
+		boolean[] campos = { data_locacao, data_prevista_devolucao, valor, carro, cliente };				
+		
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {
 				valido = false;
 			}
 		}
-
+		
 		return valido;
 		
 	}

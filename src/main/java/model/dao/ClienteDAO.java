@@ -19,7 +19,7 @@ public class ClienteDAO {
 	
 	public ClienteVO cadastrarCliente(ClienteVO cliente) {
 		
-		String query ="INSERT INTO CLIENTE (NOME, CPF, TELEFONE, CNH, SEXO, DATA_NASCIMENTO) VALUES (?, ?, ?, ?, ?, ?)";
+		String query ="INSERT INTO CLIENTE (NOME, CNH, CPF, SEXO, TELEFONE, DATA_NASCIMENTO) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -151,10 +151,11 @@ public class ClienteDAO {
 		ClienteVO cliente = new ClienteVO();
 		
 		String query = "SELECT * FROM CLIENTE WHERE CPF = " + cpf;
+
 		
 		try {
 			resultado = stmt.executeQuery(query);
-			while(resultado.next()) {
+			if(resultado.next()) {
 				cliente.setId(Integer.parseInt(resultado.getString(1)));
 				cliente.setNome(resultado.getString(2));
 				cliente.setCNH(resultado.getString(3));
@@ -162,6 +163,8 @@ public class ClienteDAO {
 				cliente.setSexo(resultado.getString(5));
 				cliente.setDataNascimento(resultado.getDate(6).toLocalDate());
 				cliente.setTelefone(resultado.getString(7));
+			} else {
+				JOptionPane.showMessageDialog(null, "Cliente não encontrado"); 
 			}
 		} catch (SQLException erro) {
 			System.out.println("ClienteDAO - Erro ao executar a query do método consultarClientePorCPF");
@@ -173,7 +176,42 @@ public class ClienteDAO {
 		}
 
           return cliente;
+	}
+	
+	public ClienteVO consultarClientePorID(int id) {
 		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		ClienteVO cliente = new ClienteVO();
+		
+		String query = "SELECT * FROM CLIENTE WHERE IDCLIENTE = " + id;
+
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()) {
+				cliente.setId(Integer.parseInt(resultado.getString(1)));
+				cliente.setNome(resultado.getString(2));
+				cliente.setCNH(resultado.getString(3));
+				cliente.setCPF(resultado.getString(4));
+				cliente.setSexo(resultado.getString(5));
+				cliente.setDataNascimento(resultado.getDate(6).toLocalDate());
+				cliente.setTelefone(resultado.getString(7));
+			} else {
+				JOptionPane.showMessageDialog(null, "Cliente não encontrado"); 
+			}
+		} catch (SQLException erro) {
+			System.out.println("ClienteDAO - Erro ao executar a query do método consultarClientePorID");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return cliente;
 	}
 
 }

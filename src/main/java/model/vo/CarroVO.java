@@ -8,14 +8,16 @@ public class CarroVO {
 	private String placa;
 	private String ano;
 	private String cor;
+	private boolean disponibilidade;
 	
-	public CarroVO(int id, String marca, String modelo, String placa, String ano, String cor) {
+	public CarroVO(int id, String marca, String modelo, String placa, String ano, String cor, boolean disponibilidade) {
 		super();
 		this.id = id;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.placa = placa;
 		this.ano = ano;
+		this.disponibilidade = disponibilidade;
 	}
 	
 	public CarroVO() {
@@ -68,6 +70,14 @@ public class CarroVO {
 
 	public void setCor(String cor) {
 		this.cor= cor;
+	}
+	
+	public boolean getDisponibilidade() {
+		return disponibilidade;
+	}
+	
+	public void setDisponibilidade(boolean disponibilidade) {
+		this.disponibilidade = disponibilidade;
 	}
 	
 	@Override

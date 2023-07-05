@@ -29,6 +29,18 @@ public class CarroController {
 	public List<CarroVO> consultarListaCarros() {
 		return carroBO.consultarListaCarros();
 	}
+	
+	public CarroVO consultarCarroPorID(int id) {
+		return carroBO.consultarCarroPorID(id);
+	} 
+	
+	public boolean setLocacaoCarro(int id, boolean disponibilidade) {
+		return carroBO.atualizarDisponibilidadeCarro(id, false);
+	}
+	
+	public boolean setDevolucaoCarro(int id, boolean disponibilidade) {
+		return carroBO.atualizarDisponibilidadeCarro(id, true);
+	}
 		
 	public boolean validarCamposCadastroCarroForm (CarroVO carro) {
 		

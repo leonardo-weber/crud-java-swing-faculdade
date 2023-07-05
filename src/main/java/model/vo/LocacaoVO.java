@@ -12,7 +12,6 @@ public class LocacaoVO {
 	private int valorPrevisto;
 	private int valorEfetivo;
 	private double multa;
-	private boolean disponibilidade;
 	
 	public LocacaoVO() {
 		super();
@@ -27,8 +26,7 @@ public class LocacaoVO {
 			LocalDate dataEfetivaDevolucao, 
 			int valorPrevisto,
 			int valorEfetivo,
-			int multa,
-			boolean disponibilidade
+			int multa
 	) {
 		super();
 		this.id = id;
@@ -40,7 +38,6 @@ public class LocacaoVO {
 		this.valorPrevisto = valorPrevisto;
 		this.valorEfetivo = valorEfetivo;
 		this.multa = multa;
-		this.disponibilidade = disponibilidade;
 	}
 	
 	public int getId() {
@@ -112,11 +109,5 @@ public class LocacaoVO {
 	public void setMulta(int multa) {
 		this.multa = multa;
 	}
-	public boolean getDisponibilidade() {
-		return disponibilidade;
-	}
-	
-	public void setDisponibilidade(boolean disponibilidade) {
-		this.disponibilidade = disponibilidade;
-	}
+
 }

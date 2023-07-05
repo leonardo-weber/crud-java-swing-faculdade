@@ -25,16 +25,14 @@ public class LocacaoListagem extends JPanel {
 	
 	private JTable tabelaLocacao;
 	private ArrayList<LocacaoVO> listaLocacoes; 
-	private String[] colunasTabelas = { "Data Locação", "Data Devolução", "Atraso em dias", "Valor", "Multa", "Valor Final" } ;
+	private String[] colunasTabelas = { "Data Locação", "Data Devolução", "Dias de atraso", "Valor", "Multa", "Valor Final" } ;
 	
 	LocacaoController locacaoController = new LocacaoController();
-	
-	private LocacaoVO locacaoSelecionada;
 	
 	private void inicializarTabela() {
 		tabelaLocacao.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
 	}
-	 
+	
 	private void popularTabelaFuncionarios() {	
 		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaLocacao.getModel();
@@ -42,7 +40,7 @@ public class LocacaoListagem extends JPanel {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
 			novaLinhaDaTabela[0] = locacao.getDataLocacao();
 			novaLinhaDaTabela[1] = locacao.getDataPrevistaDevolucao();
-			novaLinhaDaTabela[2] = locacao.getValor(); // atraso
+			novaLinhaDaTabela[2] = locacaoController.calcularAtraso(locacao.getDataEfetivaDevolucao(),  locacao.getDataPrevistaDevolucao());
 			novaLinhaDaTabela[3] = locacao.getValorPrevisto();
 			novaLinhaDaTabela[4] = locacao.getMulta();
 			novaLinhaDaTabela[5] = locacao.getValorEfetivo();
@@ -50,18 +48,10 @@ public class LocacaoListagem extends JPanel {
 			model.addRow(novaLinhaDaTabela);
 		}
 	}
-	
-	private boolean deletarFuncionario () {
-		return locacaoController.excluirLocacao(locacaoSelecionada);
-	}
-	
+		
 	private void pesquisarListaLocacoes () {
-		try {
-			listaLocacoes = (ArrayList<LocacaoVO>) locacaoController.consultarListaLocacao();
-			popularTabelaFuncionarios();
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "erro");
-		}
+		listaLocacoes = (ArrayList<LocacaoVO>) locacaoController.consultarListaLocacao();
+		popularTabelaFuncionarios();
 	}
 
 	public LocacaoListagem() {
@@ -73,7 +63,7 @@ public class LocacaoListagem extends JPanel {
 		titleLabel.setBounds(26, 11, 646, 58);
 		add(titleLabel);
 		
-		btnPesquisar = new JButton("Pesquisar");
+		btnPesquisar = new JButton("Pesquisar"); 
 		btnPesquisar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				pesquisarListaLocacoes();

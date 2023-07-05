@@ -29,5 +29,9 @@ public class ClienteBO {
 	public ClienteVO consultarClientePorCPF(String cpf) {
 		return clienteDAO.consultarClientePorCPF(cpf);
 	}
+	
+	public ClienteVO consultarClientePorID(int id) {
+		return clienteDAO.consultarClientePorID(id);
+	}
 
 }
