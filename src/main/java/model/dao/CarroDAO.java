@@ -178,6 +178,43 @@ public class CarroDAO {
 		
 	}
 	
+	public List<CarroVO> consultarCarrosDisponiveisEAtivos() {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		ArrayList<CarroVO> listaCarros = new ArrayList<CarroVO>(); 		
+
+		String query = "SELECT * FROM CARRO WHERE DISPONIBILIDADE = TRUE AND ATIVO = TRUE"; 
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				CarroVO carroVO = new CarroVO();
+				carroVO.setId(Integer.parseInt(resultado.getString(1)));
+				carroVO.setMarca(resultado.getString(2));
+				carroVO.setModelo(resultado.getString(3));
+				carroVO.setAno(resultado.getString(4));
+				carroVO.setPlaca(resultado.getString(5));
+				carroVO.setCor(resultado.getString(6));
+				carroVO.setDisponibilidade(resultado.getBoolean(7));
+				carroVO.setAtivo(resultado.getBoolean(8));
+				listaCarros.add(carroVO);
+			}
+		} catch (SQLException erro) {
+			System.out.println("CarroDA0 - Erro ao executar a query do método consultarListaCarros");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return listaCarros;
+		
+	}
+	
 	public CarroVO consultarCarroPorID (int id) {
 		
 		Connection conn = Banco.getConnection();

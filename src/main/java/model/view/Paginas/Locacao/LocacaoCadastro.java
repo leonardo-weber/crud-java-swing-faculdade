@@ -1,5 +1,6 @@
 package model.view.Paginas.Locacao;
 
+import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -125,7 +126,7 @@ public class LocacaoCadastro extends JPanel {
 		
 		mascaraCPF.setValueContainsLiteralCharacters(false);
 		
-		listaCarros = carroController.consultarListaCarros();
+		listaCarros = carroController.consultarCarrosDisponiveisEAtivos();
 				
 		titleLabel = new JLabel("Cadastro de Locação de Carros");
 		titleLabel.setBounds(26, 11, 222, 58);
@@ -170,8 +171,11 @@ public class LocacaoCadastro extends JPanel {
 		cpfClienteLabel = new JLabel("CPF do Cliente");
 		cpfClienteLabel.setBounds(26, 244, 102, 15);
 		add(cpfClienteLabel);
+		
+		String[] avisoComboBoxDisponibilidade = {"Não existem carros disponíveis no momento para locação"};
+		final boolean comboBoxSemCarrosDisponiveis = listaCarros.toArray().length == 0;
 					
-		comboBoxCarro = new JComboBox(listaCarros.toArray());
+		comboBoxCarro = new JComboBox((comboBoxSemCarrosDisponiveis ? avisoComboBoxDisponibilidade : listaCarros.toArray()));
 		comboBoxCarro.setSelectedIndex(-1);
 		comboBoxCarro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -184,8 +188,12 @@ public class LocacaoCadastro extends JPanel {
 		cadastrarLocacaoButton = new JButton("Cadastrar Locação");
 		cadastrarLocacaoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastrarLocacao();
-				limparCamposForm();
+				if (!comboBoxSemCarrosDisponiveis) {
+					cadastrarLocacao();
+					limparCamposForm();
+				} else {
+					JOptionPane.showMessageDialog(null, "Não existem carros disponíveis para cadastrar uma locação"); 
+				}
 			}
 		});
 		cadastrarLocacaoButton.setBounds(420, 388, 282, 25);

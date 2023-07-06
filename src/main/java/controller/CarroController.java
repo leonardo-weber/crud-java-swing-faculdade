@@ -38,6 +38,10 @@ public class CarroController {
 		return carroBO.consultarCarrosComFiltroDeDisponibilidade(disponibilidade);
 	}
 	
+	public List<CarroVO> consultarCarrosDisponiveisEAtivos () {
+		return carroBO.consultarCarrosDisponiveisEAtivos();
+	}
+	
 	public CarroVO consultarCarroPorID(int id) {
 		return carroBO.consultarCarroPorID(id);
 	} 

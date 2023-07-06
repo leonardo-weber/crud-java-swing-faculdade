@@ -21,6 +21,10 @@ public class CarroBO {
 		return carroDAO.consultarCarrosComFiltroDeDisponibilidade(disponibilidade);
 	}
 	
+	public List<CarroVO> consultarCarrosDisponiveisEAtivos() {
+		return carroDAO.consultarCarrosDisponiveisEAtivos();
+	}
+	
 	public boolean ativarStatusCarro (int id) {
 		return carroDAO.atualizarStatusCarro(id, true);
 	}
