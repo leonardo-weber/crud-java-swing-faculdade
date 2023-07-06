@@ -7,30 +7,38 @@ import model.vo.CarroVO;
 
 public class CarroBO {
 	
-	CarroDAO CarroDAO = new CarroDAO();
+	CarroDAO carroDAO = new CarroDAO();
 	
 	public CarroVO cadastrarCarro(CarroVO carro) {
-		return CarroDAO.cadastrarCarro(carro);
+		return carroDAO.cadastrarCarro(carro);
 	}
 	
 	public List<CarroVO> consultarListaCarros() {
-		return CarroDAO.consultarListaCarros();
+		return carroDAO.consultarListaCarros();
 	}
 	
-	public boolean deletarCarro(CarroVO carro) {
-		return CarroDAO.deletarCarro(carro);
+	public List<CarroVO> consultarCarrosComFiltroDeDisponibilidade(boolean disponibilidade) {
+		return carroDAO.consultarCarrosComFiltroDeDisponibilidade(disponibilidade);
+	}
+	
+	public boolean ativarStatusCarro (int id) {
+		return carroDAO.atualizarStatusCarro(id, true);
+	}
+	
+	public boolean desativarStatusCarro (int id) {
+		return carroDAO.atualizarStatusCarro(id, false);
 	}
 
 	public boolean atualizarCarro(CarroVO carro) {
-		return CarroDAO.atualizarCarro(carro);
+		return carroDAO.atualizarCarro(carro);
 	}
 	
 	public CarroVO consultarCarroPorID(int id) {
-		return CarroDAO.consultarCarroPorID(id);
-	}
+		return carroDAO.consultarCarroPorID(id);
+	} 
 	
 	public boolean atualizarDisponibilidadeCarro(int id, boolean disponibilidade) {
-		return CarroDAO.atualizarDisponibilidadeCarro(id, disponibilidade);
+		return carroDAO.atualizarDisponibilidadeCarro(id, disponibilidade);
 	}
 	
 }

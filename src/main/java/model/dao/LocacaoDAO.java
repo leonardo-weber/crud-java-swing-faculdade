@@ -91,12 +91,12 @@ public class LocacaoDAO {
 		
 		String query = "UPDATE LOCACAO SET DATA_LOCACAO = '" + locacao.getDataLocacao()
 				+ "', DATA_PREVISTA_DEVOLUCAO = '" + locacao.getDataPrevistaDevolucao()
-				+ "', DATA_EFETIVA_DEVOLUCAO = " + locacao.getDataEfetivaDevolucao()
-				+ "', VALOR_PREVISTO = " + locacao.getValorPrevisto()
-				+ "', VALOR_EFETIVO = " + locacao.getValorEfetivo()
-				+ "', MULTA = " + locacao.getMulta()
-				+ "', IDCLIENTE = " + locacao.getMulta()
-				+ "', IDCARRO = " + locacao.getCarro().getId()
+				+ "', DATA_EFETIVA_DEVOLUCAO = '" + locacao.getDataEfetivaDevolucao()
+				+ "', VALOR_PREVISTO = '" + locacao.getValorPrevisto()
+				+ "', VALOR_EFETIVO = '" + locacao.getValorEfetivo()
+				+ "', MULTA = '" + locacao.getMulta()
+				+ "', IDCLIENTE = '" + locacao.getCliente().getId()
+				+ "', IDCARRO = '" + locacao.getCarro().getId()
 				+ "' WHERE IDLOCACAO = " + locacao.getCliente().getId();
 		 
 		try {
@@ -113,6 +113,23 @@ public class LocacaoDAO {
 		
 		return retorno;
 	
+	}
+	
+	public boolean cadastrarDevolucao (LocacaoVO locacao) {
+		
+		boolean locacaoAtualizada = atualizarLocacao(locacao);
+		CarroController carroController = new CarroController();
+		
+		int carroID = locacao.getCarro().getId();
+		carroController.setDevolucaoCarro(carroID);
+		
+		if (locacaoAtualizada) {
+			JOptionPane.showMessageDialog(null, "Devolução cadastrada com sucesso");
+		} else {
+			JOptionPane.showMessageDialog(null, "Falha ao cadastrar devolução");
+		}
+		
+		return locacaoAtualizada;
 	}
 		
 	public List<LocacaoVO> consultarListaLocacao () {
@@ -135,8 +152,56 @@ public class LocacaoDAO {
 				ClienteVO cliente = clienteController.consultarClientePorID(Integer.parseInt(resultado.getString(2)));
 				CarroVO carro = carroController.consultarCarroPorID(Integer.parseInt(resultado.getString(3)));
 				
-				
 				LocacaoVO locacao = new LocacaoVO();
+				
+				String valorPrevisto = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(7)));
+				String valorEfetivo = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(8)));
+				
+				carroController.setLocacaoCarro(Integer.parseInt(resultado.getString(3)));
+								
+				locacao.setId(Integer.parseInt(resultado.getString(1)));
+				locacao.setCliente(cliente);
+				locacao.setCarro(carro);
+				locacao.setDataLocacao(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyy-MM-dd")));
+				locacao.setDataPrevistaDevolucao(LocalDate.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyy-MM-dd")));
+				locacao.setDataEfetivaDevolucao(LocalDate.parse(resultado.getString(6), DateTimeFormatter.ofPattern("yyy-MM-dd")));
+				locacao.setValorPrevisto(Integer.parseInt(valorPrevisto));
+				locacao.setValorEfetivo(Integer.parseInt(valorEfetivo));
+				locacao.setMulta(0);
+				listaLocacao.add(locacao);
+			}
+		} catch (SQLException erro) {
+			System.out.println("LocacaoDAO - Erro ao executar a query do método consultarListaLocacao");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+			
+          return listaLocacao;
+	}
+	
+	public LocacaoVO consultarLocacaoPorID (int id) {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		LocacaoVO locacao = new LocacaoVO();
+		
+		ClienteController clienteController = new ClienteController();
+		CarroController carroController = new CarroController();
+		
+		
+		String query = "SELECT * FROM LOCACAO WHERE IDLOCACAO = " + id;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()) {
+				
+				ClienteVO cliente = clienteController.consultarClientePorID(Integer.parseInt(resultado.getString(2)));
+				CarroVO carro = carroController.consultarCarroPorID(Integer.parseInt(resultado.getString(3)));
 				
 				String valorPrevisto = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(7)));
 				String valorEfetivo = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(8)));
@@ -149,10 +214,12 @@ public class LocacaoDAO {
 				locacao.setDataEfetivaDevolucao(LocalDate.parse(resultado.getString(6), DateTimeFormatter.ofPattern("yyy-MM-dd")));
 				locacao.setValorPrevisto(Integer.parseInt(valorPrevisto));
 				locacao.setValorEfetivo(Integer.parseInt(valorEfetivo));
-				locacao.setMulta(Integer.parseInt(resultado.getString(9)));
+				locacao.setMulta(0);
+			} else {
+				JOptionPane.showMessageDialog(null, "Cliente não encontrado"); 
 			}
 		} catch (SQLException erro) {
-			System.out.println("LocacaoDAO - Erro ao executar a query do método consultarListaLocacao");
+			System.out.println("LocacaoDAO - Erro ao executar a query do método consultarCarroPorID");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -160,7 +227,7 @@ public class LocacaoDAO {
 			Banco.closeConnection(conn);
 		}
 
-          return listaLocacao;
+          return locacao;
 		
 	}
 

@@ -19,7 +19,7 @@ public class FuncionarioDAO {
 	
 	public boolean cadastrarFuncionario(FuncionarioVO funcionario) {
 		
-		String query ="INSERT INTO FUNCIONARIO (NOME, SENHA, TELEFONE, CPF, SEXO, DATA_NASCIMENTO) VALUES (?, ?, ?, ?, ?, ?)";
+		String query ="INSERT INTO FUNCIONARIO (NOME, SENHA, TELEFONE, CPF, SEXO, DATA_NASCIMENTO, ATIVO) VALUES (?, ?, ?, ?, ?, ?, ?)";
 		boolean funcionarioCadastrado = false;
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -31,6 +31,7 @@ public class FuncionarioDAO {
 			statement.setString(4, funcionario.getCPF());
 			statement.setString(5, funcionario.getSexo());
 			statement.setDate(6, Date.valueOf(funcionario.getDataNascimento()));
+			statement.setBoolean(7, true);
 			statement.execute();	
 			ResultSet resultado = statement.getGeneratedKeys();
 			if(resultado.next()) {
@@ -106,6 +107,32 @@ public class FuncionarioDAO {
 	
 	}
 	
+	public boolean atualizarStatusFuncionario(FuncionarioVO funcionario, boolean status) {
+		
+		Connection connection = Banco.getConnection();
+		Statement statement = Banco.getStatement(connection);
+		boolean retorno = false;
+		
+		String query = "UPDATE FUNCIONARIO SET ATIVO = " + status + " WHERE IDFUNCIONARIO = " + funcionario.getId();
+		 
+		try {
+			if(statement.executeUpdate(query) == 1) {
+				retorno = true;
+			}
+		} catch (SQLException erro) {
+			System.out.println("FuncionarioDAO - Erro ao executar a query do método atualizarFuncionario");
+			System.out.println("Erro: " + erro.getMessage());	
+		} finally {
+			Banco.closeStatement(statement);
+			Banco.closeConnection(connection);
+		}
+		
+		return retorno;
+	
+	}
+	
+	
+	
 	public boolean checarFuncionarioValido(FuncionarioVO funcionario) {
 		
 		Connection connection = Banco.getConnection();
@@ -154,10 +181,48 @@ public class FuncionarioDAO {
 				funcionario.setCPF(resultado.getString(5));
 				funcionario.setSexo(resultado.getString(6));
 				funcionario.setDataNascimento(resultado.getDate(7).toLocalDate());
+				funcionario.setAtivo(resultado.getBoolean(8));
 				listaFuncionarios.add(funcionario);
 			}
 		} catch (SQLException erro) {
 			System.out.println("FuncionarioDAO - Erro ao executar a query do método consultarListaFuncionarios");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+          return listaFuncionarios;
+		
+	}
+	
+	public ArrayList<FuncionarioVO> consultarListaFuncionariosComFiltragemDeStatus (boolean status) {
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		ResultSet resultado = null;
+		
+		ArrayList<FuncionarioVO> listaFuncionarios = new ArrayList<FuncionarioVO>(); 
+		
+		String query = "SELECT * FROM FUNCIONARIO WHERE ATIVO = " + status;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				FuncionarioVO funcionario = new FuncionarioVO();
+				funcionario.setId(Integer.parseInt(resultado.getString(1)));
+				funcionario.setNome(resultado.getString(2));
+				funcionario.setSenha(resultado.getString(3));
+				funcionario.setTelefone(resultado.getString(4));
+				funcionario.setCPF(resultado.getString(5));
+				funcionario.setSexo(resultado.getString(6));
+				funcionario.setDataNascimento(resultado.getDate(7).toLocalDate());
+				funcionario.setAtivo(resultado.getBoolean(8));
+				listaFuncionarios.add(funcionario);
+			}
+		} catch (SQLException erro) {
+			System.out.println("FuncionarioDAO - Erro ao executar a query do método consultarListaFuncionariosComFiltragemDeStatus");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);

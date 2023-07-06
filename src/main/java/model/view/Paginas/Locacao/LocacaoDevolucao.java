@@ -2,6 +2,12 @@ package model.view.Paginas.Locacao;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -9,9 +15,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
+import com.github.lgooddatepicker.components.DatePicker;
+
+import controller.LocacaoController;
+import model.vo.LocacaoVO;
+
 public class LocacaoDevolucao extends JPanel {
 	
 	private JLabel tituloLabel;
+	
+	LocacaoController locacaoController = new LocacaoController();
+	private LocacaoVO locacao;
 	
 	private JLabel idLocacaoLabel;
 	private JLabel dataLocacaoLabel;
@@ -25,8 +39,9 @@ public class LocacaoDevolucao extends JPanel {
 	private JLabel cpfClienteLabel;
 	
 	private JTextField idLocacaoTextField;
-	private JTextField dataLocacaoTextField;
-	private JTextField dataDevolucaoTextField;
+	private DatePicker dataLocacaoDatePicker;
+	private DatePicker dataDevolucaoEfetivaDatePicker;
+	private DatePicker dataDevolucaoPrevistaDatePicker;
 	private JTextField valorPrevistoTextField;
 	private JTextField valorEfetivoTextField;
 	private JTextField valorMultaTextField;
@@ -38,14 +53,53 @@ public class LocacaoDevolucao extends JPanel {
 	private JButton cadastrarDevolucaoButton;
 	private JButton buscarLocacaoButton;
 	private JButton btnLimparCampos;
-	private JTextField textField;
+	private JLabel dataDevolucaoPrevista;
 	
 	public void cadastrarDevolucao () {
+		
+		try {
+			
+			locacaoController.cadastrarDevolucao(locacao);
+
+		} catch (Exception e ) {
+			System.out.println("erro");
+		}
 		
 	}
 	
 	public void limparCamposForm () {
+		idLocacaoTextField.setText("");
+		dataLocacaoDatePicker.setText("");
+		dataDevolucaoPrevistaDatePicker.setText("");
+		dataDevolucaoEfetivaDatePicker.setText("");
+		valorPrevistoTextField.setText("");
+		valorEfetivoTextField.setText("");
+		valorMultaTextField.setText("");
+		valorCarroTextField.setText("");
+		nomeClienteTextField.setText("");
+		telefoneClienteTextField.setText("");
+		cpfClienteTextField.setText("");		
+	}
+	
+	public void preencherCamposLocacao () {
 		
+		Date dataDeHoje = new Date();
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");  
+		String dataDevolucaoEfetiva = dateFormat.format(dataDeHoje);
+		
+		int valorMulta = locacaoController.calcularMulta(locacao, LocalDate.now());
+		int valorEfetivo = locacaoController.calcularValorEfetivo(locacao.getValorPrevisto(), valorMulta);
+		
+		dataLocacaoDatePicker.setText(locacao.getDataLocacao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		dataDevolucaoPrevistaDatePicker.setText(locacao.getDataEfetivaDevolucao().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		dataDevolucaoEfetivaDatePicker.setText(dataDevolucaoEfetiva);
+		valorPrevistoTextField.setText(Integer.toString(locacao.getValorPrevisto()));
+		valorMultaTextField.setText(Integer.toString(valorMulta));
+		valorEfetivoTextField.setText(Integer.toString(valorEfetivo));
+		valorCarroTextField.setText(locacao.getCarro().toString());
+		nomeClienteTextField.setText(locacao.getCliente().getNome());
+		telefoneClienteTextField.setText(locacao.getCliente().getTelefone());
+		cpfClienteTextField.setText(locacao.getCliente().getCPF());
 	}
 	
 	public LocacaoDevolucao() {
@@ -68,26 +122,25 @@ public class LocacaoDevolucao extends JPanel {
 		add(cadastrarDevolucaoButton);
 		
 		idLocacaoLabel = new JLabel("Identificador da locação");
-		idLocacaoLabel.setBounds(26, 96, 237, 15);
+		idLocacaoLabel.setBounds(26, 78, 237, 15);
 		add(idLocacaoLabel);
 		
 		idLocacaoTextField = new JTextField();
-		idLocacaoTextField.setBounds(26, 123, 176, 19);
+		idLocacaoTextField.setBounds(26, 105, 176, 19);
 		add(idLocacaoTextField);
 		idLocacaoTextField.setColumns(10);
 				
 		dataLocacaoLabel = new JLabel("Data da Locação");
-		dataLocacaoLabel.setBounds(26, 234, 237, 15);
+		dataLocacaoLabel.setBounds(26, 173, 237, 15);
 		add(dataLocacaoLabel);
 		
-		dataDevolucaoLabel = new JLabel("Data da Devolução");
+		dataDevolucaoLabel = new JLabel("Data da Devolução Efetiva");
 		dataDevolucaoLabel.setBounds(26, 292, 237, 15);
 		add(dataDevolucaoLabel);
 		
-		dataDevolucaoTextField = new JTextField();
-		dataDevolucaoTextField.setColumns(10);
-		dataDevolucaoTextField.setBounds(26, 319, 176, 19);
-		add(dataDevolucaoTextField);
+		dataDevolucaoEfetivaDatePicker = new DatePicker();
+		dataDevolucaoEfetivaDatePicker.setBounds(26, 319, 200, 19);
+		add(dataDevolucaoEfetivaDatePicker);
 		
 		valorPrevistoLabel = new JLabel("Valor Previsto");
 		valorPrevistoLabel.setBounds(26, 350, 237, 15);
@@ -99,21 +152,21 @@ public class LocacaoDevolucao extends JPanel {
 		add(valorPrevistoTextField);
 		
 		valorEfetivoLabel = new JLabel("Valor Efetivo");
-		valorEfetivoLabel.setBounds(271, 234, 237, 15);
+		valorEfetivoLabel.setBounds(275, 292, 237, 15);
 		add(valorEfetivoLabel);
 		
 		valorEfetivoTextField = new JTextField();
 		valorEfetivoTextField.setColumns(10);
-		valorEfetivoTextField.setBounds(271, 261, 176, 19);
+		valorEfetivoTextField.setBounds(271, 319, 176, 19);
 		add(valorEfetivoTextField);
 		
 		valorMultaLabel = new JLabel("Valor Multa");
-		valorMultaLabel.setBounds(271, 292, 237, 15);
+		valorMultaLabel.setBounds(275, 234, 237, 15);
 		add(valorMultaLabel);
 		
 		valorMultaTextField = new JTextField();
 		valorMultaTextField.setColumns(10);
-		valorMultaTextField.setBounds(271, 319, 176, 19);
+		valorMultaTextField.setBounds(275, 261, 176, 19);
 		add(valorMultaTextField);
 		
 		valorCarroLabel = new JLabel("Carro");
@@ -152,22 +205,40 @@ public class LocacaoDevolucao extends JPanel {
 		add(cpfClienteTextField);
 		
 		btnLimparCampos = new JButton("Limpar Campos");
+		btnLimparCampos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				limparCamposForm();
+			}
+		});
 		btnLimparCampos.setBounds(448, 154, 237, 25);
 		add(btnLimparCampos);
 		
 		buscarLocacaoButton = new JButton("Buscar locação");
-		buscarLocacaoButton.setBounds(26, 154, 176, 25);
+		buscarLocacaoButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				locacao = locacaoController.consultarLocacaoPorID(Integer.parseInt(idLocacaoTextField.getText()));
+				preencherCamposLocacao();
+			}
+		});
+		buscarLocacaoButton.setBounds(26, 136, 176, 25);
 		add(buscarLocacaoButton);
 		
-		dataLocacaoTextField = new JTextField();
-		dataLocacaoTextField.setColumns(10);
-		dataLocacaoTextField.setBounds(26, 261, 176, 19);
-		add(dataLocacaoTextField);
+		dataLocacaoDatePicker = new DatePicker();
+		dataLocacaoDatePicker.setBounds(26, 200, 200, 19);
+		add(dataLocacaoDatePicker);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(509, 377, 176, 19);
-		add(textField);
+		cpfClienteTextField = new JTextField();
+		cpfClienteTextField.setColumns(10);
+		cpfClienteTextField.setBounds(509, 377, 176, 19);
+		add(cpfClienteTextField);
+		
+		dataDevolucaoPrevista = new JLabel("Data da Devolução Prevista");
+		dataDevolucaoPrevista.setBounds(26, 234, 237, 15);
+		add(dataDevolucaoPrevista);
+		
+		dataDevolucaoPrevistaDatePicker = new DatePicker();
+		dataDevolucaoPrevistaDatePicker.setBounds(26, 261, 200, 19);
+		add(dataDevolucaoPrevistaDatePicker);
 
 	}
 }

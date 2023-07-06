@@ -27,8 +27,21 @@ public class FuncionarioController {
 		return funcionarioBO.deletarFuncionario(funcionario);
 	}
 	
+	public boolean desativarFuncionario(FuncionarioVO funcionario) {
+		return funcionarioBO.desativarFuncionario(funcionario);
+	}
+	
+	public boolean ativarFuncionario(FuncionarioVO funcionario) {
+		return funcionarioBO.ativarFuncionario(funcionario);
+	}
+	
+	
 	public List<FuncionarioVO> consultarListaFuncionarios () {
 		return funcionarioBO.consultarListaFuncionarios();
+	}
+	
+	public List<FuncionarioVO> consultarListaFuncionariosComFiltragemDeStatus (boolean status) {
+		return funcionarioBO.consultarListaFuncionariosComFiltragemDeStatus(status);
 	}
 	
 	public boolean validarCamposCadastroFuncionarioForm (FuncionarioVO funcionario) {

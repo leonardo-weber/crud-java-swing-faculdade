@@ -1,5 +1,6 @@
 package model.bo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.FuncionarioDAO;
@@ -26,6 +27,18 @@ public class FuncionarioBO {
 		return FuncionarioDAO.deletarFuncionario(funcionario);
 	}
 
+	public boolean desativarFuncionario(FuncionarioVO funcionario) {
+		return FuncionarioDAO.atualizarStatusFuncionario(funcionario, false);
+	}
+
+	public boolean ativarFuncionario(FuncionarioVO funcionario) {
+		return FuncionarioDAO.atualizarStatusFuncionario(funcionario, true);
+	}
+
+	public ArrayList<FuncionarioVO> consultarListaFuncionariosComFiltragemDeStatus (boolean status) {
+		return FuncionarioDAO.consultarListaFuncionariosComFiltragemDeStatus(status);
+	}
+	
 	public boolean atualizarFuncionario(FuncionarioVO funcionario) {
 		return FuncionarioDAO.atualizarFuncionario(funcionario);
 	}

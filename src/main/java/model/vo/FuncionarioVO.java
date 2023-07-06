@@ -11,12 +11,13 @@ public class FuncionarioVO {
 	private String senha;
 	private String sexo;
 	private LocalDate dataNascimento;
+	private boolean ativo;
 	
 	public FuncionarioVO() {
 		super();
 	}
 	
-	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha, String sexo, LocalDate dataNascimento) {
+	public FuncionarioVO(int id, String nome, String telefone, String cpf, String senha, String sexo, LocalDate dataNascimento, boolean ativo) {
 		super();
 		this.id = id;
 		this.nome = nome;
@@ -25,6 +26,7 @@ public class FuncionarioVO {
 		this.senha = senha;
 		this.sexo = sexo;
 		this.dataNascimento = dataNascimento;
+		this.ativo = ativo;
 	}
 	
 	public int getId() {
@@ -81,6 +83,14 @@ public class FuncionarioVO {
 	
 	public void setDataNascimento(LocalDate dataNascimento) {
 		this.dataNascimento = dataNascimento;
+	}
+	
+	public boolean getAtivo() {
+		return ativo;
+	}
+	
+	public void setAtivo(boolean ativo) {
+		this.ativo = ativo;
 	}
 
 }

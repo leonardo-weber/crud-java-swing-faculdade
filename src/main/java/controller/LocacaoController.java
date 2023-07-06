@@ -30,14 +30,18 @@ public class LocacaoController {
 		return locacaoBO.deletarLocacao(locacao);
 	}
 	
-	public List<LocacaoVO> consultarListaLocacao () {
-		return locacaoBO.consultarListaLocacao();
-	}
-	
 	public boolean cadastrarDevolucao(LocacaoVO locacao) {
 		return locacaoBO.cadastrarDevolucao(locacao);
 	}
 	
+	public List<LocacaoVO> consultarListaLocacao () {
+		return locacaoBO.consultarListaLocacao();
+	}
+	
+	public LocacaoVO consultarLocacaoPorID(int id) {
+		return locacaoBO.consultarLocacaoPorID(id);
+	}
+		
 	public int calcularValor(LocalDate dataLocacao, LocalDate dataDevolucao) {
 		return locacaoBO.calcularValor(dataLocacao, dataDevolucao);
 	}
@@ -46,6 +50,13 @@ public class LocacaoController {
 		return locacaoBO.calcularAtraso(dataDevolucaoEfetiva, dataDevolucaoPrevista);
 	}
 	
+	public int calcularMulta(LocacaoVO locacao, LocalDate dataEfetivaDevolucao) {
+		return locacaoBO.calcularMulta(locacao, dataEfetivaDevolucao);
+	}
+	
+	public int calcularValorEfetivo (int valorPrevisto, int multa) {
+		return locacaoBO.calcularValorEfetivo(valorPrevisto, multa);
+	}
 	
 	private boolean validarCamposCadastroLocacaoForm (LocacaoVO locacao) {
 		

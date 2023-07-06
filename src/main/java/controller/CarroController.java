@@ -22,23 +22,31 @@ public class CarroController {
 		return carroBO.atualizarCarro(carro);
 	}
 	
-	public boolean excluirCarro(CarroVO carro) {
-		return carroBO.deletarCarro(carro);
+	public boolean ativarStatusCarro (int id) {
+		return carroBO.ativarStatusCarro(id);
+	}
+	
+	public boolean desativarStatusCarro (int id) {
+		return carroBO.desativarStatusCarro(id);
 	}
 	
 	public List<CarroVO> consultarListaCarros() {
 		return carroBO.consultarListaCarros();
 	}
 	
+	public List<CarroVO> consultarCarrosComFiltroDeDisponibilidade (boolean disponibilidade) {
+		return carroBO.consultarCarrosComFiltroDeDisponibilidade(disponibilidade);
+	}
+	
 	public CarroVO consultarCarroPorID(int id) {
 		return carroBO.consultarCarroPorID(id);
 	} 
 	
-	public boolean setLocacaoCarro(int id, boolean disponibilidade) {
+	public boolean setLocacaoCarro(int id) {
 		return carroBO.atualizarDisponibilidadeCarro(id, false);
 	}
 	
-	public boolean setDevolucaoCarro(int id, boolean disponibilidade) {
+	public boolean setDevolucaoCarro(int id) {
 		return carroBO.atualizarDisponibilidadeCarro(id, true);
 	}
 		
