@@ -14,6 +14,8 @@ import model.vo.FuncionarioVO;
 import model.vo.LocacaoVO;
 
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -25,7 +27,9 @@ public class LocacaoListagem extends JPanel {
 	
 	private JTable tabelaLocacao;
 	private ArrayList<LocacaoVO> listaLocacoes; 
-	private String[] colunasTabelas = { "Data Locação", "Data Devolução", "Dias de atraso", "Valor", "Multa", "Valor Final" } ;
+	private LocacaoVO locacaoSelecionada;
+	
+	private String[] colunasTabelas = { "Data Locação", "Previsão Devolução", "Data Devolução", "Dias de atraso", "Valor", "Multa", "Valor Final", "Nome cliente", "CPF Cliente" } ;
 	
 	LocacaoController locacaoController = new LocacaoController();
 	
@@ -40,10 +44,13 @@ public class LocacaoListagem extends JPanel {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
 			novaLinhaDaTabela[0] = locacao.getDataLocacao();
 			novaLinhaDaTabela[1] = locacao.getDataPrevistaDevolucao();
-			novaLinhaDaTabela[2] = locacaoController.calcularAtraso(locacao.getDataEfetivaDevolucao(),  locacao.getDataPrevistaDevolucao());
-			novaLinhaDaTabela[3] = locacao.getValorPrevisto();
-			novaLinhaDaTabela[4] = locacao.getMulta();
-			novaLinhaDaTabela[5] = locacao.getValorEfetivo();
+			novaLinhaDaTabela[2] = locacao.getDataEfetivaDevolucao();
+;			novaLinhaDaTabela[3] = locacaoController.calcularAtraso(locacao.getDataEfetivaDevolucao(),  locacao.getDataPrevistaDevolucao());
+			novaLinhaDaTabela[4] = locacao.getValorPrevisto();
+			novaLinhaDaTabela[5] = locacao.getMulta();
+			novaLinhaDaTabela[6] = locacao.getValorEfetivo();
+			novaLinhaDaTabela[7] = locacao.getCliente().getNome();
+			novaLinhaDaTabela[8] = locacao.getCliente().getCPF();
 			
 			model.addRow(novaLinhaDaTabela);
 		}
@@ -74,6 +81,20 @@ public class LocacaoListagem extends JPanel {
 		
 		tabelaLocacao = new JTable();
 		tabelaLocacao.setBounds(26, 81, 694, 252);
+		tabelaLocacao.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+				int indiceSelecionado = tabelaLocacao.getSelectedRow();
+
+				if (indiceSelecionado > 0) {
+					btnEditar.setEnabled(true);
+					locacaoSelecionada = listaLocacoes.get(indiceSelecionado - 1);
+				} else {
+					btnEditar.setEnabled(false);
+				}
+			}
+		});
 		add(tabelaLocacao);
 			 
 		btnEditar = new JButton("Editar");
