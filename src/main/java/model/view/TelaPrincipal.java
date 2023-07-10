@@ -7,13 +7,17 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.view.Paginas.Carro.CarroCadastro;
+import model.view.Paginas.Carro.CarroEdicao;
 import model.view.Paginas.Carro.CarroListagem;
 import model.view.Paginas.Cliente.ClienteCadastro;
+import model.view.Paginas.Cliente.ClienteEdicao;
 import model.view.Paginas.Cliente.ClienteListagem;
 import model.view.Paginas.Funcionario.FuncionarioCadastro;
+import model.view.Paginas.Funcionario.FuncionarioEdicao;
 import model.view.Paginas.Funcionario.FuncionarioListagem;
 import model.view.Paginas.Locacao.LocacaoCadastro;
 import model.view.Paginas.Locacao.LocacaoDevolucao;
+import model.view.Paginas.Locacao.LocacaoEdicao;
 import model.view.Paginas.Locacao.LocacaoListagem;
 import model.view.Paginas.Sobre.SobreLogOut;
 
@@ -35,15 +39,19 @@ public class TelaPrincipal extends JFrame {
 	private JLabel subtitle;
 	
 	private CarroCadastro cadastroDeCarros = new CarroCadastro();
+	private CarroEdicao edicaoDeCarros = new CarroEdicao();
 	private CarroListagem listagemDeCarros = new CarroListagem();
 	
 	private ClienteCadastro cadastroDeCliente = new ClienteCadastro();
+	private ClienteEdicao edicaoDeCliente = new ClienteEdicao();
 	private ClienteListagem listagemDeCliente = new ClienteListagem();
 	
 	private FuncionarioCadastro cadastroDeFuncionario = new FuncionarioCadastro();
+	private FuncionarioEdicao edicaoDeFuncionario = new FuncionarioEdicao();
 	private FuncionarioListagem listagemDeFuncionario = new FuncionarioListagem();
 	
 	private LocacaoCadastro cadastroDeLocacao = new LocacaoCadastro();
+	private LocacaoEdicao edicaoDeLocacao = new LocacaoEdicao();
 	private LocacaoListagem listagemDeLocacao = new LocacaoListagem();
 	private LocacaoDevolucao devolucaoDeLocacao = new LocacaoDevolucao();
 	
@@ -94,6 +102,15 @@ public class TelaPrincipal extends JFrame {
 		});
 		menuItemFuncionario.add(menuItemFuncionarioCadastro);
 		
+		JMenuItem menuItemFuncionarioEdicao = new JMenuItem("Edição");
+		menuItemFuncionarioEdicao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(edicaoDeFuncionario);
+				revalidate();
+			}
+		});
+		menuItemFuncionario.add(menuItemFuncionarioEdicao);
+		
 		JMenu menuItemCarros = new JMenu("Carros");
 		menuBar.add(menuItemCarros);
 		
@@ -114,6 +131,15 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuItemCarros.add(menuItemCarrosCadastro);
+		
+		JMenuItem menuItemCarrosEdicao = new JMenuItem("Edição");
+		menuItemCarrosEdicao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(edicaoDeCarros);
+				revalidate();
+			}
+		});
+		menuItemCarros.add(menuItemCarrosEdicao);
 		
 		JMenu menuItemLocacao = new JMenu("Locação");
 		menuBar.add(menuItemLocacao);
@@ -145,6 +171,15 @@ public class TelaPrincipal extends JFrame {
 		});
 		menuItemLocacao.add(menuItemLocacaoDevolucao);
 		
+		JMenuItem menuItemLocacaoEdicao = new JMenuItem("Edição");
+		menuItemLocacaoEdicao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(edicaoDeLocacao);
+				revalidate();
+			}
+		});
+		menuItemLocacao.add(menuItemLocacaoEdicao);
+		
 		JMenu menuItemCliente = new JMenu("Cliente");
 		menuBar.add(menuItemCliente);
 		
@@ -165,6 +200,15 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuItemCliente.add(menuItemClienteCadastro);
+		
+		JMenuItem menuItemClienteEdicao = new JMenuItem("Edição");
+		menuItemClienteEdicao.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				setContentPane(edicaoDeCliente);
+				revalidate();
+			}
+		});
+		menuItemCliente.add(menuItemClienteEdicao);
 		
 		JMenu menuItemSobre = new JMenu("Sobre");
 		menuBar.add(menuItemSobre);

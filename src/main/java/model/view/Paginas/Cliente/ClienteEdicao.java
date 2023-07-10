@@ -1,6 +1,13 @@
 package model.view.Paginas.Cliente;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.text.ParseException;
+import java.util.List;
+
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -9,21 +16,12 @@ import javax.swing.UIManager;
 import javax.swing.text.MaskFormatter;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 
+import controller.CarroController;
 import controller.ClienteController;
 import model.vo.ClienteVO;
 
-import java.awt.event.ActionListener;
-import java.text.ParseException;
-import java.awt.event.ActionEvent;
-import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
-
-public class ClienteCadastro extends JPanel {
+public class ClienteEdicao extends JPanel {
 	
 	private JTextField nameTextField;
 	private JFormattedTextField phoneTextField;
@@ -41,53 +39,47 @@ public class ClienteCadastro extends JPanel {
 	
 	private JButton cadastrarClienteButton;
 	private JButton btnLimparCampos;
+	
 	private JComboBox comboBoxSexo;
 	
 	private MaskFormatter mascaraCNH;
 	private MaskFormatter mascaraCPF;
 	private MaskFormatter mascaraTelefone;
 	
-	ClienteVO clienteVO = new ClienteVO();
-	ClienteController clienteController = new ClienteController();
+	private JComboBox comboBoxClientesCadastrados;
+	private JLabel lblClientesCadastrados;
 	
-	public void limparCampos() {
-		nameTextField.setText("");
-		phoneTextField.setText("");
-		cpfTextField.setText("");
-		cnhTextField.setText("");
-		dataNascimentoDatePicker.setText("");
-		comboBoxSexo.setSelectedIndex(-1);
+	private List<ClienteVO> listaClientesCadastrados;
+	private ClienteVO cliente;
+	
+	public void preencherCamposCliente () {
+		nameTextField.setText(cliente.getNome());
+		nameTextField.setText(cliente.getNome());
+		nameTextField.setText(cliente.getNome());
+		nameTextField.setText(cliente.getNome());
+		nameTextField.setText(cliente.getNome());
 	}
-
-	public ClienteCadastro() {
+	
+	public ClienteEdicao() {
 		
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
 		
-		try {
-			mascaraCPF = new MaskFormatter("###.###.###-##");
-		} catch (ParseException e1) {
-			System.out.println("Erro ao inicializar variável do campo CPF");
-		}
+		ClienteController clienteController = new ClienteController();
+		listaClientesCadastrados = clienteController.consultarListaClientes();
 		
-		try {
-			mascaraTelefone = new MaskFormatter("(##) - #####-####");
-		} catch (ParseException e1) {
-			System.out.println("Erro ao inicializar variável de máscara do campo Telefone");
-		}
+		comboBoxClientesCadastrados = new JComboBox(listaClientesCadastrados.toArray());
+		comboBoxClientesCadastrados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		comboBoxClientesCadastrados.setBounds(229, 68, 473, 24);
+		add(comboBoxClientesCadastrados);
 		
-		try {
-			mascaraCNH = new MaskFormatter("##########");
-		} catch (ParseException e1) {
-			System.out.println("Erro ao inicializar variável de máscara do campo CNH");
-		}
-		
-		mascaraCPF.setValueContainsLiteralCharacters(false);
-		mascaraTelefone.setValueContainsLiteralCharacters(false);
-		mascaraCNH.setValueContainsLiteralCharacters(false);
-		
-		String[] listaSexos = {"Masculino", "Feminimo"};
-		
+		lblClientesCadastrados = new JLabel("Clientes Cadastrados");
+		lblClientesCadastrados.setBounds(26, 73, 154, 15);
+		add(lblClientesCadastrados);
+
 		titleLabel = new JLabel("Cadastro de Clientes");
 		titleLabel.setBounds(26, 11, 149, 58);
 		add(titleLabel);
@@ -124,32 +116,6 @@ public class ClienteCadastro extends JPanel {
 		cadastrarClienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
-				try {
-					String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
-					clienteVO.setCPF(cpfSemMascara);
-				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
-				}
-	
-				try {
-					String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
-					clienteVO.setTelefone(telefoneSemMascara);
-				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de Telefone para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
-				}
-				
-				clienteVO.setNome(nameTextField.getText());
-				clienteVO.setCNH(cnhTextField.getText());
-				clienteVO.setDataNascimento(dataNascimentoDatePicker.getDate());
-				clienteVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
-				
-				try {
-					clienteController.cadastrarCliente(clienteVO);
-					limparCampos();
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o cliente");
-				}
-				
 			}
 		});
 		
@@ -171,7 +137,7 @@ public class ClienteCadastro extends JPanel {
 		dataNascimentoLabel.setBounds(26, 234, 70, 15);
 		add(dataNascimentoLabel);
 		
-		comboBoxSexo = new JComboBox(listaSexos);
+		comboBoxSexo = new JComboBox();
 		comboBoxSexo.setBounds(118, 201, 584, 24);
 		comboBoxSexo.setSelectedIndex(-1);
 		add(comboBoxSexo);
@@ -183,11 +149,13 @@ public class ClienteCadastro extends JPanel {
 		btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limparCampos();
+
 			}
 		});
 		btnLimparCampos.setBounds(420, 351, 282, 25);
 		add(btnLimparCampos);
 
+
 	}
+
 }

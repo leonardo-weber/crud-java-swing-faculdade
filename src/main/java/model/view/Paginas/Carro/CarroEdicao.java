@@ -1,27 +1,24 @@
 package model.view.Paginas.Carro;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
 
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
-
 import controller.CarroController;
 import model.vo.CarroVO;
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import javax.swing.JComboBox;
 
-public class CarroCadastro extends JPanel {
-
+public class CarroEdicao extends JPanel {
+	
 	private JTextField marcaTextField;
 	private JTextField modeloTextField;
 	private JTextField anoTextField;
@@ -38,36 +35,27 @@ public class CarroCadastro extends JPanel {
 	private JButton cadastrarCarroButton;
 	private JButton limparCamposBotao;
 	
-	CarroVO carroVO = new CarroVO();
-	CarroController carroController = new CarroController();
+	private JComboBox comboBoxCarrosCadastrados;
+	private JLabel lblCarrosCadastrados;
 	
-	public void limparCamposForm () {
-		marcaTextField.setText("");
-		modeloTextField.setText("");
-		anoTextField.setText("");
-		placaTextField.setText("");
-		corTextField.setText("");
+	private List<CarroVO> listaCarrosCadastrados;
+	private CarroVO carro;
+	
+	public void preencherCamposCarro () {
+		marcaTextField.setText(carro.getMarca());
+		modeloTextField.setText(carro.getModelo());
+		anoTextField.setText(carro.getAno());
+		placaTextField.setText(carro.getPlaca());
+		corTextField.setText(carro.getCor());
 	}
-	
-	public void cadastrarCarro () {
-		
-		carroVO.setMarca(marcaTextField.getText());
-		carroVO.setModelo(modeloTextField.getText());
-		carroVO.setPlaca(placaTextField.getText());
-		carroVO.setAno(anoTextField.getText());
-		carroVO.setCor(corTextField.getText());
-					
-		try {
-			carroController.cadastrarCarro(carroVO);
-		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(null, "Erro ao cadastrar o automóvel");
-		}
-	}
-	
-	public CarroCadastro() {
+
+	public CarroEdicao() {
 		
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
+		
+		CarroController carroController = new CarroController();
+		listaCarrosCadastrados = carroController.consultarListaCarros();
 		
 		titleLabel = new JLabel("Cadastro de carros");
 		titleLabel.setBounds(26, 11, 136, 58);
@@ -86,6 +74,11 @@ public class CarroCadastro extends JPanel {
 		add(anoLabel);
 		
 		marcaTextField = new JTextField();
+		marcaTextField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+		});
 		marcaTextField.setBounds(226, 104, 476, 19);
 		add(marcaTextField);
 		marcaTextField.setColumns(10);
@@ -121,8 +114,7 @@ public class CarroCadastro extends JPanel {
 		cadastrarCarroButton = new JButton("Cadastrar carro");
 		cadastrarCarroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				cadastrarCarro();
-				limparCamposForm();
+	
 			}
 		});
 		
@@ -132,12 +124,26 @@ public class CarroCadastro extends JPanel {
 		limparCamposBotao = new JButton("Limpar campos");
 		limparCamposBotao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				limparCamposForm();
+
 			}
 		});
 		limparCamposBotao.setBounds(420, 351, 282, 25);
 		add(limparCamposBotao);
+		
+		comboBoxCarrosCadastrados = new JComboBox(listaCarrosCadastrados.toArray());
+		comboBoxCarrosCadastrados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carro = (CarroVO) comboBoxCarrosCadastrados.getSelectedItem();
+				preencherCamposCarro();
+			}
+		});
+		comboBoxCarrosCadastrados.setBounds(226, 68, 476, 24);
+		add(comboBoxCarrosCadastrados);
+		
+		lblCarrosCadastrados = new JLabel("Carros Cadastrados");
+		lblCarrosCadastrados.setBounds(26, 73, 154, 15);
+		add(lblCarrosCadastrados);
+
 
 	}
-
 }
