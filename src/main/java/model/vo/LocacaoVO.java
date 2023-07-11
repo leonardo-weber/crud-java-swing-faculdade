@@ -109,5 +109,10 @@ public class LocacaoVO {
 	public void setMulta(int multa) {
 		this.multa = multa;
 	}
+	
+	@Override
+	public String toString() {
+		return null
+	}
 
 }

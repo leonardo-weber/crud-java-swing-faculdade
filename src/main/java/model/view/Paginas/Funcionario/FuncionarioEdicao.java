@@ -3,6 +3,7 @@ package model.view.Paginas.Funcionario;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -28,6 +29,7 @@ public class FuncionarioEdicao extends JPanel {
 	private JFormattedTextField phoneTextField;
 	private JFormattedTextField cpfTextField;
 	private DatePicker dataNascimentoDatePicker;
+	private JTextField ativoTextField;
 	
 	private JLabel titleLabel;
 	private JLabel nameLabel;
@@ -36,20 +38,57 @@ public class FuncionarioEdicao extends JPanel {
 	private JLabel cpfLabel;
 	private JLabel sexoLabel;
 	private JLabel dataNascimentoLabel;
+	private JLabel lblFuncionariosCadastrados;
+	private JLabel lblAtivo;
 	
-	private JButton cadastrarFuncionarioButton;
+	private JButton editarFuncionarioButton;
 	private JButton btnLimparCampos;
 	
 	private JComboBox comboBoxSexo;
+	private JComboBox comboBoxFuncionariosCadastrados;
 	
 	private MaskFormatter mascaraCPF;
 	private MaskFormatter mascaraTelefone;
 	
-	private JComboBox comboBoxFuncionariosCadastrados;
-	private JLabel lblFuncionariosCadastrados;
+	private FuncionarioVO funcionario;
 	
 	private List<FuncionarioVO> listaFuncionariosCadastrados;
 	
+	public void editarDadosFuncionario (FuncionarioController funcionarioController) {
+		funcionario.setNome(nameTextField.getText());
+		funcionario.setCPF(cpfTextField.getText());
+		funcionario.setSenha(passwordTextField.getText());
+		funcionario.setDataNascimento(dataNascimentoDatePicker.getDate());
+		funcionario.setAtivo(Boolean.parseBoolean(ativoTextField.getText()));
+		funcionario.setTelefone(phoneTextField.getText());
+		
+		boolean funcionarioCadastrado = funcionarioController.atualizarFuncionario(funcionario);
+		
+		if (funcionarioCadastrado) {
+			JOptionPane.showMessageDialog(null, "Dados do funcionário foram atualizados com sucesso");
+		}
+	}
+
+	public void limparCampos() {
+		nameTextField.setText("");
+		passwordTextField.setText("");
+		phoneTextField.setText("");
+		cpfTextField.setText("");
+		dataNascimentoDatePicker.setText("");
+		ativoTextField.setText("");
+		comboBoxSexo.setSelectedIndex(-1);
+		comboBoxFuncionariosCadastrados.setSelectedIndex(-1);
+	}
+	
+	public void preencherCamposFuncionario () {
+		nameTextField.setText(funcionario.getNome());
+		passwordTextField.setText(funcionario.getSenha());
+		cpfTextField.setText(funcionario.getCPF());
+		phoneTextField.setText(funcionario.getTelefone());
+		comboBoxSexo.setSelectedItem(funcionario.getSexo());
+		dataNascimentoDatePicker.setText(funcionario.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		ativoTextField.setText(Boolean.toString(funcionario.getAtivo()));
+	}
 
 	public FuncionarioEdicao() {
 		
@@ -58,12 +97,15 @@ public class FuncionarioEdicao extends JPanel {
 		
 		String[] listaSexos = {"Masculino", "Feminimo"};
 		
-		FuncionarioController funcionarioController = new FuncionarioController();
-		listaFuncionariosCadastrados = funcionarioController.consultarListaFuncionarios();
+		final FuncionarioController funcionarioController = new FuncionarioController();
+		listaFuncionariosCadastrados = funcionarioController.consultarListaFuncionariosComFiltragemDeStatus(true);
 		
 		comboBoxFuncionariosCadastrados = new JComboBox(listaFuncionariosCadastrados.toArray());
+		comboBoxFuncionariosCadastrados.setSelectedIndex(-1);
 		comboBoxFuncionariosCadastrados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				funcionario = (FuncionarioVO) comboBoxFuncionariosCadastrados.getSelectedItem();
+				preencherCamposFuncionario();
 			}
 		});
 		comboBoxFuncionariosCadastrados.setBounds(253, 68, 449, 24);
@@ -130,26 +172,34 @@ public class FuncionarioEdicao extends JPanel {
 		sexoLabel.setBounds(26, 203, 70, 15);
 		add(sexoLabel);
 		
-		cadastrarFuncionarioButton = new JButton("Cadastrar funcionário");
-		cadastrarFuncionarioButton.setBounds(420, 388, 282, 25);
-		cadastrarFuncionarioButton.addActionListener(new ActionListener() {
+		editarFuncionarioButton = new JButton("Editar funcionário");
+		editarFuncionarioButton.setBounds(420, 388, 282, 25);
+		editarFuncionarioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-				
+				editarDadosFuncionario(funcionarioController);
+				limparCampos();
 			}
 		});
-		add(cadastrarFuncionarioButton);
+		add(editarFuncionarioButton);
 		
 		btnLimparCampos = new JButton("Limpar campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-		
+				limparCampos();
 			}
 		});
 		btnLimparCampos.setBounds(420, 349, 282, 25);
 		add(btnLimparCampos);
+		
+		lblAtivo = new JLabel("Ativo");
+		lblAtivo.setBounds(26, 288, 70, 15);
+		add(lblAtivo);
+		
+		ativoTextField = new JTextField();
+		ativoTextField.setColumns(10);
+		ativoTextField.setBounds(118, 290, 584, 19);
+		add(ativoTextField);
 	
 
 	}
-
 }

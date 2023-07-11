@@ -8,6 +8,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -24,6 +25,8 @@ public class CarroEdicao extends JPanel {
 	private JTextField anoTextField;
 	private JTextField placaTextField;
 	private JTextField corTextField;
+	private JTextField disponibilidadeTextField;
+	private JTextField ativoTextField;
 	
 	private JLabel titleLabel;
 	private JLabel marcaLabel;
@@ -31,8 +34,10 @@ public class CarroEdicao extends JPanel {
 	private JLabel anoLabel;
 	private JLabel placaLabel;
 	private JLabel corLabel;
+	private JLabel lblDisponibilidade;
+	private JLabel lblAtivo;
 	
-	private JButton cadastrarCarroButton;
+	private JButton editarCarroButton;
 	private JButton limparCamposBotao;
 	
 	private JComboBox comboBoxCarrosCadastrados;
@@ -41,12 +46,42 @@ public class CarroEdicao extends JPanel {
 	private List<CarroVO> listaCarrosCadastrados;
 	private CarroVO carro;
 	
+	public void atualizarDadosCarro (CarroController carroController) {
+		carro.setMarca(marcaTextField.getText());
+		carro.setModelo(modeloTextField.getText());
+		carro.setAno(anoTextField.getText());
+		carro.setPlaca(placaTextField.getText());
+		carro.setCor(anoTextField.getText());
+		carro.setDisponibilidade(Boolean.parseBoolean(disponibilidadeTextField.getText()));
+		carro.setAno(Boolean.toString(Boolean.parseBoolean(ativoTextField.getText())));
+		
+		boolean carroCadastrado = carroController.atualizarCarro(carro);
+		
+		if (carroCadastrado) {
+			JOptionPane.showMessageDialog(null, "Dados do carro foram atualizados com sucesso");
+		}
+		
+	}
+	
+	public void limparCampos () {
+		marcaTextField.setText("");
+		modeloTextField.setText("");
+		anoTextField.setText("");
+		placaTextField.setText("");
+		corTextField.setText("");
+		disponibilidadeTextField.setText("");
+		ativoTextField.setText("");
+		comboBoxCarrosCadastrados.setSelectedIndex(-1);
+	}
+	
 	public void preencherCamposCarro () {
 		marcaTextField.setText(carro.getMarca());
 		modeloTextField.setText(carro.getModelo());
 		anoTextField.setText(carro.getAno());
 		placaTextField.setText(carro.getPlaca());
 		corTextField.setText(carro.getCor());
+		disponibilidadeTextField.setText(Boolean.toString(carro.getDisponibilidade()));
+		ativoTextField.setText(Boolean.toString(carro.getAtivo()));
 	}
 
 	public CarroEdicao() {
@@ -54,12 +89,27 @@ public class CarroEdicao extends JPanel {
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
 		
-		CarroController carroController = new CarroController();
+		final CarroController carroController = new CarroController();
 		listaCarrosCadastrados = carroController.consultarListaCarros();
 		
 		titleLabel = new JLabel("Cadastro de carros");
 		titleLabel.setBounds(26, 11, 136, 58);
 		add(titleLabel);
+		
+		comboBoxCarrosCadastrados = new JComboBox(listaCarrosCadastrados.toArray());
+		comboBoxCarrosCadastrados.setSelectedIndex(-1);
+		comboBoxCarrosCadastrados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				carro = (CarroVO) comboBoxCarrosCadastrados.getSelectedItem();
+				preencherCamposCarro();
+			}
+		});
+		comboBoxCarrosCadastrados.setBounds(226, 68, 476, 24);
+		add(comboBoxCarrosCadastrados);
+		
+		lblCarrosCadastrados = new JLabel("Carros Cadastrados");
+		lblCarrosCadastrados.setBounds(26, 73, 154, 15);
+		add(lblCarrosCadastrados);
 		
 		marcaLabel = new JLabel("Marca");
 		marcaLabel.setBounds(26, 106, 70, 15);
@@ -74,11 +124,6 @@ public class CarroEdicao extends JPanel {
 		add(anoLabel);
 		
 		marcaTextField = new JTextField();
-		marcaTextField.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyTyped(KeyEvent e) {
-			}
-		});
 		marcaTextField.setBounds(226, 104, 476, 19);
 		add(marcaTextField);
 		marcaTextField.setColumns(10);
@@ -111,15 +156,16 @@ public class CarroEdicao extends JPanel {
 		placaTextField.setBounds(226, 203, 476, 19);
 		add(placaTextField);
 		
-		cadastrarCarroButton = new JButton("Cadastrar carro");
-		cadastrarCarroButton.addActionListener(new ActionListener() {
+		editarCarroButton = new JButton("Editar carro");
+		editarCarroButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-	
+				atualizarDadosCarro(carroController);
+				limparCampos();
 			}
 		});
 		
-		cadastrarCarroButton.setBounds(420, 388, 282, 25);
-		add(cadastrarCarroButton);
+		editarCarroButton.setBounds(420, 388, 282, 25);
+		add(editarCarroButton);
 				
 		limparCamposBotao = new JButton("Limpar campos");
 		limparCamposBotao.addActionListener(new ActionListener() {
@@ -129,20 +175,24 @@ public class CarroEdicao extends JPanel {
 		});
 		limparCamposBotao.setBounds(420, 351, 282, 25);
 		add(limparCamposBotao);
+				
+		lblDisponibilidade = new JLabel("Disponibilidade");
+		lblDisponibilidade.setBounds(26, 267, 165, 15);
+		add(lblDisponibilidade);
 		
-		comboBoxCarrosCadastrados = new JComboBox(listaCarrosCadastrados.toArray());
-		comboBoxCarrosCadastrados.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				carro = (CarroVO) comboBoxCarrosCadastrados.getSelectedItem();
-				preencherCamposCarro();
-			}
-		});
-		comboBoxCarrosCadastrados.setBounds(226, 68, 476, 24);
-		add(comboBoxCarrosCadastrados);
+		lblAtivo = new JLabel("Ativo");
+		lblAtivo.setBounds(26, 299, 70, 15);
+		add(lblAtivo);
 		
-		lblCarrosCadastrados = new JLabel("Carros Cadastrados");
-		lblCarrosCadastrados.setBounds(26, 73, 154, 15);
-		add(lblCarrosCadastrados);
+		disponibilidadeTextField = new JTextField();
+		disponibilidadeTextField.setColumns(10);
+		disponibilidadeTextField.setBounds(226, 265, 476, 19);
+		add(disponibilidadeTextField);
+		
+		ativoTextField = new JTextField();
+		ativoTextField.setColumns(10);
+		ativoTextField.setBounds(226, 297, 476, 19);
+		add(ativoTextField);
 
 
 	}

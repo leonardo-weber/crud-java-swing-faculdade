@@ -3,6 +3,7 @@ package model.view.Paginas.Cliente;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -37,7 +38,7 @@ public class ClienteEdicao extends JPanel {
 	private JLabel sexoLabel;
 	private JLabel dataNascimentoLabel;
 	
-	private JButton cadastrarClienteButton;
+	private JButton editarClienteButton;
 	private JButton btnLimparCampos;
 	
 	private JComboBox comboBoxSexo;
@@ -52,12 +53,40 @@ public class ClienteEdicao extends JPanel {
 	private List<ClienteVO> listaClientesCadastrados;
 	private ClienteVO cliente;
 	
+	public void atualizarDadosCliente(ClienteController clienteController) {
+		
+		cliente.setNome(nameTextField.getText());
+		cliente.setCPF(cpfTextField.getText());
+		cliente.setCNH(cnhTextField.getText());
+		cliente.setDataNascimento(dataNascimentoDatePicker.getDate());
+		cliente.setTelefone(phoneTextField.getText());
+		cliente.setSexo((String) comboBoxSexo.getSelectedItem());
+		
+		boolean clienteCadastrado = clienteController.atualizarCliente(cliente);
+		
+		if (clienteCadastrado) {
+			JOptionPane.showMessageDialog(null, "Dados do cliente foram atualizados com sucesso");
+		}
+		
+	}
+	
 	public void preencherCamposCliente () {
 		nameTextField.setText(cliente.getNome());
-		nameTextField.setText(cliente.getNome());
-		nameTextField.setText(cliente.getNome());
-		nameTextField.setText(cliente.getNome());
-		nameTextField.setText(cliente.getNome());
+		phoneTextField.setText(cliente.getTelefone());
+		comboBoxSexo.setSelectedItem(cliente.getSexo());
+		cpfTextField.setText(cliente.getCPF());
+		cnhTextField.setText(cliente.getCNH());
+		dataNascimentoDatePicker.setText(cliente.getDataNascimento().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+	}
+	
+	public void limparCampos () {
+		nameTextField.setText("");
+		phoneTextField.setText("");
+		cpfTextField.setText("");
+		cnhTextField.setText("");
+		dataNascimentoDatePicker.setText("");
+		comboBoxSexo.setSelectedIndex(-1);
+		comboBoxClientesCadastrados.setSelectedIndex(-1);
 	}
 	
 	public ClienteEdicao() {
@@ -65,12 +94,17 @@ public class ClienteEdicao extends JPanel {
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
 		
-		ClienteController clienteController = new ClienteController();
+		String[] listaSexos = {"Masculino", "Feminimo"};
+		
+		final ClienteController clienteController = new ClienteController();
 		listaClientesCadastrados = clienteController.consultarListaClientes();
 		
 		comboBoxClientesCadastrados = new JComboBox(listaClientesCadastrados.toArray());
+		comboBoxClientesCadastrados.setSelectedIndex(-1);
 		comboBoxClientesCadastrados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cliente = (ClienteVO) comboBoxClientesCadastrados.getSelectedItem();
+				preencherCamposCliente();
 			}
 		});
 		comboBoxClientesCadastrados.setBounds(229, 68, 473, 24);
@@ -111,18 +145,18 @@ public class ClienteEdicao extends JPanel {
 		cpfTextField.setColumns(10);
 		add(cpfTextField);
 		
-		cadastrarClienteButton = new JButton("Cadastrar Cliente");
-		cadastrarClienteButton.setBounds(420, 388, 282, 25);
-		cadastrarClienteButton.addActionListener(new ActionListener() {
+		editarClienteButton = new JButton("Editar Cliente");
+		editarClienteButton.setBounds(420, 388, 282, 25);
+		editarClienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				atualizarDadosCliente(clienteController);
 			}
 		});
 		
 		cnhLabel = new JLabel("CNH");
 		cnhLabel.setBounds(26, 137, 70, 15);
 		add(cnhLabel);
-		add(cadastrarClienteButton);
+		add(editarClienteButton);
 		
 		cnhTextField = new JFormattedTextField(mascaraCNH);
 		cnhTextField.setColumns(10);
@@ -137,7 +171,7 @@ public class ClienteEdicao extends JPanel {
 		dataNascimentoLabel.setBounds(26, 234, 70, 15);
 		add(dataNascimentoLabel);
 		
-		comboBoxSexo = new JComboBox();
+		comboBoxSexo = new JComboBox(listaSexos);
 		comboBoxSexo.setBounds(118, 201, 584, 24);
 		comboBoxSexo.setSelectedIndex(-1);
 		add(comboBoxSexo);
@@ -149,7 +183,7 @@ public class ClienteEdicao extends JPanel {
 		btnLimparCampos = new JButton("Limpar Campos");
 		btnLimparCampos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				limparCampos();
 			}
 		});
 		btnLimparCampos.setBounds(420, 351, 282, 25);
