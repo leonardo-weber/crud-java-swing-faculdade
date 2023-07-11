@@ -23,7 +23,6 @@ public class LocacaoListagem extends JPanel {
 
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
-	private JButton btnEditar;
 	
 	private JTable tabelaLocacao;
 	private ArrayList<LocacaoVO> listaLocacoes; 
@@ -88,23 +87,12 @@ public class LocacaoListagem extends JPanel {
 				int indiceSelecionado = tabelaLocacao.getSelectedRow();
 
 				if (indiceSelecionado > 0) {
-					btnEditar.setEnabled(true);
 					locacaoSelecionada = listaLocacoes.get(indiceSelecionado - 1);
 				} else {
-					btnEditar.setEnabled(false);
 				}
 			}
 		});
 		add(tabelaLocacao);
-			 
-		btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEditar.setEnabled(false);
-		btnEditar.setBounds(468, 375, 117, 25);
-		add(btnEditar);
 		
 		this.inicializarTabela();
 

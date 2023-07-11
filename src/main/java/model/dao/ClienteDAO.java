@@ -88,6 +88,7 @@ public class ClienteDAO {
 				+ "', data_nascimento = '" + cliente.getDataNascimento()
 				+ "', telefone = '" + cliente.getTelefone()	
 				+ "' WHERE IDCLIENTE = " + cliente.getId();
+		
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {

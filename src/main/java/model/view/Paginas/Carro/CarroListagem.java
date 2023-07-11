@@ -28,7 +28,6 @@ public class CarroListagem extends JPanel {
 	
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
-	private JButton btnEditar;
 	
 	CarroController carroController = new CarroController();
 	
@@ -71,6 +70,7 @@ public class CarroListagem extends JPanel {
 	private void pesquisarListaCarros () {
 		
 		String valorComboBoxDisponibilidade = comboBoxDisponibilidade.getSelectedItem() != null ? comboBoxDisponibilidade.getSelectedItem().toString() : null;
+		
 		boolean filtragemPorCarrosDisponiveis = false;
 		boolean filtragemPorCarrosIndisponiveis = false;
 		
@@ -78,6 +78,7 @@ public class CarroListagem extends JPanel {
 			filtragemPorCarrosDisponiveis = valorComboBoxDisponibilidade.equals("Disponível");
 			filtragemPorCarrosIndisponiveis = valorComboBoxDisponibilidade.equals("Indisponível");
 		}
+		
 		
 		try {
 			
@@ -109,6 +110,9 @@ public class CarroListagem extends JPanel {
 		titleLabel.setBounds(26, 11, 214, 58);
 		add(titleLabel);
 		
+		comboBoxDisponibilidade = new JComboBox(opcoesDisponibilidadeLocacao);
+		comboBoxEstadoFrota = new JComboBox(opcoesEstadoFrota);
+			
 		btnPesquisar = new JButton("Pesquisar");
 		btnPesquisar.setBounds(603, 375, 117, 25);
 		btnPesquisar.addActionListener(new ActionListener() {
@@ -117,24 +121,10 @@ public class CarroListagem extends JPanel {
 			}
 		});
 		add(btnPesquisar);
-		
-		btnEditar = new JButton("Editar");
-		btnEditar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnEditar.setBounds(468, 375, 117, 25);
-		btnEditar.setEnabled(false);
-		add(btnEditar);
 	
 		tabelaCarros = new JTable();
 		tabelaCarros.setBounds(26, 81, 694, 252);
 		add(tabelaCarros);
-		
-		comboBoxDisponibilidade = new JComboBox(opcoesDisponibilidadeLocacao);
-		comboBoxDisponibilidade.setBounds(484, 45, 236, 24);
-		comboBoxDisponibilidade.setSelectedIndex(-1);
-		add(comboBoxDisponibilidade);
 		
 		btnLimparFiltro = new JButton("Limpar Filtro");
 		btnLimparFiltro.addActionListener(new ActionListener() {
@@ -145,7 +135,7 @@ public class CarroListagem extends JPanel {
 				popularTabelaCarros();
 			}
 		});
-		btnLimparFiltro.setBounds(159, 375, 162, 25);
+		btnLimparFiltro.setBounds(274, 375, 162, 25);
 		add(btnLimparFiltro);
 		
 		final JButton btnDesativar = new JButton("Alterar status");
@@ -159,18 +149,14 @@ public class CarroListagem extends JPanel {
 			}
 		});
 		btnDesativar.setEnabled(false);
-		btnDesativar.setBounds(333, 375, 117, 25);
+		btnDesativar.setBounds(448, 375, 143, 25);
 		add(btnDesativar);
 		
-		comboBoxEstadoFrota = new JComboBox(opcoesEstadoFrota);
-		comboBoxEstadoFrota.setSelectedIndex(-1);
-		comboBoxEstadoFrota.setBounds(281, 45, 180, 24);
-		add(comboBoxEstadoFrota);
+		comboBoxDisponibilidade.setBounds(484, 45, 236, 24);
+		comboBoxDisponibilidade.setSelectedIndex(-1);
+		add(comboBoxDisponibilidade);
 		
-		JLabel lblEstadoNaFrota = new JLabel("Estado na frota");
-		lblEstadoNaFrota.setBounds(281, 18, 180, 15);
-		add(lblEstadoNaFrota);
-		
+	
 		JLabel lblDisponibilidadeDeLocao = new JLabel("DIsponibilidade De Locação");
 		lblDisponibilidadeDeLocao.setBounds(523, 18, 236, 15);
 		add(lblDisponibilidadeDeLocao);
@@ -182,7 +168,6 @@ public class CarroListagem extends JPanel {
 				int indiceSelecionado = tabelaCarros.getSelectedRow();
 
 				if (indiceSelecionado > 0) {
-					btnEditar.setEnabled(true);
 					btnDesativar.setEnabled(true);
 					carroSelecionado = listaCarros.get(indiceSelecionado - 1);
 					
@@ -192,9 +177,20 @@ public class CarroListagem extends JPanel {
 						btnDesativar.setText("Ativar");
 					}
 				} else {
-					btnEditar.setEnabled(false);
 					btnDesativar.setEnabled(true);
 				}
+			}
+		});
+		
+		comboBoxDisponibilidade.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboBoxEstadoFrota.getSelectedItem() != null) {
+				}
+			}
+		});
+		
+		comboBoxEstadoFrota.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
 			}
 		});
 			

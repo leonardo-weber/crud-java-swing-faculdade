@@ -85,12 +85,13 @@ public class FuncionarioDAO {
 		
 		String query = "UPDATE FUNCIONARIO SET nome = '" + funcionario.getNome()
 				+ "', senha = '" + funcionario.getSenha()
-				+ "', telefone = " + funcionario.getTelefone()
-				+ ", cpf = '" + funcionario.getCPF()
-				+ ", sexo = '" + funcionario.getSexo()
-				+ ", data_nascimento = '" + funcionario.getDataNascimento()
-				+ "' WHERE IDFUNCIONARIO = " + funcionario.getId();
-		 
+				+ "', telefone = '" + funcionario.getTelefone()
+				+ "', cpf = '" + funcionario.getCPF()
+				+ "', sexo = '" + funcionario.getSexo()
+				+ "', data_nascimento = '" + funcionario.getDataNascimento()
+				+ "', ativo = " + funcionario.getAtivo()
+				+ " WHERE IDFUNCIONARIO = " + funcionario.getId();
+				 
 		try {
 			if(statement.executeUpdate(query) == 1) {
 				retorno = true;

@@ -76,11 +76,9 @@ public class LocacaoEdicao extends JPanel {
 		comboBoxCarro.setSelectedIndex(-1);
 	}
 	
-	public void preencherCamposCliente () {
-		nomeClienteTextField.setText(cliente.getNome());
-		telefoneClienteTextField.setText(cliente.getTelefone());
-		cnhClienteTextField.setText(cliente.getCNH());
-	} 
+	preencherCamposLocacao () {
+		
+	}
 	
 	public LocacaoEdicao() {
 		

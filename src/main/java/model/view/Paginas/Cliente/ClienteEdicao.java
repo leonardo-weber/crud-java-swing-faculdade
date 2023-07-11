@@ -54,23 +54,17 @@ public class ClienteEdicao extends JPanel {
 	private ClienteVO cliente;
 	
 	public void atualizarDadosCliente(ClienteController clienteController) {
+				
+		boolean clienteAtualizado = clienteController.atualizarCliente(cliente);
 		
-		cliente.setNome(nameTextField.getText());
-		cliente.setCPF(cpfTextField.getText());
-		cliente.setCNH(cnhTextField.getText());
-		cliente.setDataNascimento(dataNascimentoDatePicker.getDate());
-		cliente.setTelefone(phoneTextField.getText());
-		cliente.setSexo((String) comboBoxSexo.getSelectedItem());
-		
-		boolean clienteCadastrado = clienteController.atualizarCliente(cliente);
-		
-		if (clienteCadastrado) {
+		if (clienteAtualizado) {
 			JOptionPane.showMessageDialog(null, "Dados do cliente foram atualizados com sucesso");
+			limparCampos();
 		}
 		
 	}
 	
-	public void preencherCamposCliente () {
+	public void preencherCamposCliente (ClienteVO cliente) {
 		nameTextField.setText(cliente.getNome());
 		phoneTextField.setText(cliente.getTelefone());
 		comboBoxSexo.setSelectedItem(cliente.getSexo());
@@ -86,7 +80,6 @@ public class ClienteEdicao extends JPanel {
 		cnhTextField.setText("");
 		dataNascimentoDatePicker.setText("");
 		comboBoxSexo.setSelectedIndex(-1);
-		comboBoxClientesCadastrados.setSelectedIndex(-1);
 	}
 	
 	public ClienteEdicao() {
@@ -104,7 +97,7 @@ public class ClienteEdicao extends JPanel {
 		comboBoxClientesCadastrados.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cliente = (ClienteVO) comboBoxClientesCadastrados.getSelectedItem();
-				preencherCamposCliente();
+				preencherCamposCliente(cliente);
 			}
 		});
 		comboBoxClientesCadastrados.setBounds(229, 68, 473, 24);

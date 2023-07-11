@@ -66,6 +66,7 @@ public class FuncionarioEdicao extends JPanel {
 		
 		if (funcionarioCadastrado) {
 			JOptionPane.showMessageDialog(null, "Dados do funcionário foram atualizados com sucesso");
+			limparCampos();
 		}
 	}
 
@@ -77,7 +78,6 @@ public class FuncionarioEdicao extends JPanel {
 		dataNascimentoDatePicker.setText("");
 		ativoTextField.setText("");
 		comboBoxSexo.setSelectedIndex(-1);
-		comboBoxFuncionariosCadastrados.setSelectedIndex(-1);
 	}
 	
 	public void preencherCamposFuncionario () {
@@ -98,7 +98,7 @@ public class FuncionarioEdicao extends JPanel {
 		String[] listaSexos = {"Masculino", "Feminimo"};
 		
 		final FuncionarioController funcionarioController = new FuncionarioController();
-		listaFuncionariosCadastrados = funcionarioController.consultarListaFuncionariosComFiltragemDeStatus(true);
+		listaFuncionariosCadastrados = funcionarioController.consultarListaFuncionarios();
 		
 		comboBoxFuncionariosCadastrados = new JComboBox(listaFuncionariosCadastrados.toArray());
 		comboBoxFuncionariosCadastrados.setSelectedIndex(-1);
@@ -177,7 +177,6 @@ public class FuncionarioEdicao extends JPanel {
 		editarFuncionarioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				editarDadosFuncionario(funcionarioController);
-				limparCampos();
 			}
 		});
 		add(editarFuncionarioButton);

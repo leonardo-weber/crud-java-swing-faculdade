@@ -25,6 +25,10 @@ public class CarroBO {
 		return carroDAO.consultarCarrosDisponiveisEAtivos();
 	}
 	
+	public List<CarroVO> consultarCarrosAtivosEmFrota() {
+		return carroDAO.consultarCarrosAtivosEmFrota();
+	}
+	
 	public boolean ativarStatusCarro (int id) {
 		return carroDAO.atualizarStatusCarro(id, true);
 	}

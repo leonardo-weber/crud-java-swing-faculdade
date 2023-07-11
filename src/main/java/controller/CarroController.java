@@ -36,7 +36,11 @@ public class CarroController {
 	
 	public List<CarroVO> consultarCarrosComFiltroDeDisponibilidade (boolean disponibilidade) {
 		return carroBO.consultarCarrosComFiltroDeDisponibilidade(disponibilidade);
-	}
+	} 
+	
+	public List<CarroVO> consultarCarrosAtivosEmFrota () {
+		return carroBO.consultarCarrosAtivosEmFrota();
+	} 
 	
 	public List<CarroVO> consultarCarrosDisponiveisEAtivos () {
 		return carroBO.consultarCarrosDisponiveisEAtivos();

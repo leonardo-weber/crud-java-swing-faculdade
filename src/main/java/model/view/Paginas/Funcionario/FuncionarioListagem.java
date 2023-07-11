@@ -23,7 +23,6 @@ public class FuncionarioListagem extends JPanel {
 
 	private JLabel titleLabel;
 	private JButton btnPesquisar;
-	private JButton btnEditar;
 	
 	FuncionarioController funcionarioController = new FuncionarioController();
 	
@@ -114,12 +113,7 @@ public class FuncionarioListagem extends JPanel {
 		tabelaFuncionarios = new JTable();
 		tabelaFuncionarios.setBounds(26, 81, 694, 252);
 		add(tabelaFuncionarios);
-		
-		btnEditar = new JButton("Editar");
-		btnEditar.setEnabled(false);
-		btnEditar.setBounds(468, 375, 117, 25);
-		add(btnEditar);
-		
+				
 		final JButton btnDesativar = new JButton("Alterar status");
 		btnDesativar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -131,7 +125,7 @@ public class FuncionarioListagem extends JPanel {
 			}
 		});
 		btnDesativar.setEnabled(false);
-		btnDesativar.setBounds(333, 375, 117, 25);
+		btnDesativar.setBounds(449, 375, 141, 25);
 		add(btnDesativar);
 			
 		tabelaFuncionarios.addMouseListener(new MouseAdapter() {
@@ -141,7 +135,6 @@ public class FuncionarioListagem extends JPanel {
 				int indiceSelecionado = tabelaFuncionarios.getSelectedRow();
 
 				if (indiceSelecionado > 0) {
-					btnEditar.setEnabled(true);
 					btnDesativar.setEnabled(true);
 					funcionarioSelecionado = listaFuncionarios.get(indiceSelecionado - 1);
 					
@@ -152,7 +145,6 @@ public class FuncionarioListagem extends JPanel {
 					}
 					
 				} else {
-					btnEditar.setEnabled(false);
 					btnDesativar.setEnabled(true);
 				}
 			}

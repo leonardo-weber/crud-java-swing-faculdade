@@ -47,13 +47,15 @@ public class CarroEdicao extends JPanel {
 	private CarroVO carro;
 	
 	public void atualizarDadosCarro (CarroController carroController) {
+		
+		
 		carro.setMarca(marcaTextField.getText());
 		carro.setModelo(modeloTextField.getText());
 		carro.setAno(anoTextField.getText());
 		carro.setPlaca(placaTextField.getText());
 		carro.setCor(anoTextField.getText());
 		carro.setDisponibilidade(Boolean.parseBoolean(disponibilidadeTextField.getText()));
-		carro.setAno(Boolean.toString(Boolean.parseBoolean(ativoTextField.getText())));
+		carro.setAtivo(Boolean.parseBoolean(ativoTextField.getText()));
 		
 		boolean carroCadastrado = carroController.atualizarCarro(carro);
 		
@@ -71,17 +73,20 @@ public class CarroEdicao extends JPanel {
 		corTextField.setText("");
 		disponibilidadeTextField.setText("");
 		ativoTextField.setText("");
-		comboBoxCarrosCadastrados.setSelectedIndex(-1);
 	}
 	
 	public void preencherCamposCarro () {
+		
+		String disponibilidadeCarro = carro.getDisponibilidade()  ? "Disponível" : "Indisponível";
+		String ativoCarro = carro.getAtivo() ? "Em frota" : "Fora de frota";
+		
 		marcaTextField.setText(carro.getMarca());
 		modeloTextField.setText(carro.getModelo());
 		anoTextField.setText(carro.getAno());
 		placaTextField.setText(carro.getPlaca());
 		corTextField.setText(carro.getCor());
-		disponibilidadeTextField.setText(Boolean.toString(carro.getDisponibilidade()));
-		ativoTextField.setText(Boolean.toString(carro.getAtivo()));
+		disponibilidadeTextField.setText(disponibilidadeCarro);
+		ativoTextField.setText(ativoCarro);
 	}
 
 	public CarroEdicao() {
