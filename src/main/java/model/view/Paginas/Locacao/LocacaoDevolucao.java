@@ -72,7 +72,7 @@ public class LocacaoDevolucao extends JPanel {
 		try {
 			locacaoController.cadastrarDevolucao(locacao);
 		} catch (Exception e ) {
-			System.out.println("erro");
+			JOptionPane.showMessageDialog(null, "Dados inv"); 
 		}
 	}
 	

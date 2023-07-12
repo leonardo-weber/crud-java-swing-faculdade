@@ -2,6 +2,7 @@ package model.view.Paginas.Locacao;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
@@ -30,7 +31,7 @@ public class LocacaoListagem extends JPanel {
 		tabelaLocacao.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
 	}
 	
-	private void popularTabelaFuncionarios() {	
+	private void popularTabelaLocacoes() {	
 		this.inicializarTabela();
 		DefaultTableModel model = (DefaultTableModel) tabelaLocacao.getModel();
 		for (LocacaoVO locacao : listaLocacoes) {
@@ -53,7 +54,11 @@ public class LocacaoListagem extends JPanel {
 		
 	private void pesquisarListaLocacoes () {
 		listaLocacoes = (ArrayList<LocacaoVO>) locacaoController.consultarListaLocacao();
-		popularTabelaFuncionarios();
+		popularTabelaLocacoes();
+		
+		if (listaLocacoes.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Não existem locacões cadastradas no momento"); 
+		}
 	}
 
 	public LocacaoListagem() {

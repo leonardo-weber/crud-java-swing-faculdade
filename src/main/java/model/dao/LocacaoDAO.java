@@ -165,17 +165,20 @@ public class LocacaoDAO {
 				String valorPrevisto = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(7)));
 				String valorEfetivo = !valorEfetivoNull ? new DecimalFormat("#").format(Double.parseDouble(resultado.getString(8))) : null;
 				
+				boolean valorMultaZerado = !multaNull ? resultado.getString(9).equals("0.0") : false;
+								
 				carroController.setLocacaoCarro(Integer.parseInt(resultado.getString(3)));
 								
+				
 				locacao.setId(Integer.parseInt(resultado.getString(1)));
 				locacao.setCliente(cliente);
 				locacao.setCarro(carro);
 				locacao.setDataLocacao(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyy-MM-dd")));
 				locacao.setDataPrevistaDevolucao(LocalDate.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyy-MM-dd")));
-				locacao.setDataEfetivaDevolucao(!dataEfetivaNull ? LocalDate.parse(resultado.getString(6), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : LocalDate.now());
+				locacao.setDataEfetivaDevolucao(!dataEfetivaNull ? LocalDate.parse(resultado.getString(6), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : LocalDate.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyy-MM-dd")));
 				locacao.setValorPrevisto(Integer.parseInt(valorPrevisto));
-				locacao.setValorEfetivo(!valorEfetivoNull ? Integer.parseInt(valorEfetivo) : 0);
-				locacao.setMulta(0);
+				locacao.setValorEfetivo(!valorEfetivoNull ? Integer.parseInt(valorEfetivo) : Integer.parseInt(valorPrevisto));
+				locacao.setMulta(valorMultaZerado || multaNull ? 0 : Integer.parseInt(resultado.getString(9)));
 				locacao.setEstado(Boolean.parseBoolean(resultado.getString(10)));
 				listaLocacao.add(locacao);
 			}
@@ -201,6 +204,10 @@ public class LocacaoDAO {
 			if (locacao.getCliente().getCPF().equals(cpf)) {
 				listaLocacoesPorCPF.add(locacao);
 			}
+		}
+		
+		if (listaLocacoesPorCPF.size() == 0) {
+			JOptionPane.showMessageDialog(null, "Não foi encontrado nenhuma locação aberta com esse CPF"); 
 		}
 		
 		return listaLocacoesPorCPF;

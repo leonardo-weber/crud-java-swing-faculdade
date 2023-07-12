@@ -58,7 +58,7 @@ public class LocacaoController {
 	}
 	
 	public int calcularMulta(LocacaoVO locacao, LocalDate dataEfetivaDevolucao) {
-		return locacaoBO.calcularMulta(locacao, dataEfetivaDevolucao);
+		return locacaoBO.calcularMulta(locacao, dataEfetivaDevolucao); 
 	}
 	
 	public int calcularValorEfetivo (int valorPrevisto, int multa) {

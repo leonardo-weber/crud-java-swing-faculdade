@@ -50,8 +50,9 @@ public class LocacaoBO {
 		return (int) ChronoUnit.DAYS.between(dataDevolucaoPrevista, dataDevolucaoEfetiva);
 	}
 	
-	public int calcularMulta (LocacaoVO locacao, LocalDate dataEfetivaDevolucao) {
-		int diasAtrasados = calcularAtraso(dataEfetivaDevolucao, locacao.getDataPrevistaDevolucao());
+	public int calcularMulta (LocacaoVO locacao, LocalDate dataEfetivaDevolucao) { 
+		int diasAtrasados = calcularAtraso(dataEfetivaDevolucao, locacao.getDataPrevistaDevolucao()); 
+		System.out.println(diasAtrasados);
 		int valorTotalMulta = diasAtrasados > 0 ? locacao.getValorPrevisto() + diasAtrasados * 10 : 0;
 		return valorTotalMulta;
 	}
