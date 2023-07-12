@@ -92,7 +92,7 @@ public class CarroVO {
 	
 	@Override
 	public String toString() {
-		return marca + " / " + modelo + " / " + ano;
+		return marca + " / " + modelo + " / " + ano + " / " + placa + " / " + cor;
 	}
 	
 	

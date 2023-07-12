@@ -90,7 +90,8 @@ public class CarroDAO {
 				+ ", ativo = " + carro.getAtivo()
 				+ " WHERE IDCARRO = " + carro.getId();
 		
-		  
+		System.out.println(query);  
+		
 		try {
 			if(statement.executeUpdate(query) == 1) {
 				retorno = true;

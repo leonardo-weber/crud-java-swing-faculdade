@@ -2,15 +2,16 @@ package controller;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.bo.CarroBO;
-import model.exception.CampoInvalidoException;
 import model.vo.CarroVO;
 import utils.ValidarCamposFormulario;
 public class CarroController {
 	
 	CarroBO carroBO = new CarroBO();
 	
-	public CarroVO cadastrarCarro(CarroVO carro) throws CampoInvalidoException {
+	public CarroVO cadastrarCarro(CarroVO carro)  {
 		if (this.validarCamposCadastroCarroForm(carro)) {
 			return carroBO.cadastrarCarro(carro);
 		} else {
@@ -19,7 +20,11 @@ public class CarroController {
 	}
 	
 	public boolean atualizarCarro(CarroVO carro) {
-		return carroBO.atualizarCarro(carro);
+		if (this.validarCamposCadastroCarroForm(carro)) {
+			return carroBO.atualizarCarro(carro);
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean ativarStatusCarro (int id) {
@@ -67,15 +72,30 @@ public class CarroController {
 		boolean modelo = ValidarCamposFormulario.validacao(carro.getModelo());
 		boolean placa = ValidarCamposFormulario.validacao(carro.getPlaca());
 		boolean cor = ValidarCamposFormulario.validacao(carro.getCor());
+		boolean disponibilidade = ValidarCamposFormulario.validacao(Boolean.toString(carro.getDisponibilidade()));
+		boolean ativo = ValidarCamposFormulario.validacao(Boolean.toString(carro.getAtivo()));
+				
+		boolean anoRegexValidacao = ValidarCamposFormulario.validarAno(carro.getAno());
+		boolean placaRegexValidacao = ValidarCamposFormulario.validarPlacaCarro(carro.getPlaca());
 		
-		boolean[] campos = { marca, ano, modelo, placa, cor };
+		if (!anoRegexValidacao) {
+			JOptionPane.showMessageDialog(null, "Ano Inválido!"); 
+			return false;
+		}
+		
+		if (!placaRegexValidacao) {
+			JOptionPane.showMessageDialog(null, "Placa inválida!");
+			return false;
+		}
+		
+		boolean[] campos = { marca, ano, modelo, placa, cor, disponibilidade, ativo, anoRegexValidacao, placaRegexValidacao };
 				
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {
 				valido = false;
 			}
 		}
-
+		
 		return valido;
 		
 	}

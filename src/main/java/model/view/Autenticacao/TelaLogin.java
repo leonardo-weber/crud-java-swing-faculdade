@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import java.awt.FlowLayout;
 import com.jgoodies.forms.layout.FormLayout;
@@ -29,7 +30,7 @@ public class TelaLogin extends JFrame {
 	private JPanel contentPane;
 	
 	private JTextField loginInputField;
-	private JTextField passwordInputField;
+	private JPasswordField passwordInputField;
 	
 	private JButton loginButton;
 	private JButton signupButton;
@@ -77,7 +78,7 @@ public class TelaLogin extends JFrame {
 		contentPane.add(loginLabel);
 		
 		loginInputField = new JTextField();
-		loginInputField.setBounds(163, 128, 505, 36);
+		loginInputField.setBounds(387, 128, 281, 36);
 		contentPane.add(loginInputField);
 		loginInputField.setColumns(10);
 		
@@ -86,8 +87,8 @@ public class TelaLogin extends JFrame {
 		passwordLabel.setFont(new Font("Dialog", Font.BOLD, 24));
 		contentPane.add(passwordLabel);
 		
-		passwordInputField = new JTextField();
-		passwordInputField.setBounds(163, 212, 505, 36);
+		passwordInputField = new JPasswordField();
+		passwordInputField.setBounds(387, 212, 281, 36);
 		passwordInputField.setColumns(10);
 		contentPane.add(passwordInputField);
 		

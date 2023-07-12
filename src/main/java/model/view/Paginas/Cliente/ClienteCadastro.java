@@ -105,17 +105,17 @@ public class ClienteCadastro extends JPanel {
 		add(cpfLabel);
 		
 		nameTextField = new JTextField();
-		nameTextField.setBounds(118, 104, 584, 19);
+		nameTextField.setBounds(253, 104, 449, 19);
 		add(nameTextField);
 		nameTextField.setColumns(10);
 		
 		phoneTextField = new JFormattedTextField(mascaraTelefone);
-		phoneTextField.setBounds(118, 263, 584, 19);
+		phoneTextField.setBounds(253, 263, 449, 19);
 		phoneTextField.setColumns(10);
 		add(phoneTextField);
 		
 		cpfTextField = new JFormattedTextField(mascaraCPF);
-		cpfTextField.setBounds(118, 170, 584, 19);
+		cpfTextField.setBounds(253, 170, 449, 19);
 		cpfTextField.setColumns(10);
 		add(cpfTextField);
 		
@@ -160,11 +160,11 @@ public class ClienteCadastro extends JPanel {
 		
 		cnhTextField = new JFormattedTextField(mascaraCNH);
 		cnhTextField.setColumns(10);
-		cnhTextField.setBounds(118, 135, 584, 19);
+		cnhTextField.setBounds(253, 135, 449, 19);
 		add(cnhTextField);
 				
 		dataNascimentoDatePicker = new DatePicker();
-		dataNascimentoDatePicker.setBounds(118, 232, 584, 19);
+		dataNascimentoDatePicker.setBounds(253, 232, 449, 19);
 		add(dataNascimentoDatePicker);
 		
 		dataNascimentoLabel = new JLabel("Data Nascimento");
@@ -172,7 +172,7 @@ public class ClienteCadastro extends JPanel {
 		add(dataNascimentoLabel);
 		
 		comboBoxSexo = new JComboBox(listaSexos);
-		comboBoxSexo.setBounds(118, 201, 584, 24);
+		comboBoxSexo.setBounds(253, 201, 449, 24);
 		comboBoxSexo.setSelectedIndex(-1);
 		add(comboBoxSexo);
 		

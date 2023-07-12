@@ -2,6 +2,8 @@ package controller;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.bo.FuncionarioBO;
 import model.vo.ClienteVO;
 import model.vo.FuncionarioVO;
@@ -20,7 +22,11 @@ public class FuncionarioController {
 	}
 	
 	public boolean atualizarFuncionario(FuncionarioVO funcionario) {
-		return funcionarioBO.atualizarFuncionario(funcionario);
+		if (this.validarCamposCadastroFuncionarioForm(funcionario)) {
+			return funcionarioBO.atualizarFuncionario(funcionario);
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean excluirFuncionario(FuncionarioVO funcionario) {
@@ -54,8 +60,28 @@ public class FuncionarioController {
 		boolean cpf = ValidarCamposFormulario.validacao(funcionario.getCPF());
 		boolean sexo = ValidarCamposFormulario.validacao(funcionario.getSexo());
 		boolean dataNascimento = ValidarCamposFormulario.validacaoData(funcionario.getDataNascimento());
+		boolean ativo = ValidarCamposFormulario.validacao(Boolean.toString(funcionario.getAtivo()));
 		
-		boolean[] campos = { nome, senha, telefone, cpf, sexo, dataNascimento };
+		boolean senhaValidacaoRegex = ValidarCamposFormulario.validarSenha(funcionario.getSenha());
+		boolean cpfNumeroValido = ValidarCamposFormulario.validarCPF(funcionario.getCPF());
+		
+		if (!senhaValidacaoRegex) {
+			JOptionPane.showMessageDialog(null, 
+					"Sua senha precisa conter:  \n"
+					+ "No mínimo um caracter em maíusculo \n"
+					+ "No mínimo um caracter em minúsculo \n"
+					+ "Um dígito numérico \n"
+					+ "No mínimo um caracter especial (como # ou @) \n"
+					+ "No mínimo oito digitos alfanuméricos \n	");
+			return false;
+		}
+		
+		if (!cpfNumeroValido) {
+			JOptionPane.showMessageDialog(null, "O número de CPF é inválido!");
+			return false;
+		}
+		
+		boolean[] campos = { nome, senha, telefone, cpf, sexo, dataNascimento, ativo, senhaValidacaoRegex, cpfNumeroValido };
 				
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {
@@ -63,7 +89,6 @@ public class FuncionarioController {
 			}
 		}
 		
-
 		return valido;
 		
 	}

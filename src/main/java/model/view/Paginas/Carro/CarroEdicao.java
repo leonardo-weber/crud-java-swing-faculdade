@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.text.ParseException;
 import java.util.List;
 
 import javax.swing.JButton;
@@ -12,21 +13,21 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
+import javax.swing.text.MaskFormatter;
 
 import controller.CarroController;
 import model.vo.CarroVO;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 public class CarroEdicao extends JPanel {
 	
 	private JTextField marcaTextField;
 	private JTextField modeloTextField;
-	private JTextField anoTextField;
+	private JFormattedTextField anoTextField;
 	private JTextField placaTextField;
 	private JTextField corTextField;
-	private JTextField disponibilidadeTextField;
-	private JTextField ativoTextField;
 	
 	private JLabel titleLabel;
 	private JLabel marcaLabel;
@@ -45,17 +46,23 @@ public class CarroEdicao extends JPanel {
 	
 	private List<CarroVO> listaCarrosCadastrados;
 	private CarroVO carro;
+	private JComboBox comboBoxDisponibilidade;
+	private JComboBox comboBoxAtivo;
+	
+	private MaskFormatter mascaraAno;
 	
 	public void atualizarDadosCarro (CarroController carroController) {
 		
+		boolean disponibilidade = comboBoxDisponibilidade.getSelectedItem() == "Disponível" ? true : false;
+		boolean ativo = comboBoxAtivo.getSelectedItem() == "Em frota" ? true : false;
 		
 		carro.setMarca(marcaTextField.getText());
 		carro.setModelo(modeloTextField.getText());
 		carro.setAno(anoTextField.getText());
 		carro.setPlaca(placaTextField.getText());
-		carro.setCor(anoTextField.getText());
-		carro.setDisponibilidade(Boolean.parseBoolean(disponibilidadeTextField.getText()));
-		carro.setAtivo(Boolean.parseBoolean(ativoTextField.getText()));
+		carro.setCor(corTextField.getText());
+		carro.setDisponibilidade(disponibilidade);
+		carro.setAtivo(ativo);
 		
 		boolean carroCadastrado = carroController.atualizarCarro(carro);
 		
@@ -71,8 +78,8 @@ public class CarroEdicao extends JPanel {
 		anoTextField.setText("");
 		placaTextField.setText("");
 		corTextField.setText("");
-		disponibilidadeTextField.setText("");
-		ativoTextField.setText("");
+		comboBoxDisponibilidade.setSelectedIndex(-1);
+		comboBoxAtivo.setSelectedIndex(-1);
 	}
 	
 	public void preencherCamposCarro () {
@@ -85,8 +92,8 @@ public class CarroEdicao extends JPanel {
 		anoTextField.setText(carro.getAno());
 		placaTextField.setText(carro.getPlaca());
 		corTextField.setText(carro.getCor());
-		disponibilidadeTextField.setText(disponibilidadeCarro);
-		ativoTextField.setText(ativoCarro);
+		comboBoxDisponibilidade.setSelectedItem(disponibilidadeCarro);
+		comboBoxAtivo.setSelectedItem(ativoCarro);
 	}
 
 	public CarroEdicao() {
@@ -94,10 +101,21 @@ public class CarroEdicao extends JPanel {
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
 		
+		try {
+			mascaraAno = new MaskFormatter("####");
+		} catch (ParseException e1) {
+			System.out.println("Erro ao inicializar variável do campo Ano");
+		}
+		
+		mascaraAno.setValueContainsLiteralCharacters(false);
+		
 		final CarroController carroController = new CarroController();
 		listaCarrosCadastrados = carroController.consultarListaCarros();
 		
-		titleLabel = new JLabel("Cadastro de carros");
+		String[] listaDisponibilidade = {"Disponível" , "Indisponível"};
+		String[] listaAtivo = {"Em frota" , "Fora de frota"};
+		
+		titleLabel = new JLabel("Edição de carros");
 		titleLabel.setBounds(26, 11, 136, 58);
 		add(titleLabel);
 		
@@ -138,7 +156,7 @@ public class CarroEdicao extends JPanel {
 		modeloTextField.setColumns(10);
 		add(modeloTextField);
 		
-		anoTextField = new JTextField();
+		anoTextField = new JFormattedTextField(mascaraAno);
 		anoTextField.setBounds(226, 172, 476, 19);
 		anoTextField.setColumns(10);
 		add(anoTextField);
@@ -149,7 +167,7 @@ public class CarroEdicao extends JPanel {
 		add(corTextField);
 		
 		corLabel = new JLabel("Cor");
-		corLabel.setBounds(26, 232, 70, 15);
+		corLabel.setBounds(26, 236, 70, 15);
 		add(corLabel);
 		
 		placaLabel = new JLabel("Placa");
@@ -175,29 +193,29 @@ public class CarroEdicao extends JPanel {
 		limparCamposBotao = new JButton("Limpar campos");
 		limparCamposBotao.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				limparCampos();
 			}
 		});
 		limparCamposBotao.setBounds(420, 351, 282, 25);
 		add(limparCamposBotao);
 				
 		lblDisponibilidade = new JLabel("Disponibilidade");
-		lblDisponibilidade.setBounds(26, 267, 165, 15);
+		lblDisponibilidade.setBounds(26, 270, 165, 15);
 		add(lblDisponibilidade);
 		
 		lblAtivo = new JLabel("Ativo");
-		lblAtivo.setBounds(26, 299, 70, 15);
+		lblAtivo.setBounds(26, 304, 70, 15);
 		add(lblAtivo);
 		
-		disponibilidadeTextField = new JTextField();
-		disponibilidadeTextField.setColumns(10);
-		disponibilidadeTextField.setBounds(226, 265, 476, 19);
-		add(disponibilidadeTextField);
+		comboBoxDisponibilidade = new JComboBox(listaDisponibilidade);
+		comboBoxDisponibilidade.setSelectedIndex(-1);
+		comboBoxDisponibilidade.setBounds(226, 265, 476, 24);
+		add(comboBoxDisponibilidade);
 		
-		ativoTextField = new JTextField();
-		ativoTextField.setColumns(10);
-		ativoTextField.setBounds(226, 297, 476, 19);
-		add(ativoTextField);
+		comboBoxAtivo = new JComboBox(listaAtivo);
+		comboBoxAtivo.setSelectedIndex(-1);
+		comboBoxAtivo.setBounds(226, 299, 476, 24);
+		add(comboBoxAtivo);
 
 
 	}

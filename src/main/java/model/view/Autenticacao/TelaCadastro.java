@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.MaskFormatter;
 
@@ -34,7 +35,7 @@ public class TelaCadastro extends JFrame {
 	private JTextField nameInputField;
 	private JFormattedTextField cpfInputField;
 	private JFormattedTextField phoneInputField;
-	private JTextField passwordInputField;
+	private JPasswordField passwordInputField;
 	private DatePicker dataNascimentoDatePicker;
 	
 	private JLabel nameLabel;
@@ -104,14 +105,14 @@ public class TelaCadastro extends JFrame {
 					String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfInputField.getText());
 					funcionarioVO.setCPF(cpfSemMascara);
 				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+					System.out.println("Erro ao converter o valor de CPF para valor sem máscara");
 				}
 	
 				try {
 					String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneInputField.getText());
 					funcionarioVO.setTelefone(telefoneSemMascara);
 				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de Telefone para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+					System.out.println("Erro ao converter o valor de Telefone para valor sem máscara");
 				}
 	
 				
@@ -177,7 +178,7 @@ public class TelaCadastro extends JFrame {
 		phoneLabel.setFont(new Font("Dialog", Font.BOLD, 14));
 		contentPane.add(phoneLabel);
 		
-		passwordInputField = new JTextField();
+		passwordInputField = new JPasswordField();
 		passwordInputField.setBounds(201, 95, 500, 19);
 		passwordInputField.setColumns(10);
 		contentPane.add(passwordInputField);

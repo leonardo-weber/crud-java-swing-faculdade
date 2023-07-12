@@ -132,10 +132,12 @@ public class CarroListagem extends JPanel {
 				comboBoxDisponibilidade.setSelectedIndex(-1);
 				comboBoxEstadoFrota.setSelectedIndex(-1);
 				listaCarros = (ArrayList<CarroVO>) carroController.consultarListaCarros();
+				btnLimparFiltro.setEnabled(false);
 				popularTabelaCarros();
 			}
 		});
-		btnLimparFiltro.setBounds(274, 375, 162, 25);
+		btnLimparFiltro.setEnabled(false);
+		btnLimparFiltro.setBounds(310, 45, 162, 25);
 		add(btnLimparFiltro);
 		
 		final JButton btnDesativar = new JButton("Alterar status");
@@ -177,23 +179,19 @@ public class CarroListagem extends JPanel {
 						btnDesativar.setText("Ativar");
 					}
 				} else {
-					btnDesativar.setEnabled(true);
+					btnDesativar.setEnabled(false);
 				}
 			}
 		});
 		
 		comboBoxDisponibilidade.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if (comboBoxEstadoFrota.getSelectedItem() != null) {
+				if (comboBoxDisponibilidade.getSelectedIndex() > -1) {
+					btnLimparFiltro.setEnabled(true);
 				}
 			}
 		});
 		
-		comboBoxEstadoFrota.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-			
 		this.inicializarTabela();
 
 	}

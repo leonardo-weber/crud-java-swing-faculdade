@@ -17,7 +17,6 @@ public class LoginController {
 		if (camposValidos) {		
 			return funcionarioBO.checarFuncionarioValido(funcionario);
 		} else {
-			JOptionPane.showMessageDialog(null, "Campos inválidos");
 			return false;
 		}
 		
@@ -29,7 +28,7 @@ public class LoginController {
 		
 		boolean login = ValidarCamposFormulario.validacao(funcionario.getNome());
 		boolean senha = ValidarCamposFormulario.validacao(funcionario.getSenha());
-		
+				
 		boolean[] campos = { login, senha };
 		
 		for (int i = 0; i < campos.length; i++) {

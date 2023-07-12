@@ -2,8 +2,9 @@ package controller;
 
 import java.util.List;
 
+import javax.swing.JOptionPane;
+
 import model.bo.ClienteBO;
-import model.exception.CampoInvalidoException;
 import model.vo.ClienteVO;
 import utils.ValidarCamposFormulario;
 
@@ -20,7 +21,11 @@ public class ClienteController {
 	}
 	
 	public boolean atualizarCliente(ClienteVO cliente) {
-		return clienteBO.atualizarCliente(cliente);
+		if (this.validarCamposCadastroClienteForm(cliente)) {
+			return clienteBO.atualizarCliente(cliente);
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean excluirCliente(ClienteVO cliente) {
@@ -50,7 +55,14 @@ public class ClienteController {
 		boolean sexo = ValidarCamposFormulario.validacao(cliente.getSexo());
 		boolean dataNascimento = ValidarCamposFormulario.validacaoData(cliente.getDataNascimento());
 		
-		boolean[] campos = { nome, telefone, cpf, cnh, sexo, dataNascimento };
+		boolean cpfNumeroValido = ValidarCamposFormulario.validarCPF(cliente.getCPF());
+		
+		if (!cpfNumeroValido) {
+			JOptionPane.showMessageDialog(null, "O número de CPF é inválido!");
+			return false;
+		}
+		
+		boolean[] campos = { nome, telefone, cpf, cnh, sexo, dataNascimento, cpfNumeroValido };
 				
 		for (int i = 0; i < campos.length; i++) {
 			if (campos[i] == false) {

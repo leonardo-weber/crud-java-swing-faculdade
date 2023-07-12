@@ -1,30 +1,26 @@
 package model.view.Paginas.Carro;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
-
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
+import javax.swing.text.MaskFormatter;
 
 import controller.CarroController;
 import model.vo.CarroVO;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
+import java.text.ParseException;
 
 public class CarroCadastro extends JPanel {
 
 	private JTextField marcaTextField;
 	private JTextField modeloTextField;
-	private JTextField anoTextField;
+	private JFormattedTextField anoTextField;
 	private JTextField placaTextField;
 	private JTextField corTextField;
 	
@@ -40,6 +36,8 @@ public class CarroCadastro extends JPanel {
 	
 	CarroVO carroVO = new CarroVO();
 	CarroController carroController = new CarroController();
+	
+	private MaskFormatter mascaraAno;
 	
 	public void limparCamposForm () {
 		marcaTextField.setText("");
@@ -69,6 +67,14 @@ public class CarroCadastro extends JPanel {
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
 		
+		try {
+			mascaraAno = new MaskFormatter("####");
+		} catch (ParseException e1) {
+			System.out.println("Erro ao inicializar variável do campo Ano");
+		}
+		
+		mascaraAno.setValueContainsLiteralCharacters(false);
+		
 		titleLabel = new JLabel("Cadastro de carros");
 		titleLabel.setBounds(26, 11, 136, 58);
 		add(titleLabel);
@@ -95,7 +101,7 @@ public class CarroCadastro extends JPanel {
 		modeloTextField.setColumns(10);
 		add(modeloTextField);
 		
-		anoTextField = new JTextField();
+		anoTextField = new JFormattedTextField(mascaraAno);
 		anoTextField.setBounds(226, 172, 476, 19);
 		anoTextField.setColumns(10);
 		add(anoTextField);

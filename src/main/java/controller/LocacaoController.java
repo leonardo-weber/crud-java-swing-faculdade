@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.bo.LocacaoBO;
-import model.exception.CampoInvalidoException;
 import model.vo.FuncionarioVO;
 import model.vo.LocacaoVO;
 import utils.ValidarCamposFormulario;
@@ -23,7 +22,11 @@ public class LocacaoController {
 	}
 	
 	public boolean atualizarLocacao(LocacaoVO locacao) {
-		return locacaoBO.atualizarLocacao(locacao);
+		if (this.validarCamposCadastroLocacaoForm(locacao)) {
+			return locacaoBO.atualizarLocacao(locacao);
+		} else {
+			return false;
+		}
 	}
 	
 	public boolean excluirLocacao(LocacaoVO locacao) {

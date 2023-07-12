@@ -54,6 +54,20 @@ public class ClienteEdicao extends JPanel {
 	private ClienteVO cliente;
 	
 	public void atualizarDadosCliente(ClienteController clienteController) {
+		
+		try {
+			String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
+			cliente.setCPF(cpfSemMascara);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+		}
+
+		try {
+			String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
+			cliente.setTelefone(telefoneSemMascara);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o valor de Telefone para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+		}
 				
 		boolean clienteAtualizado = clienteController.atualizarCliente(cliente);
 		
@@ -87,6 +101,28 @@ public class ClienteEdicao extends JPanel {
 		setBackground(UIManager.getColor("Button.darkShadow"));
 		setLayout(null);
 		
+		try {
+			mascaraCPF = new MaskFormatter("###.###.###-##");
+		} catch (ParseException e1) {
+			System.out.println("Erro ao inicializar variável do campo CPF");
+		}
+		
+		try {
+			mascaraTelefone = new MaskFormatter("(##) - #####-####");
+		} catch (ParseException e1) {
+			System.out.println("Erro ao inicializar variável de máscara do campo Telefone");
+		}
+		
+		try {
+			mascaraCNH = new MaskFormatter("##########");
+		} catch (ParseException e1) {
+			System.out.println("Erro ao inicializar variável de máscara do campo CNH");
+		}
+		
+		mascaraCPF.setValueContainsLiteralCharacters(false);
+		mascaraTelefone.setValueContainsLiteralCharacters(false);
+		mascaraCNH.setValueContainsLiteralCharacters(false);
+		
 		String[] listaSexos = {"Masculino", "Feminimo"};
 		
 		final ClienteController clienteController = new ClienteController();
@@ -107,7 +143,7 @@ public class ClienteEdicao extends JPanel {
 		lblClientesCadastrados.setBounds(26, 73, 154, 15);
 		add(lblClientesCadastrados);
 
-		titleLabel = new JLabel("Cadastro de Clientes");
+		titleLabel = new JLabel("Edição de cliente");
 		titleLabel.setBounds(26, 11, 149, 58);
 		add(titleLabel);
 		
@@ -124,17 +160,17 @@ public class ClienteEdicao extends JPanel {
 		add(cpfLabel);
 		
 		nameTextField = new JTextField();
-		nameTextField.setBounds(118, 104, 584, 19);
+		nameTextField.setBounds(229, 104, 473, 19);
 		add(nameTextField);
 		nameTextField.setColumns(10);
 		
 		phoneTextField = new JFormattedTextField(mascaraTelefone);
-		phoneTextField.setBounds(118, 263, 584, 19);
+		phoneTextField.setBounds(229, 263, 473, 19);
 		phoneTextField.setColumns(10);
 		add(phoneTextField);
 		
 		cpfTextField = new JFormattedTextField(mascaraCPF);
-		cpfTextField.setBounds(118, 170, 584, 19);
+		cpfTextField.setBounds(229, 170, 473, 19);
 		cpfTextField.setColumns(10);
 		add(cpfTextField);
 		
@@ -153,11 +189,11 @@ public class ClienteEdicao extends JPanel {
 		
 		cnhTextField = new JFormattedTextField(mascaraCNH);
 		cnhTextField.setColumns(10);
-		cnhTextField.setBounds(118, 135, 584, 19);
+		cnhTextField.setBounds(229, 135, 473, 19);
 		add(cnhTextField);
 				
 		dataNascimentoDatePicker = new DatePicker();
-		dataNascimentoDatePicker.setBounds(118, 232, 584, 19);
+		dataNascimentoDatePicker.setBounds(229, 232, 470, 19);
 		add(dataNascimentoDatePicker);
 		
 		dataNascimentoLabel = new JLabel("Data Nascimento");
@@ -165,7 +201,7 @@ public class ClienteEdicao extends JPanel {
 		add(dataNascimentoLabel);
 		
 		comboBoxSexo = new JComboBox(listaSexos);
-		comboBoxSexo.setBounds(118, 201, 584, 24);
+		comboBoxSexo.setBounds(229, 201, 473, 24);
 		comboBoxSexo.setSelectedIndex(-1);
 		add(comboBoxSexo);
 		

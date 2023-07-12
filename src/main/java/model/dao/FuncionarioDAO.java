@@ -92,6 +92,7 @@ public class FuncionarioDAO {
 				+ "', ativo = " + funcionario.getAtivo()
 				+ " WHERE IDFUNCIONARIO = " + funcionario.getId();
 				 
+		
 		try {
 			if(statement.executeUpdate(query) == 1) {
 				retorno = true;

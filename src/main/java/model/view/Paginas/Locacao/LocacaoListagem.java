@@ -28,7 +28,7 @@ public class LocacaoListagem extends JPanel {
 	private ArrayList<LocacaoVO> listaLocacoes; 
 	private LocacaoVO locacaoSelecionada;
 	
-	private String[] colunasTabelas = { "Data Locação", "Previsão Devolução", "Data Devolução", "Dias de atraso", "Valor", "Multa", "Valor Final", "Nome cliente", "CPF Cliente" } ;
+	private String[] colunasTabelas = { "Data Locação", "Previsão Devolução", "Data Devolução", "Dias de atraso", "Valor", "Multa", "Valor Final", "Nome cliente", "CPF Cliente", "Estado" } ;
 	
 	LocacaoController locacaoController = new LocacaoController();
 	

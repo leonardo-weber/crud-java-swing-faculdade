@@ -97,7 +97,7 @@ public class FuncionarioListagem extends JPanel {
 		setLayout(null);
 		
 		titleLabel = new JLabel("Listagem de funcionários");
-		titleLabel.setBounds(26, 11, 198, 58);
+		titleLabel.setBounds(25, 22, 180, 36);
 		add(titleLabel);
 		
 		btnPesquisar = new JButton("Pesquisar");
@@ -151,7 +151,14 @@ public class FuncionarioListagem extends JPanel {
 		});
 		
 		comboBoxStatusFuncionario = new JComboBox(opcoesStatus);
-		comboBoxStatusFuncionario.setBounds(540, 28, 180, 24);
+		comboBoxStatusFuncionario.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (comboBoxStatusFuncionario.getSelectedIndex() > -1) {
+					btnLimparFiltro.setEnabled(true);
+				}
+			}
+		});
+		comboBoxStatusFuncionario.setBounds(540, 45, 180, 24);
 		comboBoxStatusFuncionario.setSelectedIndex(-1);
 		add(comboBoxStatusFuncionario);
 		
@@ -160,11 +167,17 @@ public class FuncionarioListagem extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				comboBoxStatusFuncionario.setSelectedIndex(-1);
 				listaFuncionarios = (ArrayList<FuncionarioVO>) funcionarioController.consultarListaFuncionarios();
+				btnLimparFiltro.setEnabled(false);
 				popularTabelaFuncionarios();
 			}
 		});
-		btnLimparFiltro.setBounds(354, 28, 162, 25);
+		btnLimparFiltro.setEnabled(false);
+		btnLimparFiltro.setBounds(366, 44, 162, 25);
 		add(btnLimparFiltro);
+		
+		JLabel lblVnculoComA = new JLabel("Vínculo com  a empresa");
+		lblVnculoComA.setBounds(540, 12, 180, 25);
+		add(lblVnculoComA);
 				
 		this.inicializarTabela();
 

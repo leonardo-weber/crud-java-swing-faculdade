@@ -3,6 +3,7 @@ package model.view.Paginas.Funcionario;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.UIManager;
 import javax.swing.text.MaskFormatter;
 import javax.swing.JTextField;
@@ -26,7 +27,7 @@ import java.awt.event.ActionEvent;
 public class FuncionarioCadastro extends JPanel {
 	
 	private JTextField nameTextField;
-	private JTextField passwordTextField;
+	private JPasswordField passwordTextField;
 	private JFormattedTextField phoneTextField;
 	private JFormattedTextField cpfTextField;
 	private DatePicker dataNascimentoDatePicker;
@@ -98,17 +99,17 @@ public class FuncionarioCadastro extends JPanel {
 		add(cpfLabel);
 		
 		nameTextField = new JTextField();
-		nameTextField.setBounds(118, 104, 584, 19);
+		nameTextField.setBounds(258, 104, 444, 19);
 		add(nameTextField);
 		nameTextField.setColumns(10);
 		
-		passwordTextField = new JTextField();
-		passwordTextField.setBounds(118, 138, 584, 19);
+		passwordTextField = new JPasswordField();
+		passwordTextField.setBounds(258, 138, 444, 19);
 		passwordTextField.setColumns(10);
 		add(passwordTextField);
 		
 		cpfTextField = new JFormattedTextField(mascaraCPF);
-		cpfTextField.setBounds(118, 172, 584, 19);
+		cpfTextField.setBounds(258, 172, 444, 19);
 		cpfTextField.setColumns(10);
 		add(cpfTextField);
 			
@@ -118,19 +119,19 @@ public class FuncionarioCadastro extends JPanel {
 		
 		phoneTextField = new JFormattedTextField(mascaraTelefone);
 		phoneTextField.setColumns(10);
-		phoneTextField.setBounds(118, 232, 584, 19);
+		phoneTextField.setBounds(258, 232, 444, 19);
 		add(phoneTextField);
 		
 		dataNascimentoDatePicker = new DatePicker();
-		dataNascimentoDatePicker.setBounds(118, 259, 584, 19);
+		dataNascimentoDatePicker.setBounds(258, 259, 444, 19);
 		add(dataNascimentoDatePicker);
 		
 		dataNascimentoLabel = new JLabel("Data Nascimento");
-		dataNascimentoLabel.setBounds(26, 261, 70, 15);
+		dataNascimentoLabel.setBounds(26, 261, 214, 15);
 		add(dataNascimentoLabel);
 		
 		comboBoxSexo = new JComboBox(listaSexos);
-		comboBoxSexo.setBounds(118, 201, 584, 24);
+		comboBoxSexo.setBounds(258, 201, 444, 24);
 		comboBoxSexo.setSelectedIndex(-1);
 		add(comboBoxSexo);
 		
@@ -148,16 +149,15 @@ public class FuncionarioCadastro extends JPanel {
 					String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
 					funcionarioVO.setCPF(cpfSemMascara);
 				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+					System.out.println("Erro ao converter o valor de CPF para valor sem máscara");
 				}
 	
 				try {
 					String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
 					funcionarioVO.setTelefone(telefoneSemMascara);
 				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de Telefone para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+					System.out.println("Erro ao converter o valor de Telefone para valor sem máscara");
 				}
-				
 				
 				funcionarioVO.setNome(nameTextField.getText());
 				funcionarioVO.setSenha(passwordTextField.getText());

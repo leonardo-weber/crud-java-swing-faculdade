@@ -17,7 +17,6 @@ import model.view.Paginas.Funcionario.FuncionarioEdicao;
 import model.view.Paginas.Funcionario.FuncionarioListagem;
 import model.view.Paginas.Locacao.LocacaoCadastro;
 import model.view.Paginas.Locacao.LocacaoDevolucao;
-import model.view.Paginas.Locacao.LocacaoEdicao;
 import model.view.Paginas.Locacao.LocacaoListagem;
 import model.view.Paginas.Sobre.SobreLogOut;
 
@@ -51,7 +50,6 @@ public class TelaPrincipal extends JFrame {
 	private FuncionarioListagem listagemDeFuncionario = new FuncionarioListagem();
 	
 	private LocacaoCadastro cadastroDeLocacao = new LocacaoCadastro();
-	private LocacaoEdicao edicaoDeLocacao = new LocacaoEdicao();
 	private LocacaoListagem listagemDeLocacao = new LocacaoListagem();
 	private LocacaoDevolucao devolucaoDeLocacao = new LocacaoDevolucao();
 	
@@ -170,16 +168,7 @@ public class TelaPrincipal extends JFrame {
 			}
 		});
 		menuItemLocacao.add(menuItemLocacaoDevolucao);
-		
-		JMenuItem menuItemLocacaoEdicao = new JMenuItem("Edição");
-		menuItemLocacaoEdicao.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				setContentPane(edicaoDeLocacao);
-				revalidate();
-			}
-		});
-		menuItemLocacao.add(menuItemLocacaoEdicao);
-		
+				
 		JMenu menuItemCliente = new JMenu("Cliente");
 		menuBar.add(menuItemCliente);
 		
