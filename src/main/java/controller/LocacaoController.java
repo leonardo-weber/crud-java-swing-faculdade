@@ -20,15 +20,7 @@ public class LocacaoController {
         	return locacao;
         }
 	}
-	
-	public boolean atualizarLocacao(LocacaoVO locacao) {
-		if (this.validarCamposCadastroLocacaoForm(locacao)) {
-			return locacaoBO.atualizarLocacao(locacao);
-		} else {
-			return false;
-		}
-	}
-	
+
 	public boolean excluirLocacao(LocacaoVO locacao) {
 		return locacaoBO.deletarLocacao(locacao);
 	}
