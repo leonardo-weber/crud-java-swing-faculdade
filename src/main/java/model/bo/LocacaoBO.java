@@ -2,6 +2,7 @@ package model.bo;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 import java.util.List;
 
 import model.dao.LocacaoDAO;
@@ -19,10 +20,14 @@ public class LocacaoBO {
 		return LocacaoDAO.consultarListaLocacao();
 	}
 	
+	public ArrayList<LocacaoVO> buscarLocacaoPorCPF(String cpf) {
+		return LocacaoDAO.buscarLocacaoPorCPF(cpf);
+	}
+	
 	public boolean deletarLocacao(LocacaoVO locacao) {
 		return LocacaoDAO.deletarLocacao(locacao);
 	}
-
+	
 	public boolean atualizarLocacao(LocacaoVO locacao) {
 		return LocacaoDAO.atualizarLocacao(locacao);
 	}

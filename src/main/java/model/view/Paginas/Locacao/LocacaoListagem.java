@@ -2,20 +2,15 @@ package model.view.Paginas.Locacao;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import controller.LocacaoController;
-import model.bo.LocacaoBO;
-import model.vo.FuncionarioVO;
 import model.vo.LocacaoVO;
 
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -26,7 +21,6 @@ public class LocacaoListagem extends JPanel {
 	
 	private JTable tabelaLocacao;
 	private ArrayList<LocacaoVO> listaLocacoes; 
-	private LocacaoVO locacaoSelecionada;
 	
 	private String[] colunasTabelas = { "Data Locação", "Previsão Devolução", "Data Devolução", "Dias de atraso", "Valor", "Multa", "Valor Final", "Nome cliente", "CPF Cliente", "Estado" } ;
 	
@@ -41,7 +35,8 @@ public class LocacaoListagem extends JPanel {
 		DefaultTableModel model = (DefaultTableModel) tabelaLocacao.getModel();
 		for (LocacaoVO locacao : listaLocacoes) {
 			Object[] novaLinhaDaTabela = new Object[colunasTabelas.length];
-			novaLinhaDaTabela[0] = locacao.getDataLocacao();
+			String estadoLocacao = locacao.getEstado() ? "Finalizada" : "Em aberto";
+ 			novaLinhaDaTabela[0] = locacao.getDataLocacao();
 			novaLinhaDaTabela[1] = locacao.getDataPrevistaDevolucao();
 			novaLinhaDaTabela[2] = locacao.getDataEfetivaDevolucao();
 ;			novaLinhaDaTabela[3] = locacaoController.calcularAtraso(locacao.getDataEfetivaDevolucao(),  locacao.getDataPrevistaDevolucao());
@@ -50,6 +45,7 @@ public class LocacaoListagem extends JPanel {
 			novaLinhaDaTabela[6] = locacao.getValorEfetivo();
 			novaLinhaDaTabela[7] = locacao.getCliente().getNome();
 			novaLinhaDaTabela[8] = locacao.getCliente().getCPF();
+			novaLinhaDaTabela[9] = estadoLocacao;
 			
 			model.addRow(novaLinhaDaTabela);
 		}
@@ -80,18 +76,6 @@ public class LocacaoListagem extends JPanel {
 		
 		tabelaLocacao = new JTable();
 		tabelaLocacao.setBounds(26, 81, 694, 252);
-		tabelaLocacao.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				int indiceSelecionado = tabelaLocacao.getSelectedRow();
-
-				if (indiceSelecionado > 0) {
-					locacaoSelecionada = listaLocacoes.get(indiceSelecionado - 1);
-				} else {
-				}
-			}
-		});
 		add(tabelaLocacao);
 		
 		this.inicializarTabela();

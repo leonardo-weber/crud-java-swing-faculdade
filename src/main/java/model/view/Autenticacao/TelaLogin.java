@@ -59,6 +59,27 @@ public class TelaLogin extends JFrame {
 			}
 		});
 	}
+	
+	public void realizarLogin () {
+		
+		funcionarioVO.setNome(loginInputField.getText());
+		funcionarioVO.setSenha(passwordInputField.getText());
+		
+		try {
+			loginAutenticado = loginController.realizarLogin(funcionarioVO);
+			
+			if (loginAutenticado) {
+				JOptionPane.showMessageDialog(null, "Funcionário autenticado com sucesso");
+				dispose();
+				principal.setVisible(true);
+			} else {
+				JOptionPane.showMessageDialog(null, "Falha ao autenticar funcionário");
+			}
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "erro");
+		}
+		
+	}
 
 	public TelaLogin() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -95,24 +116,7 @@ public class TelaLogin extends JFrame {
 		loginButton = new JButton("Entrar");
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				funcionarioVO.setNome(loginInputField.getText());
-				funcionarioVO.setSenha(passwordInputField.getText());
-				
-				try {
-					loginAutenticado = loginController.realizarLogin(funcionarioVO);
-					
-					if (loginAutenticado) {
-						JOptionPane.showMessageDialog(null, "Funcionário autenticado com sucesso");
-						dispose();
-						principal.setVisible(true);
-					} else {
-						JOptionPane.showMessageDialog(null, "Falha ao autenticar funcionário");
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "erro");
-				}
-				
+				realizarLogin();			
 			}
 		});
 		loginButton.setBounds(51, 370, 281, 51);

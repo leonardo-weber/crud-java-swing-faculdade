@@ -1,6 +1,5 @@
 package model.view.Paginas.Locacao;
 
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,8 +22,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;

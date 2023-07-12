@@ -12,6 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import javax.swing.JOptionPane;
@@ -28,7 +29,7 @@ public class LocacaoDAO {
 	public LocacaoVO cadastrarLocacao(LocacaoVO locacao) {
 		
 		
-		String query = "INSERT INTO LOCACAO (DATA_LOCACAO, DATA_PREVISTA_DEVOLUCAO, VALOR_PREVISTO, IDCARRO, IDCLIENTE) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO LOCACAO (DATA_LOCACAO, DATA_PREVISTA_DEVOLUCAO, VALOR_PREVISTO, ESTADO, IDCARRO, IDCLIENTE) VALUES (?, ?, ?, ?, ?, ?)";
 		
 		Connection connection = Banco.getConnection();
 		PreparedStatement statement = Banco.getPreparedStatementWithPk(connection, query);
@@ -37,8 +38,9 @@ public class LocacaoDAO {
 			statement.setDate(1, Date.valueOf(locacao.getDataLocacao()));
 			statement.setDate(2, Date.valueOf(locacao.getDataPrevistaDevolucao()));
 			statement.setInt(3, locacao.getValorPrevisto());
-			statement.setInt(4,  locacao.getCarro().getId());
-			statement.setInt(5,  locacao.getCliente().getId());
+			statement.setBoolean(4,  false);
+			statement.setInt(5,  locacao.getCarro().getId());
+			statement.setInt(6,  locacao.getCliente().getId());
 			statement.execute();
 			ResultSet resultado = statement.getGeneratedKeys();	
 			if(resultado.next()) {
@@ -82,11 +84,11 @@ public class LocacaoDAO {
 		
 	}
 
-	public boolean atualizarLocacao(LocacaoVO locacao) {
+	public boolean atualizarDevolucaoLocacaoFinalizada(LocacaoVO locacao) {
 	
 		Connection connection = Banco.getConnection();
 		Statement statement = Banco.getStatement(connection);
-		
+				
 		boolean retorno = false;
 		
 		String query = "UPDATE LOCACAO SET DATA_LOCACAO = '" + locacao.getDataLocacao()
@@ -95,9 +97,10 @@ public class LocacaoDAO {
 				+ "', VALOR_PREVISTO = '" + locacao.getValorPrevisto()
 				+ "', VALOR_EFETIVO = '" + locacao.getValorEfetivo()
 				+ "', MULTA = '" + locacao.getMulta()
-				+ "', IDCLIENTE = '" + locacao.getCliente().getId()
+				+ "', ESTADO = " + true				
+				+ ", IDCLIENTE = '" + locacao.getCliente().getId()
 				+ "', IDCARRO = '" + locacao.getCarro().getId()
-				+ "' WHERE IDLOCACAO = " + locacao.getCliente().getId();
+				+ "' WHERE IDLOCACAO = " + locacao.getId();
 		 
 		try {
 			if(statement.executeUpdate(query) == 1) {
@@ -117,13 +120,14 @@ public class LocacaoDAO {
 	
 	public boolean cadastrarDevolucao (LocacaoVO locacao) {
 		
-		boolean locacaoAtualizada = atualizarLocacao(locacao);
+		boolean locacaoAtualizada = atualizarDevolucaoLocacaoFinalizada(locacao);
+		boolean carroDevolvido;
 		CarroController carroController = new CarroController();
 		
 		int carroID = locacao.getCarro().getId();
-		carroController.setDevolucaoCarro(carroID);
+		carroDevolvido = carroController.setDevolucaoCarro(carroID);
 		
-		if (locacaoAtualizada) {
+		if (locacaoAtualizada && carroDevolvido) {
 			JOptionPane.showMessageDialog(null, "Devolução cadastrada com sucesso");
 		} else {
 			JOptionPane.showMessageDialog(null, "Falha ao cadastrar devolução");
@@ -147,15 +151,19 @@ public class LocacaoDAO {
 		
 		try {
 			resultado = stmt.executeQuery(query);
-			while(resultado.next()) { 				
+			while(resultado.next()) {
 				
+				boolean valorEfetivoNull = resultado.getString(8) == null;
+				boolean dataEfetivaNull = resultado.getString(6) == null;
+				boolean multaNull = resultado.getString(9) == null;
+								
 				ClienteVO cliente = clienteController.consultarClientePorID(Integer.parseInt(resultado.getString(2)));
 				CarroVO carro = carroController.consultarCarroPorID(Integer.parseInt(resultado.getString(3)));
 				
 				LocacaoVO locacao = new LocacaoVO();
 				
 				String valorPrevisto = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(7)));
-				String valorEfetivo = new DecimalFormat("#").format(Double.parseDouble(resultado.getString(8)));
+				String valorEfetivo = !valorEfetivoNull ? new DecimalFormat("#").format(Double.parseDouble(resultado.getString(8))) : null;
 				
 				carroController.setLocacaoCarro(Integer.parseInt(resultado.getString(3)));
 								
@@ -164,10 +172,11 @@ public class LocacaoDAO {
 				locacao.setCarro(carro);
 				locacao.setDataLocacao(LocalDate.parse(resultado.getString(4), DateTimeFormatter.ofPattern("yyy-MM-dd")));
 				locacao.setDataPrevistaDevolucao(LocalDate.parse(resultado.getString(5), DateTimeFormatter.ofPattern("yyy-MM-dd")));
-				locacao.setDataEfetivaDevolucao(LocalDate.parse(resultado.getString(6), DateTimeFormatter.ofPattern("yyy-MM-dd")));
+				locacao.setDataEfetivaDevolucao(!dataEfetivaNull ? LocalDate.parse(resultado.getString(6), DateTimeFormatter.ofPattern("yyyy-MM-dd")) : LocalDate.now());
 				locacao.setValorPrevisto(Integer.parseInt(valorPrevisto));
-				locacao.setValorEfetivo(Integer.parseInt(valorEfetivo));
+				locacao.setValorEfetivo(!valorEfetivoNull ? Integer.parseInt(valorEfetivo) : 0);
 				locacao.setMulta(0);
+				locacao.setEstado(Boolean.parseBoolean(resultado.getString(10)));
 				listaLocacao.add(locacao);
 			}
 		} catch (SQLException erro) {
@@ -180,6 +189,22 @@ public class LocacaoDAO {
 		}
 			
           return listaLocacao;
+	}
+	
+	public ArrayList<LocacaoVO> buscarLocacaoPorCPF(String cpf) {
+		
+		List<LocacaoVO> listaTodasLocacoes = consultarListaLocacao();
+		
+		ArrayList<LocacaoVO> listaLocacoesPorCPF = new ArrayList<LocacaoVO>(); 
+		
+		for (LocacaoVO locacao: listaTodasLocacoes) {
+			if (locacao.getCliente().getCPF().equals(cpf)) {
+				listaLocacoesPorCPF.add(locacao);
+			}
+		}
+		
+		return listaLocacoesPorCPF;
+		
 	}
 	
 	public LocacaoVO consultarLocacaoPorID (int id) {
@@ -215,6 +240,7 @@ public class LocacaoDAO {
 				locacao.setValorPrevisto(Integer.parseInt(valorPrevisto));
 				locacao.setValorEfetivo(Integer.parseInt(valorEfetivo));
 				locacao.setMulta(0);
+				locacao.setEstado(Boolean.parseBoolean(resultado.getString(10)));
 			} else {
 				JOptionPane.showMessageDialog(null, "Cliente não encontrado"); 
 			}

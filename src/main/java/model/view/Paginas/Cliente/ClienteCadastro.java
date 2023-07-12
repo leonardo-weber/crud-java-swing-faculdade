@@ -9,10 +9,6 @@ import javax.swing.UIManager;
 import javax.swing.text.MaskFormatter;
 
 import com.github.lgooddatepicker.components.DatePicker;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 
 import controller.ClienteController;
 import model.vo.ClienteVO;
@@ -57,6 +53,36 @@ public class ClienteCadastro extends JPanel {
 		cnhTextField.setText("");
 		dataNascimentoDatePicker.setText("");
 		comboBoxSexo.setSelectedIndex(-1);
+	}
+	
+	public void cadastrarCliente () {
+		
+		try {
+			String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
+			clienteVO.setCPF(cpfSemMascara);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+		}
+
+		try {
+			String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
+			clienteVO.setTelefone(telefoneSemMascara);
+		} catch (ParseException e1) {
+			JOptionPane.showMessageDialog(null, "Erro ao converter o valor de Telefone para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
+		}
+		
+		clienteVO.setNome(nameTextField.getText());
+		clienteVO.setCNH(cnhTextField.getText());
+		clienteVO.setDataNascimento(dataNascimentoDatePicker.getDate());
+		clienteVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
+		
+		try {
+			clienteController.cadastrarCliente(clienteVO);
+			limparCampos();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o cliente");
+		}
+		
 	}
 
 	public ClienteCadastro() {
@@ -123,33 +149,7 @@ public class ClienteCadastro extends JPanel {
 		cadastrarClienteButton.setBounds(420, 388, 282, 25);
 		cadastrarClienteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
-					clienteVO.setCPF(cpfSemMascara);
-				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de CPF para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
-				}
-	
-				try {
-					String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
-					clienteVO.setTelefone(telefoneSemMascara);
-				} catch (ParseException e1) {
-					JOptionPane.showMessageDialog(null, "Erro ao converter o valor de Telefone para valor sem máscara", "Erro", JOptionPane.ERROR_MESSAGE); 
-				}
-				
-				clienteVO.setNome(nameTextField.getText());
-				clienteVO.setCNH(cnhTextField.getText());
-				clienteVO.setDataNascimento(dataNascimentoDatePicker.getDate());
-				clienteVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
-				
-				try {
-					clienteController.cadastrarCliente(clienteVO);
-					limparCampos();
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o cliente");
-				}
-				
+				cadastrarCliente();
 			}
 		});
 		

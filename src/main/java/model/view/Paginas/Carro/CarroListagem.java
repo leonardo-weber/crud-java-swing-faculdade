@@ -9,19 +9,13 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import controller.CarroController;
-import model.bo.CarroBO;
 import model.vo.CarroVO;
-import model.vo.FuncionarioVO;
 
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
-import com.jgoodies.forms.layout.FormLayout;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 import javax.swing.JComboBox;
 
 public class CarroListagem extends JPanel {

@@ -19,7 +19,6 @@ import javax.swing.text.MaskFormatter;
 import com.github.lgooddatepicker.components.DatePicker;
 
 import controller.FuncionarioController;
-import model.vo.ClienteVO;
 import model.vo.FuncionarioVO;
 
 public class FuncionarioEdicao extends JPanel {

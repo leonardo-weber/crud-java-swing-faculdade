@@ -12,6 +12,7 @@ public class LocacaoVO {
 	private int valorPrevisto;
 	private int valorEfetivo;
 	private double multa;
+	private boolean estado;
 	
 	public LocacaoVO() {
 		super();
@@ -26,7 +27,8 @@ public class LocacaoVO {
 			LocalDate dataEfetivaDevolucao, 
 			int valorPrevisto,
 			int valorEfetivo,
-			int multa
+			int multa,
+			boolean estado
 	) {
 		super();
 		this.id = id;
@@ -38,6 +40,7 @@ public class LocacaoVO {
 		this.valorPrevisto = valorPrevisto;
 		this.valorEfetivo = valorEfetivo;
 		this.multa = multa;
+		this.estado = estado;
 	}
 	
 	public int getId() {
@@ -110,9 +113,17 @@ public class LocacaoVO {
 		this.multa = multa;
 	}
 	
+	public boolean getEstado() {
+		return estado;
+	}
+	
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+	
 	@Override
 	public String toString() {
-		return null;
+		return id + " / " + carro;
 	}
 
 }

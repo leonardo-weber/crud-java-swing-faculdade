@@ -37,6 +37,10 @@ public class LocacaoController {
 		return locacaoBO.cadastrarDevolucao(locacao);
 	}
 	
+	public ArrayList<LocacaoVO> buscarLocacaoPorCPF (String cpf) {
+		return locacaoBO.buscarLocacaoPorCPF(cpf);
+	}
+	
 	public List<LocacaoVO> consultarListaLocacao () {
 		return locacaoBO.consultarListaLocacao();
 	}

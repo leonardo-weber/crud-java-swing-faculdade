@@ -66,8 +66,43 @@ public class TelaCadastro extends JFrame {
 		});
 	}
 
+	public void cadastrarFuncionario () {
+		try {
+			String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfInputField.getText());
+			funcionarioVO.setCPF(cpfSemMascara);
+		} catch (ParseException e1) {
+			System.out.println("Erro ao converter o valor de CPF para valor sem máscara");
+		}
+
+		try {
+			String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneInputField.getText());
+			funcionarioVO.setTelefone(telefoneSemMascara);
+		} catch (ParseException e1) {
+			System.out.println("Erro ao converter o valor de Telefone para valor sem máscara");
+		}
+
+		
+		funcionarioVO.setNome(nameInputField.getText());
+		funcionarioVO.setSenha(passwordInputField.getText());
+		funcionarioVO.setDataNascimento(dataNascimentoDatePicker.getDate());
+		funcionarioVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
+		
+	
+		try {
+			funcionarioCadastrado = funcionarioController.cadastrarFuncionario(funcionarioVO);
+			if (funcionarioCadastrado) {
+				TelaPrincipal principal = new TelaPrincipal();
+				dispose();
+				principal.setVisible(true);
+			}
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário");
+		}	
+	}
+	
 	public TelaCadastro() {
 		
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
 		setLocationRelativeTo(null);
@@ -100,38 +135,7 @@ public class TelaCadastro extends JFrame {
 		btnNewButton.setBounds(45, 362, 309, 64);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				try {
-					String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfInputField.getText());
-					funcionarioVO.setCPF(cpfSemMascara);
-				} catch (ParseException e1) {
-					System.out.println("Erro ao converter o valor de CPF para valor sem máscara");
-				}
-	
-				try {
-					String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneInputField.getText());
-					funcionarioVO.setTelefone(telefoneSemMascara);
-				} catch (ParseException e1) {
-					System.out.println("Erro ao converter o valor de Telefone para valor sem máscara");
-				}
-	
-				
-				funcionarioVO.setNome(nameInputField.getText());
-				funcionarioVO.setSenha(passwordInputField.getText());
-				funcionarioVO.setDataNascimento(dataNascimentoDatePicker.getDate());
-				funcionarioVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
-				
-			
-				try {
-					funcionarioCadastrado = funcionarioController.cadastrarFuncionario(funcionarioVO);
-					if (funcionarioCadastrado) {
-						TelaPrincipal principal = new TelaPrincipal();
-						dispose();
-						principal.setVisible(true);
-					}
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Erro ao cadastrar funcionário");
-				}			
+				cadastrarFuncionario();
 			}
 		});
 		contentPane.setLayout(null);

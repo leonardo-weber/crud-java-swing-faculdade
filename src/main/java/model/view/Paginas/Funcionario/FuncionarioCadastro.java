@@ -11,11 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
-import com.jgoodies.forms.layout.FormLayout;
 import com.github.lgooddatepicker.components.DatePicker;
-import com.jgoodies.forms.layout.ColumnSpec;
-import com.jgoodies.forms.layout.FormSpecs;
-import com.jgoodies.forms.layout.RowSpec;
 
 import controller.FuncionarioController;
 import model.vo.FuncionarioVO;
@@ -58,6 +54,34 @@ public class FuncionarioCadastro extends JPanel {
 		cpfTextField.setText("");
 		dataNascimentoDatePicker.setText("");
 		comboBoxSexo.setSelectedIndex(-1);
+	}
+	
+	public void cadastrarFuncionario () {
+		try {
+			String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
+			funcionarioVO.setCPF(cpfSemMascara);
+		} catch (ParseException e1) {
+			System.out.println("Erro ao converter o valor de CPF para valor sem máscara");
+		}
+
+		try {
+			String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
+			funcionarioVO.setTelefone(telefoneSemMascara);
+		} catch (ParseException e1) {
+			System.out.println("Erro ao converter o valor de Telefone para valor sem máscara");
+		}
+		
+		funcionarioVO.setNome(nameTextField.getText());
+		funcionarioVO.setSenha(passwordTextField.getText());
+		funcionarioVO.setDataNascimento(dataNascimentoDatePicker.getDate());
+		funcionarioVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
+		
+		try {
+			funcionarioController.cadastrarFuncionario(funcionarioVO);
+			limparCampos();
+		} catch (Exception e2) {
+			JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o funcionário");
+		}
 	}
 
 	public FuncionarioCadastro() {
@@ -143,34 +167,7 @@ public class FuncionarioCadastro extends JPanel {
 		cadastrarFuncionarioButton.setBounds(420, 388, 282, 25);
 		cadastrarFuncionarioButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
-				
-				try {
-					String cpfSemMascara = (String) mascaraCPF.stringToValue(cpfTextField.getText());
-					funcionarioVO.setCPF(cpfSemMascara);
-				} catch (ParseException e1) {
-					System.out.println("Erro ao converter o valor de CPF para valor sem máscara");
-				}
-	
-				try {
-					String telefoneSemMascara = (String) mascaraTelefone.stringToValue(phoneTextField.getText());
-					funcionarioVO.setTelefone(telefoneSemMascara);
-				} catch (ParseException e1) {
-					System.out.println("Erro ao converter o valor de Telefone para valor sem máscara");
-				}
-				
-				funcionarioVO.setNome(nameTextField.getText());
-				funcionarioVO.setSenha(passwordTextField.getText());
-				funcionarioVO.setDataNascimento(dataNascimentoDatePicker.getDate());
-				funcionarioVO.setSexo(comboBoxSexo.getSelectedItem() != null ? comboBoxSexo.getSelectedItem().toString() : null);
-				
-				try {
-					funcionarioController.cadastrarFuncionario(funcionarioVO);
-					limparCampos();
-				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(null, "Não foi possível cadastrar o funcionário");
-				}
-				
+				cadastrarFuncionario();
 			}
 		});
 		add(cadastrarFuncionarioButton);

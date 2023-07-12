@@ -8,15 +8,10 @@ import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import controller.ClienteController;
-import model.bo.ClienteBO;
-import model.vo.CarroVO;
 import model.vo.ClienteVO;
-import model.vo.FuncionarioVO;
 
 import javax.swing.JTable;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 
@@ -29,9 +24,7 @@ public class ClienteListagem extends JPanel {
 	private String[] colunasTabelas = {"Nome", "CPF", "Telefone", "CNH", "Sexo", "Data de Nascimento",};
 	
 	ClienteController clienteController = new ClienteController();
-		
-	private ClienteVO clienteSelecionado;
-	
+			
 	private void inicializarTabela() {
 		tabelaClientes.setModel(new DefaultTableModel(new Object[][] { colunasTabelas, }, colunasTabelas));
 	}
@@ -51,11 +44,7 @@ public class ClienteListagem extends JPanel {
 			model.addRow(novaLinhaDaTabela);
 		}
 	}
-	
-	private boolean deletarCliente () {
-		return clienteController.excluirCliente(clienteSelecionado);
-	}
-	
+		
 	public void pesquisarListaClientes () {
 		try {
 			listaClientes = (ArrayList<ClienteVO>) clienteController.consultarListaClientes();
@@ -91,19 +80,6 @@ public class ClienteListagem extends JPanel {
 		tabelaClientes = new JTable();
 		tabelaClientes.setBounds(26, 81, 694, 252);
 		add(tabelaClientes);
-		
-		tabelaClientes.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				
-				int indiceSelecionado = tabelaClientes.getSelectedRow();
-
-				if (indiceSelecionado > 0) {
-					clienteSelecionado = listaClientes.get(indiceSelecionado - 1);
-				} else {
-				}
-			}
-		});
 		
 		this.inicializarTabela();
 
